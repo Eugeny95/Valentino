@@ -91,46 +91,138 @@ class _MenuPageState extends State<MenuPage> {
                   ),
                 ])),
             SliverAppBar(
+              toolbarHeight: height / 500,
               pinned: true,
               snap: false,
               floating: false,
-              // bottom: PreferredSize(
-              //   preferredSize: Size.fromHeight(height / 100),
-              //   child: Text('jljkj'),
-              // ),
-              flexibleSpace: Row(children: [
-                SizedBox(
-                  width: width / 4,
-                  height: height / 20,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        Scrollable.ensureVisible(globalKeys[0].currentContext!);
-                      },
-                      child: Text('Итал закуски')),
+              flexibleSpace: SizedBox(
+                height: height * 0.04,
+                child: ListView(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  children: <Widget>[
+                    SizedBox(
+                      width: width * 0.3,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(12), // <-- Radius
+                            ),
+                            elevation: 5,
+                          ),
+                          onPressed: () {
+                            Scrollable.ensureVisible(
+                                globalKeys[0].currentContext!);
+                          },
+                          child: Text('Итал закуски')),
+                    ),
+                    Padding(padding: EdgeInsets.only(left: 5)),
+                    SizedBox(
+                      width: width * 0.3,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(12), // <-- Radius
+                            ),
+                            elevation: 5,
+                          ),
+                          onPressed: () {
+                            Scrollable.ensureVisible(
+                                globalKeys[1].currentContext!);
+                          },
+                          child: Text('Напитки')),
+                    ),
+                    Padding(padding: EdgeInsets.only(left: 5)),
+                    SizedBox(
+                      width: width * 0.3,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(12), // <-- Radius
+                            ),
+                            elevation: 5,
+                          ),
+                          onPressed: () {
+                            Scrollable.ensureVisible(
+                                globalKeys[2].currentContext!);
+                          },
+                          child: Text('Соусы')),
+                    ),
+                    Padding(padding: EdgeInsets.only(left: 5)),
+                    SizedBox(
+                      width: width * 0.3,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(12), // <-- Radius
+                            ),
+                            elevation: 5,
+                          ),
+                          onPressed: () {
+                            Scrollable.ensureVisible(
+                                globalKeys[0].currentContext!);
+                          },
+                          child: Text('Дисерты')),
+                    ),
+                    Padding(padding: EdgeInsets.only(left: 5)),
+                    SizedBox(
+                      width: width * 0.3,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(12), // <-- Radius
+                            ),
+                            elevation: 5,
+                          ),
+                          onPressed: () {
+                            Scrollable.ensureVisible(
+                                globalKeys[3].currentContext!);
+                          },
+                          child: Text('Итал закуски')),
+                    ),
+                    Padding(padding: EdgeInsets.only(left: 5)),
+                  ],
                 ),
-                SizedBox(
-                  width: width / 4,
-                  height: height / 20,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        Scrollable.ensureVisible(globalKeys[1].currentContext!);
-                      },
-                      child: Text('Напитки')),
-                ),
-                SizedBox(
-                  width: width / 4,
-                  height: height / 20,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        Scrollable.ensureVisible(globalKeys[2].currentContext!);
-                      },
-                      child: Text('Соусы')),
-                ),
-              ]),
-              // expandedHeight: height / 20,
-              // collapsedHeight: height / 13,
-              toolbarHeight: height / 30,
+              ),
             ),
+
+            // Row(children: [
+            //   SizedBox(
+            //     width: width / 4,
+            //     height: height / 20,
+            //     child: ElevatedButton(
+            //         onPressed: () {
+            //           Scrollable.ensureVisible(globalKeys[0].currentContext!);
+            //         },
+            //         child: Text('Итал закуски')),
+            //   ),
+            //   SizedBox(
+            //     width: width / 4,
+            //     height: height / 20,
+            //     child: ElevatedButton(
+            //         onPressed: () {
+            //           Scrollable.ensureVisible(globalKeys[1].currentContext!);
+            //         },
+            //         child: Text('Напитки')),
+            //   ),
+            //   SizedBox(
+            //     width: width / 4,
+            //     height: height / 20,
+            //     child: ElevatedButton(
+            //         onPressed: () {
+            //           Scrollable.ensureVisible(globalKeys[2].currentContext!);
+            //         },
+            //         child: Text('Соусы')),
+            //   ),
+            // ]),
+            // expandedHeight: height / 20,
+            // collapsedHeight: height / 13,
+
             SliverList(
               delegate: SliverChildListDelegate(
                 [

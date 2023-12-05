@@ -8,8 +8,9 @@ class ModifiresHttpModel {
   /// The generated code assumes these values exist in JSON.
   String? id;
   String? name;
+  bool isSelected = false;
 
-  ModifiresHttpModel({required this.id,required this.name});
+  ModifiresHttpModel({required this.id, required this.name});
 
   factory ModifiresHttpModel.fromJson(Map<String, dynamic> json) =>
       _$ModifiresHttpModelFromJson(json);

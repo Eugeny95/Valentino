@@ -22,6 +22,7 @@ class DishHttpModel {
   String? additionalinfo;
   List<String> imageLinks;
   List<ModifiresHttpModel>? modifiers;
+  
 
   DishHttpModel({required this.id, required this.name, required this.weight, required this.energyAmount, required this.energyFullAmount, 
   required this.currentPrice, required this.description, required this.proteinsAmount, required this.fatAmount, required this.carbohydratesAmount,

@@ -2,13 +2,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:data_layer/models/dish_http_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:valentino/buisiness/basket_bloc/basket_bloc_bloc.dart';
 
 // TODO можно в будущем сделать категории подгружаемыми с интернета
 
 class SelectDishDialog extends StatefulWidget {
   DishHttpModel dishHttpModel;
+  
 
-  SelectDishDialog(this.dishHttpModel);
+  SelectDishDialog({required this.dishHttpModel});
 
   // SelectDishDialog(this.dish);
   @override
@@ -29,25 +32,24 @@ class SelectDishDialogState extends State<SelectDishDialog> {
     List<Widget> propertiesWidget = [];
     List<Widget> volumesWidget = [];
     DishHttpModel dishHttpModel = this.widget.dishHttpModel;
-    // for (int i = 0; i < dish.options.length; i++) {
-    //   propertiesWidget.add(Row(children: [
-    //     Expanded(
-    //       child: Text(dish.options[i].name),
-    //       flex: 3,
-    //     ),
-    //     Text(dish.options[i].price.toInt().toString()),
-    //     Checkbox(
-    //       activeColor: Color.fromARGB(255, 89, 89, 89),
-    //       value: dish.options[i].isSelected,
-    //       onChanged: (value) {
-    //         setState(() {
-    //           print('used ${value}');
-    //           dish.options[i].isSelected = value!;
-    //         });
-    //       },
-    //     ),
-    //   ]));
-    // }
+    for (int i = 0; i < dishHttpModel.modifiers!.length; i++) {
+      propertiesWidget.add(Row(children: [
+        Expanded(
+          child: Text(dishHttpModel.modifiers![i].name!),
+          flex: 3,
+        ),
+        Checkbox(
+          activeColor: Color.fromARGB(255, 89, 89, 89),
+          value: dishHttpModel.modifiers![i].isSelected,
+          onChanged: (value) {
+            setState(() {
+              print('used ${value}');
+              dishHttpModel.modifiers![i].isSelected = value!;
+            });
+          },
+        ),
+      ]));
+    }
     // for (Option volume in dish.fieldSelection.fields) {
     //   volumesWidget.add(Row(children: [
     //     Expanded(
@@ -142,6 +144,10 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                   flex: 2,
                 ),
               ]),
+              Column(children:
+                propertiesWidget
+
+              ),
 
               // CounterWidget(
               //   onChange: ((counter) {
@@ -170,9 +176,8 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                     minimumSize: Size(height * 0.55, width * 0.12),
                   ),
                   onPressed: () {
-                    // Provider.of<BasketObject>(context, listen: false)
-                    //     .addCoffe(dish);
-                    // Navigator.pop(context);
+                    
+                    Navigator.pop(context);
                   },
                   child: Text(
                     'Добавить в корзину',

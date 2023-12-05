@@ -104,7 +104,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       thickness: 1,
                     ),
                     Expanded(
-                      child: Text('Name'),
+                      child: Text('Имя'),
                       flex: 7,
                     ),
                     Expanded(

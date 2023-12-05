@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:valentino/buisiness/basket_bloc/basket_bloc_bloc.dart';
 import 'package:valentino/buisiness/menu_bloc/menu_bloc.dart';
 import 'package:valentino/ui/auth_page/signin_or_signup_screen.dart';
 import 'package:valentino/ui/constants.dart';
@@ -28,20 +29,21 @@ class MyApp extends StatelessWidget {
       theme: lightThemeData(context),
       darkTheme: darkThemeData(context),
       themeMode: ThemeMode.dark,
-      initialRoute: '/',
-      routes: {
-        // When navigating to the "/" route, build the FirstScreen widget.
-        '/main': (context) => MainScreen(),
-        // When navigating to the "/second" route, build the SecondScreen widget.
-      },
-      home: MultiBlocProvider(providers: [BlocProvider(
-        create: (context) { 
-          MenuBloc menuBloc = MenuBloc();
-          menuBloc.add(GetMenuEvent());
-          return menuBloc;
-          })],
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) {
+            MenuBloc menuBloc = MenuBloc();
+            menuBloc.add(GetMenuEvent());
+            return menuBloc;
+          }),
+          BlocProvider(create: (context) {
+            BasketBloc basketBloc = BasketBloc();
+            basketBloc.add(EmptyBasketEvent());
+            return basketBloc;
+          })
+        ],
         child: MainScreen(),
-      ), 
+      ),
     );
   }
 }
@@ -58,7 +60,7 @@ class _MainScreenState extends State<MainScreen> {
     MenuPage(),
     BasketPage(),
     StorePage(),
-    SigninOrSignupScreen(),
+    ProfilePage(),
   ];
   int _selectedIndex = 0;
 
