@@ -105,7 +105,10 @@ class _MainScreenState extends State<MainScreen> {
             child: Material(
                 elevation: 0.0,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0)),
+                    borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(30),
+                  topLeft: Radius.circular(30),
+                )),
                 child: buildBottomNavigationBar())));
   }
 }

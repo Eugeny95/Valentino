@@ -30,60 +30,84 @@ class _ProfilePageState extends State<ProfilePage> {
     return Stack(
       children: [
         Column(children: [
+          Padding(padding: EdgeInsets.only(top: 40)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(width: width / 7),
+              Text(
+                'Valentino',
+                style: TextStyle(
+                    fontFamily: 'SHAL',
+                    color: Colors.red,
+                    fontSize: 55,
+                    fontWeight: FontWeight.normal),
+              ),
+            ],
+          ),
+          Text(
+            '      Bontempi',
+            style: TextStyle(
+                fontFamily: 'SHAL',
+                color: Color.fromARGB(255, 69, 161, 48),
+                fontSize: 55,
+                height: 0.6,
+                fontWeight: FontWeight.normal),
+          ),
           Stack(children: <Widget>[
-            Container(
-                height: height / 3,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(25),
-                      bottomRight: Radius.circular(25)),
-                  // image: DecorationImage(
-                  //   image: AssetImage("assets/images/thefirP.png"),
-                  //   fit: BoxFit.cover,
-                  // ),
-                )),
-            Container(
-                height: height / 3,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(25),
-                      bottomRight: Radius.circular(25)),
-                  gradient: LinearGradient(
-                    begin: FractionalOffset.topCenter,
-                    end: FractionalOffset.bottomCenter,
-                    colors: [
-                      Color.fromARGB(50, 0, 0, 0),
-                      Color.fromARGB(255, 255, 255, 255),
-                    ],
-                  ),
-                ),
-                child: Column(children: [
-                  SizedBox(
-                    height: height * 0.05,
-                  ),
-                  Row(mainAxisAlignment: MainAxisAlignment.end, children: []),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(padding: EdgeInsets.only(top: height * 0.19)),
-                        //Icon(Icons.park_sharp),
-                      ]),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Профиль пользователя",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              //fontStyle: FontStyle.italic,
-                              fontSize: 27,
-                              color: Color.fromARGB(169, 38, 38, 38)))
-                    ],
-                  ),
-                ]))
+            // Container(
+            //     height: height / 3,
+            //     decoration: BoxDecoration(
+            //       borderRadius: BorderRadius.only(
+            //           bottomLeft: Radius.circular(25),
+            //           bottomRight: Radius.circular(25)),
+            //       // image: DecorationImage(
+            //       //   image: AssetImage("assets/images/thefirP.png"),
+            //       //   fit: BoxFit.cover,
+            //       // ),
+            //     )),
+            // Container(
+            //     height: height / 3,
+            //     decoration: BoxDecoration(
+            //       borderRadius: BorderRadius.only(
+            //           bottomLeft: Radius.circular(25),
+            //           bottomRight: Radius.circular(25)),
+            //       gradient: LinearGradient(
+            //         begin: FractionalOffset.topCenter,
+            //         end: FractionalOffset.bottomCenter,
+            //         colors: [
+            //           Color.fromARGB(50, 0, 0, 0),
+            //           Color.fromARGB(255, 255, 255, 255),
+            //         ],
+            //       ),
+            //     ),
+            //     child: Column(children: [
+            //       SizedBox(
+            //         height: height * 0.05,
+            //       ),
+            //       Row(mainAxisAlignment: MainAxisAlignment.end, children: []),
+            //       Row(
+            //           mainAxisAlignment: MainAxisAlignment.center,
+            //           crossAxisAlignment: CrossAxisAlignment.start,
+            //           children: [
+            //             Padding(padding: EdgeInsets.only(top: height * 0.19)),
+            //             //Icon(Icons.park_sharp),
+            //           ]),
+            //       Row(
+            //         mainAxisAlignment: MainAxisAlignment.center,
+            //         crossAxisAlignment: CrossAxisAlignment.start,
+            //         children: [
+            //           Text("Профиль пользователя",
+            //               style: TextStyle(
+            //                   fontWeight: FontWeight.bold,
+            //                   //fontStyle: FontStyle.italic,
+            //                   fontSize: 27,
+            //                   color: Color.fromARGB(169, 38, 38, 38)))
+            //         ],
+            //       ),
+            //     ]))
           ]),
-          Padding(padding: EdgeInsets.only(top: 180)),
+          Padding(padding: EdgeInsets.only(top: 40)),
           Container(
             width: width * 0.9,
             child: Column(children: [
