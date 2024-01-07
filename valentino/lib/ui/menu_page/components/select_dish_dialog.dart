@@ -9,7 +9,6 @@ import 'package:valentino/buisiness/basket_bloc/basket_bloc_bloc.dart';
 
 class SelectDishDialog extends StatefulWidget {
   DishHttpModel dishHttpModel;
-  
 
   SelectDishDialog({required this.dishHttpModel});
 
@@ -22,8 +21,6 @@ class SelectDishDialog extends StatefulWidget {
 }
 
 class SelectDishDialogState extends State<SelectDishDialog> {
-  
-
   // SelectDishDialogState(this.dish) {
   //   dish.fieldSelection.selectedField = dish.fieldSelection.fields.first;
   // }
@@ -76,7 +73,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
     return AlertDialog(
         insetPadding: EdgeInsets.all(20),
         title: Text(
-          dishHttpModel.name??'',
+          dishHttpModel.name ?? '',
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 32),
         ),
@@ -97,10 +94,13 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20.0),
                   child: CachedNetworkImage(
-                       imageUrl: (dishHttpModel.imageLinks.isEmpty)?'': dishHttpModel.imageLinks.first,
-                       placeholder: (context, url) => CircularProgressIndicator(),
-                       errorWidget: (context, url, error) => Icon(Icons.error),
-                        fit: BoxFit.cover),
+                      imageUrl: (dishHttpModel.imageLinks.isEmpty)
+                          ? ''
+                          : dishHttpModel.imageLinks.first,
+                      placeholder: (context, url) =>
+                          CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                      fit: BoxFit.cover),
                 ),
               ),
               Divider(color: Colors.black),
@@ -144,10 +144,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                   flex: 2,
                 ),
               ]),
-              Column(children:
-                propertiesWidget
-
-              ),
+              Column(children: propertiesWidget),
 
               // CounterWidget(
               //   onChange: ((counter) {
@@ -176,7 +173,8 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                     minimumSize: Size(height * 0.55, width * 0.12),
                   ),
                   onPressed: () {
-                    
+                    BlocProvider.of<BasketBloc>(context)
+                        .add(AddDishEvent(dishHttpModel: dishHttpModel));
                     Navigator.pop(context);
                   },
                   child: Text(

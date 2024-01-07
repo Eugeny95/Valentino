@@ -22,11 +22,24 @@ class DishHttpModel {
   String? additionalinfo;
   List<String> imageLinks;
   List<ModifiresHttpModel>? modifiers;
-  
 
-  DishHttpModel({required this.id, required this.name, required this.weight, required this.energyAmount, required this.energyFullAmount, 
-  required this.currentPrice, required this.description, required this.proteinsAmount, required this.fatAmount, required this.carbohydratesAmount,
-  required this.proteinsFullAmount, required this.fatFullAmount, required this.carbohydratesFullAmount, required this.additionalinfo, required this.modifiers, required this.imageLinks});
+  DishHttpModel(
+      {required this.id,
+      required this.name,
+      required this.weight,
+      required this.energyAmount,
+      required this.energyFullAmount,
+      required this.currentPrice,
+      required this.description,
+      required this.proteinsAmount,
+      required this.fatAmount,
+      required this.carbohydratesAmount,
+      required this.proteinsFullAmount,
+      required this.fatFullAmount,
+      required this.carbohydratesFullAmount,
+      required this.additionalinfo,
+      required this.modifiers,
+      required this.imageLinks});
 
   /// Connect the generated [_$PersonFromJson] function to the `fromJson`
   /// factory.
@@ -35,4 +48,6 @@ class DishHttpModel {
 
   /// Connect the generated [_$PersonToJson] function to the `toJson` method.
   Map<String, dynamic> toJson() => _$DishHttpModelToJson(this);
+
+  bool operator ==(o) => o is DishHttpModel && id == o.id;
 }
