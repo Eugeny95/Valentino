@@ -11,6 +11,8 @@ dependencies:
   dio: ^5.3.3
   flutter:
     sdk: flutter
+  hive: any
+  hive_flutter: any
 
 dev_dependencies:
   flutter_test:

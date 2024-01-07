@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:data_layer/models/menu_http_model.dart';
 import 'package:data_layer/network/mock.dart';
 import 'package:dio/dio.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class MenuRepository {
   Future<MenuHttpModel> syncMenu() async {
