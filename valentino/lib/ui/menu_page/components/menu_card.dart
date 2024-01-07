@@ -55,13 +55,18 @@ class MenuCard extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-  //  BlocProvider.of<BasketBloc>(context);
+    //  BlocProvider.of<BasketBloc>(context);
     return GestureDetector(
         onTap: () {
+          BasketBloc basketBloc = BlocProvider.of<BasketBloc>(context);
           showDialog(
             context: context,
             builder: (BuildContext context) {
-              return SelectDishDialog(dishHttpModel: dishHttpModel);
+              return BlocProvider<BasketBloc>.value(
+                  value: basketBloc, //
+                  child: SelectDishDialog(
+                    dishHttpModel: dishHttpModel,
+                  ));
             },
           );
         },
@@ -90,8 +95,10 @@ class MenuCard extends StatelessWidget {
                     child: CachedNetworkImage(
                         filterQuality: FilterQuality.low,
                         imageUrl:
-                            'https://art-lunch.ru/content/uploads/2018/07/Greek_salad_01.jpg',
-                        //  (dishHttpModel.imageLinks.isEmpty)?'': dishHttpModel.imageLinks.first,
+                            //    'https://art-lunch.ru/content/uploads/2018/07/Greek_salad_01.jpg',
+                            (dishHttpModel.imageLinks.isEmpty)
+                                ? ''
+                                : dishHttpModel.imageLinks.first,
                         placeholder: (context, url) =>
                             CircularProgressIndicator(),
                         errorWidget: (context, url, error) => Icon(Icons.error),
