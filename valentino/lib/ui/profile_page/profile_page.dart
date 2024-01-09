@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:valentino/ui/profile_page/about_widget.dart';
+import 'package:valentino/ui/profile_page/clientdata_page.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -40,7 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 style: TextStyle(
                     fontFamily: 'SHAL',
                     color: Colors.red,
-                    fontSize: 55,
+                    fontSize: 65,
                     fontWeight: FontWeight.normal),
               ),
             ],
@@ -50,427 +52,148 @@ class _ProfilePageState extends State<ProfilePage> {
             style: TextStyle(
                 fontFamily: 'SHAL',
                 color: Color.fromARGB(255, 69, 161, 48),
-                fontSize: 55,
-                height: 0.6,
+                fontSize: 65,
+                height: 0.4,
                 fontWeight: FontWeight.normal),
           ),
-          Stack(children: <Widget>[
-            // Container(
-            //     height: height / 3,
-            //     decoration: BoxDecoration(
-            //       borderRadius: BorderRadius.only(
-            //           bottomLeft: Radius.circular(25),
-            //           bottomRight: Radius.circular(25)),
-            //       // image: DecorationImage(
-            //       //   image: AssetImage("assets/images/thefirP.png"),
-            //       //   fit: BoxFit.cover,
-            //       // ),
-            //     )),
-            // Container(
-            //     height: height / 3,
-            //     decoration: BoxDecoration(
-            //       borderRadius: BorderRadius.only(
-            //           bottomLeft: Radius.circular(25),
-            //           bottomRight: Radius.circular(25)),
-            //       gradient: LinearGradient(
-            //         begin: FractionalOffset.topCenter,
-            //         end: FractionalOffset.bottomCenter,
-            //         colors: [
-            //           Color.fromARGB(50, 0, 0, 0),
-            //           Color.fromARGB(255, 255, 255, 255),
-            //         ],
-            //       ),
-            //     ),
-            //     child: Column(children: [
-            //       SizedBox(
-            //         height: height * 0.05,
-            //       ),
-            //       Row(mainAxisAlignment: MainAxisAlignment.end, children: []),
-            //       Row(
-            //           mainAxisAlignment: MainAxisAlignment.center,
-            //           crossAxisAlignment: CrossAxisAlignment.start,
-            //           children: [
-            //             Padding(padding: EdgeInsets.only(top: height * 0.19)),
-            //             //Icon(Icons.park_sharp),
-            //           ]),
-            //       Row(
-            //         mainAxisAlignment: MainAxisAlignment.center,
-            //         crossAxisAlignment: CrossAxisAlignment.start,
-            //         children: [
-            //           Text("Профиль пользователя",
-            //               style: TextStyle(
-            //                   fontWeight: FontWeight.bold,
-            //                   //fontStyle: FontStyle.italic,
-            //                   fontSize: 27,
-            //                   color: Color.fromARGB(169, 38, 38, 38)))
-            //         ],
-            //       ),
-            //     ]))
-          ]),
-          Padding(padding: EdgeInsets.only(top: 40)),
-          Container(
-            width: width * 0.9,
-            child: Column(children: [
-              Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      color: Color.fromARGB(255, 95, 93, 93),
-                      width: 1,
-                    )),
-                child: IntrinsicHeight(
-                    child: Row(
-                  children: [
-                    Icon(Icons.person, size: 40),
-                    VerticalDivider(
-                      color: Color.fromARGB(255, 97, 97, 97),
-                      width: 5,
-                      thickness: 1,
-                    ),
-                    Expanded(
-                      child: Text('Имя'),
-                      flex: 7,
-                    ),
-                    Expanded(
-                        flex: 1,
-                        child: GestureDetector(
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color: Color.fromARGB(255, 97, 97, 97),
-                                  width: 1,
-                                )),
-                            child: Icon(Icons.edit, size: 40),
-                          ),
-                          onTap: () async {
-                            // showDialog(
-                            //     context: context,
-                            //     builder: (BuildContext context) {
-                            //       return EditTextDialog(
-                            //           'Введите имя', userProfile.name, (text) {
-                            //         userProfile.name = text;
-                            //         setState(() {});
-                            //       });
-                            //     });
-                          },
-                        ))
-                  ],
-                )),
+          Padding(padding: EdgeInsets.only(top: 30)),
+          Align(
+              alignment: Alignment.center, //or choose another Alignment
+              child: Container(
+                  color: Colors.transparent,
+                  width: width - (0.01 * width),
+                  child: AboutWidget())),
+          Padding(padding: EdgeInsets.only(top: 10)),
+          ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12), // <-- Radius
+                ),
+                elevation: 5,
+                minimumSize: Size(height * 0.43, width * 0.12),
               ),
-              SizedBox(
-                height: height * 0.02,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      color: Color.fromARGB(255, 99, 99, 99),
-                      width: 1,
-                    )),
-                child: IntrinsicHeight(
-                    child: Row(
-                  children: [
-                    Icon(Icons.phone_iphone, size: 40),
-                    VerticalDivider(
-                      color: Color.fromARGB(255, 97, 97, 97),
-                      width: 5,
-                      thickness: 1,
-                    ),
-                    Expanded(
-                      child: Text('89952519951'),
-                      flex: 7,
-                    ),
-                    Expanded(
-                        flex: 1,
-                        child: GestureDetector(
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color: Color.fromARGB(255, 97, 97, 97),
-                                  width: 1,
-                                )),
-                            child: Icon(Icons.edit, size: 40),
-                          ),
-                          onTap: () async {
-                            // showDialog(
-                            //     context: context,
-                            //     builder: (BuildContext context) {
-                            //       return EditTextDialog(
-                            //           'Введите телефон', userProfile.phone, (text) {
-                            //         userProfile.phone = text;
-                            //         setState(() {});
-                            //       });
-                            //     });
-                          },
-                        ))
-                  ],
-                )),
-              ),
-              SizedBox(
-                height: height * 0.02,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      color: Color.fromARGB(255, 97, 97, 97),
-                      width: 1,
-                    )),
-                child: IntrinsicHeight(
-                    child: Row(
-                  children: [
-                    Icon(Icons.email, size: 40),
-                    VerticalDivider(
-                      color: Color.fromARGB(255, 97, 97, 97),
-                      width: 5,
-                      thickness: 1,
-                    ),
-                    Expanded(
-                      child: Text('anemail@mail.ru'),
-                      flex: 7,
-                    ),
-                    Expanded(
-                        flex: 1,
-                        child: GestureDetector(
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color: Color.fromARGB(255, 97, 97, 97),
-                                  width: 1,
-                                )),
-                            child: Icon(Icons.edit, size: 40),
-                          ),
-                          onTap: () async {
-                            // showDialog(
-                            //     context: context,
-                            //     builder: (BuildContext context) {
-                            //       return EditTextDialog(
-                            //           'Введите email', userProfile.email, (text) {
-                            //         userProfile.email = text;
-                            //         setState(() {});
-                            //       });
-                            //     }
-                            //     );
-                          },
-                        ))
-                  ],
-                )),
-              ),
-              SizedBox(
-                height: height * 0.02,
-              ),
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12), // <-- Radius
-                    ),
-                    elevation: 5,
-                    minimumSize: Size(height * 0.43, width * 0.15),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ClientDataPage()),
+                );
+              },
+              child: Row(
+                children: [
+                  Icon(Icons.person_2_outlined, size: 22),
+                  SizedBox(
+                    width: width * 0.03,
                   ),
-                  onPressed: () {
-                    // userProfile.requestUserData();
-
-                    // if (Validator.isPhoneValid(userProfile.phone) != null) {
-                    //   const snackBar = SnackBar(
-                    //     content: Text('Введите корректный телефон'),
-                    //   );
-                    //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    //   return;
-                    // }
-                    // if (Validator.isEmailValid(userProfile.email) != null) {
-                    //   const snackBar = SnackBar(
-                    //     content: Text('Введите корректный email'),
-                    //   );
-                    //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    //   return;
-                    // }
-                    // userProfile.updateProfile();
-
-                    // TODO: validator
-                  },
-                  child: Text('Обновить профиль',
+                  Text('Данные пользователя',
                       style:
-                          TextStyle(color: Color.fromARGB(255, 55, 55, 55)))),
-            ]),
-          ),
+                          TextStyle(color: Color.fromARGB(255, 221, 221, 221))),
+                ],
+              )),
+          Padding(padding: EdgeInsets.only(top: 6)),
+          ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12), // <-- Radius
+                ),
+                elevation: 5,
+                minimumSize: Size(height * 0.43, width * 0.12),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ClientDataPage()),
+                );
+              },
+              child: Row(
+                children: [
+                  Icon(Icons.map, size: 22),
+                  SizedBox(
+                    width: width * 0.03,
+                  ),
+                  Text('Карта доставки',
+                      style:
+                          TextStyle(color: Color.fromARGB(255, 221, 221, 221))),
+                ],
+              )),
+          Padding(padding: EdgeInsets.only(top: 40)),
+          ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12), // <-- Radius
+                ),
+                elevation: 5,
+                minimumSize: Size(height * 0.43, width * 0.12),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ClientDataPage()),
+                );
+              },
+              child: Row(
+                children: [
+                  Icon(Icons.circle_notifications_outlined, size: 24),
+                  SizedBox(
+                    width: width * 0.03,
+                  ),
+                  Text('Настройка уведомлений',
+                      style:
+                          TextStyle(color: Color.fromARGB(255, 221, 221, 221))),
+                ],
+              )),
+          Padding(padding: EdgeInsets.only(top: 40)),
+          ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12), // <-- Radius
+                ),
+                elevation: 5,
+                minimumSize: Size(height * 0.43, width * 0.12),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ClientDataPage()),
+                );
+              },
+              child: Row(
+                children: [
+                  Icon(Icons.phone_iphone, size: 22),
+                  SizedBox(
+                    width: width * 0.03,
+                  ),
+                  Text('О приложении',
+                      style:
+                          TextStyle(color: Color.fromARGB(255, 221, 221, 221))),
+                ],
+              )),
+          Padding(padding: EdgeInsets.only(top: 6)),
+          ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12), // <-- Radius
+                ),
+                elevation: 5,
+                minimumSize: Size(height * 0.43, width * 0.12),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ClientDataPage()),
+                );
+              },
+              child: Row(
+                children: [
+                  Icon(Icons.update, size: 22),
+                  SizedBox(
+                    width: width * 0.03,
+                  ),
+                  Text('Обратная связь',
+                      style:
+                          TextStyle(color: Color.fromARGB(255, 221, 221, 221))),
+                ],
+              )),
         ]),
-        // Positioned(
-        //     top: height / 3.4,
-        //     left: width * 0.10,
-        //     child: SizedBox(
-        //         width: width * 0.8,
-        //         child: Card(
-        //             shape: RoundedRectangleBorder(
-        //               borderRadius: BorderRadius.circular(20.0),
-        //             ),
-        //             elevation: 20,
-        //             child: Column(
-        //               children: [
-        //                 Row(
-        //                     crossAxisAlignment: CrossAxisAlignment.center,
-        //                     mainAxisAlignment: MainAxisAlignment.center,
-        //                     children: [
-        //                       Text(
-        //                         "Бонусная карта",
-        //                         style: TextStyle(
-        //                           color: Color.fromARGB(255, 97, 97, 97),
-        //                           fontWeight: FontWeight.bold,
-        //                         ),
-        //                       ),
-        //                     ]),
-        //                 Row(
-        //                   children: [
-        //                     SizedBox(
-        //                       width: width / 50,
-        //                     ),
-        //                     Container(
-        //                         width: width / 7,
-        //                         height: height / 14,
-        //                         padding: const EdgeInsets.all(4.0),
-        //                         margin: const EdgeInsets.symmetric(
-        //                             horizontal: 5, vertical: 5),
-        //                         decoration: BoxDecoration(
-        //                             shape: BoxShape.circle,
-        //                             color: userProfile.bonuses >= 1
-        //                                 ? Color.fromARGB(164, 230, 190, 134)
-        //                                 : Color.fromARGB(255, 239, 239, 239)),
-        //                         child: Icon(IcoFontIcons.coffeeAlt, size: height * 0.05)),
-        //                     SizedBox(
-        //                       width: width / 50,
-        //                     ),
-        //                     Container(
-        //                         width: width / 7,
-        //                         height: height / 14,
-        //                         padding: const EdgeInsets.all(4.0),
-        //                         margin: const EdgeInsets.symmetric(
-        //                             horizontal: 5, vertical: 5),
-        //                         decoration: BoxDecoration(
-        //                             shape: BoxShape.circle,
-        //                             color: userProfile.bonuses >= 2
-        //                                 ? Color.fromARGB(164, 230, 190, 134)
-        //                                 : Color.fromARGB(255, 239, 239, 239)),
-        //                         child: Icon(IcoFontIcons.coffeeAlt, size: height * 0.05)),
-        //                     SizedBox(
-        //                       width: width / 50,
-        //                     ),
-        //                     Container(
-        //                         width: width / 7,
-        //                         height: height / 14,
-        //                         padding: const EdgeInsets.all(4.0),
-        //                         margin: const EdgeInsets.symmetric(
-        //                             horizontal: 5, vertical: 5),
-        //                         decoration: BoxDecoration(
-        //                             shape: BoxShape.circle,
-        //                             color: userProfile.bonuses >= 3
-        //                                 ? Color.fromARGB(164, 230, 190, 134)
-        //                                 : Color.fromARGB(255, 239, 239, 239)),
-        //                         child: Icon(IcoFontIcons.coffeeAlt, size: height * 0.05)),
-        //                     SizedBox(
-        //                       width: width / 50,
-        //                     ),
-        //                     Container(
-        //                         width: width / 7,
-        //                         height: height / 14,
-        //                         padding: const EdgeInsets.all(4.0),
-        //                         margin: const EdgeInsets.symmetric(
-        //                             horizontal: 5, vertical: 5),
-        //                         decoration: BoxDecoration(
-        //                             shape: BoxShape.circle,
-        //                             color: userProfile.bonuses >= 4
-        //                                 ? Color.fromARGB(164, 230, 190, 134)
-        //                                 : Color.fromARGB(255, 239, 239, 239)),
-        //                         child: Icon(IcoFontIcons.coffeeAlt, size: height * 0.05)),
-        //                   ],
-        //                 ),
-        //                 Row(
-        //                   children: [
-        //                     SizedBox(
-        //                       width: width / 50,
-        //                     ),
-        //                     Container(
-        //                         width: width / 7,
-        //                         height: height / 14,
-        //                         padding: const EdgeInsets.all(4.0),
-        //                         margin: const EdgeInsets.symmetric(
-        //                             horizontal: 5),
-        //                         decoration: BoxDecoration(
-        //                             shape: BoxShape.circle,
-        //                             color: userProfile.bonuses >= 5
-        //                                 ? Color.fromARGB(164, 230, 190, 134)
-        //                                 : Color.fromARGB(255, 239, 239, 239)),
-        //                         child: Icon(IcoFontIcons.coffeeAlt, size: height * 0.05)),
-        //                     SizedBox(
-        //                       width: width / 50,
-        //                     ),
-        //                     Container(
-        //                         width: width / 7,
-        //                         height: height / 14,
-        //                         padding: const EdgeInsets.all(4.0),
-        //                         margin: const EdgeInsets.symmetric(
-        //                             horizontal: 5),
-        //                         decoration: BoxDecoration(
-        //                             shape: BoxShape.circle,
-        //                             color: userProfile.bonuses >= 6
-        //                                 ? Color.fromARGB(164, 230, 190, 134)
-        //                                 : Color.fromARGB(255, 239, 239, 239)),
-        //                         child: Icon(IcoFontIcons.coffeeAlt, size: height * 0.05)),
-        //                     SizedBox(
-        //                       width: width / 50,
-        //                     ),
-        //                     Container(
-        //                         width: width / 7,
-        //                         height: height / 14,
-        //                         padding: const EdgeInsets.all(4.0),
-        //                         margin: const EdgeInsets.symmetric(
-        //                             horizontal: 5),
-        //                         decoration: BoxDecoration(
-        //                             shape: BoxShape.circle,
-        //                             color: userProfile.bonuses >= 7
-        //                                 ? Color.fromARGB(164, 230, 190, 134)
-        //                                 : Color.fromARGB(255, 239, 239, 239)),
-        //                         child: Icon(IcoFontIcons.coffeeAlt, size: height * 0.05)),
-        //                     SizedBox(
-        //                       width: width / 50,
-        //                     ),
-        //                     Container(
-        //                         width: width / 7,
-        //                         height: height / 14,
-        //                         padding: const EdgeInsets.all(4.0),
-        //                         margin: const EdgeInsets.symmetric(
-        //                             horizontal: 5),
-        //                         decoration: BoxDecoration(
-        //                             shape: BoxShape.circle,
-        //                             color: userProfile.bonuses > 8
-        //                                 ? Color.fromARGB(164, 230, 190, 134)
-        //                                 : Color.fromARGB(255, 239, 239, 239)),
-        //                         child: Icon(IcoFontIcons.coffeeAlt, size: height * 0.05)),
-        //                   ],
-        //                 ),
-        //                 SizedBox(
-        //                   height: height * 0.02,
-        //                 )
-        //               ],
-        //             )))),
-        Positioned(
-            top: height / 3.5,
-            left: width * 0.79,
-            child: IconButton(
-                icon: Icon(Icons.info_outline_rounded,
-                    size: 20, color: Color.fromARGB(255, 103, 103, 103)),
-                onPressed: () {
-                  // showDialog(
-                  //   context: context,
-                  //   builder: (BuildContext context) {
-                  //     return InfoDialog(
-                  //         // Provider.of<CoffeHouse>(context, listen: true)
-                  //         //     .photos
-                  //         );
-                  //   },
-                  // );
-                })),
       ],
     );
   }
