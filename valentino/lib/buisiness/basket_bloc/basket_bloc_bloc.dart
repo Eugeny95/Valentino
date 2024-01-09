@@ -21,13 +21,14 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
       if (!noAddflag) {
         positions.add(Position(dish: event.dishHttpModel, count: 1));
       }
-
+      print('positions lengh = ${positions.length}');
       emit(BasketState(basketStatus: BasketStatus.done, positions: positions));
     });
-
+    on<EmptyBasketEvent>((event, emit) {});
     on<RemoveDishEvent>((event, emit) {});
 
     on<GetBasketPositions>((event, emit) {
+      print('get basket positions');
       emit(BasketState(basketStatus: BasketStatus.done, positions: positions));
     });
   }

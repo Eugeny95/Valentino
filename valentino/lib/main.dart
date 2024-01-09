@@ -73,6 +73,9 @@ class _MainScreenState extends State<MainScreen> {
       onTap: (value) {
         setState(() {
           _selectedIndex = value;
+          if (_selectedIndex == 1) {
+            BlocProvider.of<BasketBloc>(context).add(GetBasketPositions());
+          }
         });
       },
       items: [

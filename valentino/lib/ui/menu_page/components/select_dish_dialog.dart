@@ -10,7 +10,7 @@ import 'package:valentino/buisiness/basket_bloc/basket_bloc_bloc.dart';
 class SelectDishDialog extends StatefulWidget {
   DishHttpModel dishHttpModel;
 
-  SelectDishDialog({required this.dishHttpModel});
+  SelectDishDialog({super.key, required this.dishHttpModel});
 
   // SelectDishDialog(this.dish);
   @override
@@ -26,6 +26,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
   // }
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<BasketBloc>(context).add(EmptyBasketEvent());
     List<Widget> propertiesWidget = [];
     List<Widget> volumesWidget = [];
     DishHttpModel dishHttpModel = this.widget.dishHttpModel;
@@ -70,6 +71,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     double fontSize = width / 25;
+    //
     return AlertDialog(
         insetPadding: EdgeInsets.all(20),
         title: Text(

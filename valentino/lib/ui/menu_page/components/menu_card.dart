@@ -107,7 +107,7 @@ class MenuCard extends StatelessWidget {
                 ),
               ),
               Container(
-                height: height / 20,
+                height: height / 25,
                 child: Text(
                   dishHttpModel.name ?? '',
                   textDirection: TextDirection.ltr,
@@ -117,9 +117,6 @@ class MenuCard extends StatelessWidget {
                     fontWeight: FontWeight.normal,
                   ),
                 ),
-              ),
-              SizedBox(
-                height: height / 85,
               ),
               Row(children: [
                 SizedBox(
@@ -149,7 +146,7 @@ class MenuCard extends StatelessWidget {
                 )
               ]),
               SizedBox(
-                height: height / 200,
+                height: height * 0.01,
               ),
               Container(
                 width: width / 2.5,

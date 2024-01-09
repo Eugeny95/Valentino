@@ -1,11 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 
 import 'package:sbp/data/c2bmembers_data.dart';
 import 'package:sbp/models/c2bmembers_model.dart';
 import 'package:sbp/sbp.dart';
+import 'package:valentino/buisiness/basket_bloc/basket_bloc_bloc.dart';
 import 'package:valentino/ui/basket_page/sbp_modal_widget.dart';
 
 import 'package:valentino/ui/constants.dart';
@@ -55,177 +57,6 @@ class BasketPageState extends State<BasketPage> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
-    List<Widget> coffeLines = [];
-    // for (DishObject line in _orderObject!.basketObject.coffePositions)
-    {
-      coffeLines.add(Container(
-        width: width * 0.95,
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Container(
-                  height: height * 0.1,
-                  width: width * 0.25,
-                  child: CachedNetworkImage(
-                      filterQuality: FilterQuality.low,
-                      imageUrl:
-                          'https://art-lunch.ru/content/uploads/2018/07/Greek_salad_01.jpg',
-                      //  (dishHttpModel.imageLinks.isEmpty)?'': dishHttpModel.imageLinks.first,
-                      placeholder: (context, url) =>
-                          CircularProgressIndicator(),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
-                      fit: BoxFit.cover),
-                ),
-                SizedBox(
-                  width: width * 0.02,
-                ),
-                Container(
-                  width: width * 0.65,
-                  child: Column(children: [
-                    Text('Название блюда (обычно они длинные)',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 229, 229, 229),
-                            fontSize: 16)),
-                    Row(children: [
-                      Expanded(
-                        child: Row(children: [
-                          IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  counter--;
-                                  if (counter < 0) counter = 0;
-                                  // onChange(counter);
-                                });
-                              },
-                              icon: Icon(Icons.remove)),
-                          Text(
-                            counter.toString(),
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 229, 229, 229),
-                                fontSize: 18),
-                          ),
-                          IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  counter++;
-                                  // onChange(counter);
-                                });
-                              },
-                              icon: Icon(Icons.add)),
-                        ]),
-                        flex: 2,
-                      ),
-                      Expanded(
-                        child: Text(
-                          // line.totalCost.toInt().toString(),
-                          '300 pуб.',
-                          textAlign: TextAlign.right,
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 229, 229, 229),
-                              fontSize: 18),
-                        ),
-                        flex: 1,
-                      ),
-                    ]),
-                    SizedBox(
-                      height: 10,
-                    ),
-                  ]),
-                ),
-              ],
-            ),
-            Divider(color: Color.fromARGB(255, 229, 229, 229)),
-          ],
-        ),
-      ));
-    }
-    {
-      coffeLines.add(Container(
-        width: width * 0.95,
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Container(
-                  height: height * 0.1,
-                  width: width * 0.25,
-                  child: CachedNetworkImage(
-                      filterQuality: FilterQuality.low,
-                      imageUrl:
-                          'https://art-lunch.ru/content/uploads/2018/07/Greek_salad_01.jpg',
-                      //  (dishHttpModel.imageLinks.isEmpty)?'': dishHttpModel.imageLinks.first,
-                      placeholder: (context, url) =>
-                          CircularProgressIndicator(),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
-                      fit: BoxFit.cover),
-                ),
-                SizedBox(
-                  width: width * 0.02,
-                ),
-                Container(
-                  width: width * 0.65,
-                  child: Column(children: [
-                    Text('Название блюда (обычно оно длинное)',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 229, 229, 229),
-                            fontSize: 16)),
-                    Row(children: [
-                      Expanded(
-                        child: Row(children: [
-                          IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  counter--;
-                                  if (counter < 0) counter = 0;
-                                  // onChange(counter);
-                                });
-                              },
-                              icon: Icon(Icons.remove)),
-                          Text(
-                            counter.toString(),
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 229, 229, 229),
-                                fontSize: 18),
-                          ),
-                          IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  counter++;
-                                  // onChange(counter);
-                                });
-                              },
-                              icon: Icon(Icons.add)),
-                        ]),
-                        flex: 2,
-                      ),
-                      Expanded(
-                        child: Text(
-                          // line.totalCost.toInt().toString(),
-                          '300 pуб.',
-                          textAlign: TextAlign.right,
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 229, 229, 229),
-                              fontSize: 18),
-                        ),
-                        flex: 1,
-                      ),
-                    ]),
-                    SizedBox(
-                      height: 10,
-                    ),
-                  ]),
-                ),
-              ],
-            ),
-            Divider(color: Color.fromARGB(255, 229, 229, 229)),
-          ],
-        ),
-      ));
-    }
-
     return Scaffold(
       appBar: AppBar(
           iconTheme: IconThemeData(color: Color.fromARGB(180, 253, 253, 253)),
@@ -257,8 +88,130 @@ class BasketPageState extends State<BasketPage> {
                           SizedBox(
                             height: 15,
                           ),
-                          Column(
-                            children: coffeLines,
+                          BlocBuilder<BasketBloc, BasketState>(
+                            builder: (context, state) {
+                              return ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: state.positions!.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Container(
+                                      width: width * 0.95,
+                                      height: height * 0.2,
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Container(
+                                                height: height * 0.1,
+                                                width: width * 0.25,
+                                                child: CachedNetworkImage(
+                                                    filterQuality:
+                                                        FilterQuality.low,
+                                                    imageUrl: state
+                                                        .positions![index]
+                                                        .dish!
+                                                        .imageLinks
+                                                        .first,
+                                                    //  (dishHttpModel.imageLinks.isEmpty)?'': dishHttpModel.imageLinks.first,
+                                                    placeholder: (context,
+                                                            url) =>
+                                                        CircularProgressIndicator(),
+                                                    errorWidget:
+                                                        (context, url, error) =>
+                                                            Icon(Icons.error),
+                                                    fit: BoxFit.cover),
+                                              ),
+                                              SizedBox(
+                                                width: width * 0.02,
+                                              ),
+                                              Container(
+                                                width: width * 0.65,
+                                                child: Column(children: [
+                                                  Text(
+                                                      state.positions![index]
+                                                          .dish!.name!,
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Color.fromARGB(
+                                                              255,
+                                                              229,
+                                                              229,
+                                                              229),
+                                                          fontSize: 16)),
+                                                  Row(children: [
+                                                    Expanded(
+                                                      child: Row(children: [
+                                                        IconButton(
+                                                            onPressed: () {
+                                                              setState(() {
+                                                                counter--;
+                                                                if (counter < 0)
+                                                                  counter = 0;
+                                                                // onChange(counter);
+                                                              });
+                                                            },
+                                                            icon: Icon(
+                                                                Icons.remove)),
+                                                        Text(
+                                                          counter.toString(),
+                                                          style: TextStyle(
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      229,
+                                                                      229,
+                                                                      229),
+                                                              fontSize: 18),
+                                                        ),
+                                                        IconButton(
+                                                            onPressed: () {
+                                                              setState(() {
+                                                                counter++;
+                                                                // onChange(counter);
+                                                              });
+                                                            },
+                                                            icon: Icon(
+                                                                Icons.add)),
+                                                      ]),
+                                                      flex: 2,
+                                                    ),
+                                                    Expanded(
+                                                      child: Text(
+                                                        // line.totalCost.toInt().toString(),
+                                                        state.positions![index]
+                                                            .allCost
+                                                            .toString(),
+                                                        textAlign:
+                                                            TextAlign.right,
+                                                        style: TextStyle(
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    229,
+                                                                    229,
+                                                                    229),
+                                                            fontSize: 18),
+                                                      ),
+                                                      flex: 1,
+                                                    ),
+                                                  ]),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                ]),
+                                              ),
+                                            ],
+                                          ),
+                                          Divider(
+                                              color: Color.fromARGB(
+                                                  255, 229, 229, 229)),
+                                        ],
+                                      ),
+                                    );
+                                  });
+                            },
                           ),
                           Container(
                               width: width * 0.9,
