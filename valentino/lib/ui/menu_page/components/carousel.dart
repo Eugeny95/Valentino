@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,7 +20,8 @@ final List<Widget> imageSliders = imgList
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),
                 child: Stack(
                   children: <Widget>[
-                    Image.network(item, fit: BoxFit.cover, width: 1000.0),
+                    CachedNetworkImage(
+                        imageUrl: item, fit: BoxFit.cover, width: 1000.0),
                     Positioned(
                       bottom: 0.0,
                       left: 0.0,

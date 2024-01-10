@@ -31,6 +31,10 @@ class SelectDishDialogState extends State<SelectDishDialog> {
     List<Widget> volumesWidget = [];
     DishHttpModel dishHttpModel = this.widget.dishHttpModel;
     for (int i = 0; i < dishHttpModel.modifiers!.length; i++) {
+      if (dishHttpModel.modifiers![i].name == 'на вынос' ||
+          dishHttpModel.modifiers![i].name == '-одновременно' ||
+          dishHttpModel.modifiers![i].name == 'коробка' ||
+          dishHttpModel.modifiers![i].name == 'лист') continue;
       propertiesWidget.add(Row(children: [
         Expanded(
           child: Text(dishHttpModel.modifiers![i].name!),
@@ -113,39 +117,76 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Container(
-                    height: height / 12, child: Text('Описание и состав блюда'))
+                    height: height / 12,
+                    child: Text('Описание и состав блюда')),
+                Row(children: [
+                  SizedBox(
+                    width: width / 20,
+                  ),
+                  // Вес блюда
+                  Column(
+                    children: [
+                      Text(
+                        'Белки ',
+                        textDirection: TextDirection.ltr,
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                      Text(
+                        ' ${(dishHttpModel.weight! * 1000).toInt()}',
+                        textDirection: TextDirection.ltr,
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      )
+                    ],
+                  ),
+
+                  // Энергетическая ценность
+                ]),
               ]),
 
               Padding(padding: EdgeInsets.only(top: height * 0.02)),
 
               Column(children: volumesWidget),
-              Row(), Divider(color: Colors.black),
+              propertiesWidget.isNotEmpty
+                  ? Divider(color: Colors.black)
+                  : Row(),
 
-              Text(
-                'Выберите добавки',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
+              propertiesWidget.isNotEmpty
+                  ? Text(
+                      'Выберите добавки',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    )
+                  : const Column(),
               Padding(padding: EdgeInsets.only(top: height * 0.02)),
               // dish.options.isEmpty
-              Row(),
-              Row(children: [
-                Expanded(
-                  child: Text('Название добавки',
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 236, 43, 43),
-                          fontSize: fontSize)),
-                  flex: 6,
-                ),
-                Expanded(
-                  child: Text(
-                    'Цена,руб',
-                    style: TextStyle(
-                        color: Color.fromARGB(255, 246, 35, 35),
-                        fontSize: fontSize),
-                  ),
-                  flex: 2,
-                ),
-              ]),
+
+              propertiesWidget.isNotEmpty
+                  ? Row(children: [
+                      Expanded(
+                        child: Text('Название добавки',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 236, 43, 43),
+                                fontSize: fontSize)),
+                        flex: 6,
+                      ),
+                      Expanded(
+                        child: Text(
+                          'Цена,руб',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 246, 35, 35),
+                              fontSize: fontSize),
+                        ),
+                        flex: 2,
+                      ),
+                    ])
+                  : Row(),
               Column(children: propertiesWidget),
 
               // CounterWidget(
@@ -153,18 +194,22 @@ class SelectDishDialogState extends State<SelectDishDialog> {
               //     dish.count = counter;
               //   }),
               // ),
-              Divider(color: Colors.black),
-              Row(children: [
-                Expanded(
-                  child: Text(
-                    'Цена,руб',
-                    style: TextStyle(
-                        color: Color.fromARGB(255, 226, 226, 226),
-                        fontSize: fontSize),
-                  ),
-                  flex: 2,
-                ),
-              ]),
+              propertiesWidget.isNotEmpty
+                  ? Divider(color: Colors.black)
+                  : Row(),
+              propertiesWidget.isNotEmpty
+                  ? Row(children: [
+                      Expanded(
+                        child: Text(
+                          'Цена,руб',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 226, 226, 226),
+                              fontSize: fontSize),
+                        ),
+                        flex: 2,
+                      ),
+                    ])
+                  : Row(),
               Padding(padding: EdgeInsets.only(top: height * 0.02)),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(

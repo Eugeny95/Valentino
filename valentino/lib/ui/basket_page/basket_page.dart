@@ -63,329 +63,378 @@ class BasketPageState extends State<BasketPage> {
           backgroundColor: kPrimaryColor,
           title: Text('Оформление заказа',
               style: TextStyle(color: Color.fromARGB(202, 255, 255, 255)))),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Center(
-              child: Container(
-                  width: width * 0.99,
-                  child: Card(
-                      elevation: 15,
-                      color: kSecondaryColor,
-                      child: Column(
-                        children: [
-                          ListTile(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    topRight: Radius.circular(10),
-                                    bottomRight: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10))),
-                            title: Text('Детали заказа'),
-                            tileColor: kPrimaryColor,
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          BlocBuilder<BasketBloc, BasketState>(
-                            builder: (context, state) {
-                              return ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: state.positions!.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return Container(
-                                      width: width * 0.95,
-                                      height: height * 0.2,
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Container(
-                                                height: height * 0.1,
-                                                width: width * 0.25,
-                                                child: CachedNetworkImage(
-                                                    filterQuality:
-                                                        FilterQuality.low,
-                                                    imageUrl: state
-                                                        .positions![index]
-                                                        .dish!
-                                                        .imageLinks
-                                                        .first,
-                                                    //  (dishHttpModel.imageLinks.isEmpty)?'': dishHttpModel.imageLinks.first,
-                                                    placeholder: (context,
-                                                            url) =>
-                                                        CircularProgressIndicator(),
-                                                    errorWidget:
-                                                        (context, url, error) =>
-                                                            Icon(Icons.error),
-                                                    fit: BoxFit.cover),
-                                              ),
-                                              SizedBox(
-                                                width: width * 0.02,
-                                              ),
-                                              Container(
-                                                width: width * 0.65,
-                                                child: Column(children: [
-                                                  Text(
-                                                      state.positions![index]
-                                                          .dish!.name!,
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Color.fromARGB(
-                                                              255,
-                                                              229,
-                                                              229,
-                                                              229),
-                                                          fontSize: 16)),
-                                                  Row(children: [
-                                                    Expanded(
-                                                      child: Row(children: [
-                                                        IconButton(
-                                                            onPressed: () {
-                                                              setState(() {
-                                                                counter--;
-                                                                if (counter < 0)
-                                                                  counter = 0;
-                                                                // onChange(counter);
-                                                              });
-                                                            },
-                                                            icon: Icon(
-                                                                Icons.remove)),
-                                                        Text(
-                                                          counter.toString(),
-                                                          style: TextStyle(
-                                                              color: Color
-                                                                  .fromARGB(
-                                                                      255,
-                                                                      229,
-                                                                      229,
-                                                                      229),
-                                                              fontSize: 18),
+      body: BlocBuilder<BasketBloc, BasketState>(
+        builder: (context, state) {
+          if (state.positions!.isNotEmpty)
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Center(
+                    child: Container(
+                        width: width * 0.99,
+                        child: Card(
+                            elevation: 15,
+                            color: kSecondaryColor,
+                            child: Column(
+                              children: [
+                                ListTile(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(10),
+                                          topRight: Radius.circular(10),
+                                          bottomRight: Radius.circular(10),
+                                          bottomLeft: Radius.circular(10))),
+                                  title: Text('Детали заказа'),
+                                  tileColor: kPrimaryColor,
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                BlocBuilder<BasketBloc, BasketState>(
+                                  builder: (context, state) {
+                                    return ListView.builder(
+                                        shrinkWrap: true,
+                                        itemCount: state.positions!.length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return Container(
+                                            width: width * 0.95,
+                                            height: height * 0.2,
+                                            child: Column(
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Container(
+                                                      height: height * 0.1,
+                                                      width: width * 0.25,
+                                                      child: CachedNetworkImage(
+                                                          filterQuality:
+                                                              FilterQuality.low,
+                                                          imageUrl: state
+                                                              .positions![index]
+                                                              .dish!
+                                                              .imageLinks
+                                                              .first,
+                                                          //  (dishHttpModel.imageLinks.isEmpty)?'': dishHttpModel.imageLinks.first,
+                                                          placeholder: (context,
+                                                                  url) =>
+                                                              CircularProgressIndicator(),
+                                                          errorWidget: (context,
+                                                                  url, error) =>
+                                                              Icon(Icons.error),
+                                                          fit: BoxFit.cover),
+                                                    ),
+                                                    SizedBox(
+                                                      width: width * 0.02,
+                                                    ),
+                                                    Container(
+                                                      width: width * 0.65,
+                                                      child: Column(children: [
+                                                        Row(
+                                                          children: [
+                                                            Text(state.positions![index].dish!.name!,
+                                                                style: TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color: Color
+                                                                        .fromARGB(
+                                                                            255,
+                                                                            229,
+                                                                            229,
+                                                                            229),
+                                                                    fontSize:
+                                                                        16)),
+                                                            IconButton(
+                                                                onPressed: () {
+                                                                  BlocProvider.of<BasketBloc>(context).add(RemovePositionEvent(
+                                                                      dishId: state
+                                                                          .positions![
+                                                                              index]
+                                                                          .dish!
+                                                                          .id!));
+                                                                },
+                                                                icon: Icon(Icons
+                                                                    .delete))
+                                                          ],
                                                         ),
-                                                        IconButton(
-                                                            onPressed: () {
-                                                              setState(() {
-                                                                counter++;
-                                                                // onChange(counter);
-                                                              });
-                                                            },
-                                                            icon: Icon(
-                                                                Icons.add)),
+                                                        Row(children: [
+                                                          Expanded(
+                                                            child: Row(
+                                                                children: [
+                                                                  IconButton(
+                                                                      onPressed:
+                                                                          () {
+                                                                        BlocProvider.of<BasketBloc>(context).add(RemoveDishEvent(
+                                                                            dishId:
+                                                                                state.positions![index].dish!.id!));
+                                                                      },
+                                                                      icon: Icon(
+                                                                          Icons
+                                                                              .remove)),
+                                                                  Text(
+                                                                    state
+                                                                        .positions![
+                                                                            index]
+                                                                        .count
+                                                                        .toString(),
+                                                                    style: TextStyle(
+                                                                        color: Color.fromARGB(
+                                                                            255,
+                                                                            229,
+                                                                            229,
+                                                                            229),
+                                                                        fontSize:
+                                                                            18),
+                                                                  ),
+                                                                  IconButton(
+                                                                      onPressed:
+                                                                          () {
+                                                                        setState(
+                                                                            () {
+                                                                          BlocProvider.of<BasketBloc>(context)
+                                                                              .add(AddDishEvent(dishHttpModel: state.positions![index].dish));
+                                                                          if (counter <
+                                                                              0)
+                                                                            counter =
+                                                                                0;
+                                                                          // onChange(counter);
+                                                                        });
+                                                                      },
+                                                                      icon: Icon(
+                                                                          Icons
+                                                                              .add)),
+                                                                ]),
+                                                            flex: 2,
+                                                          ),
+                                                          Expanded(
+                                                            child: Text(
+                                                              // line.totalCost.toInt().toString(),
+                                                              state
+                                                                  .positions![
+                                                                      index]
+                                                                  .allCost
+                                                                  .toString(),
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .right,
+                                                              style: TextStyle(
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          229,
+                                                                          229,
+                                                                          229),
+                                                                  fontSize: 18),
+                                                            ),
+                                                            flex: 1,
+                                                          ),
+                                                        ]),
+                                                        SizedBox(
+                                                          height: 10,
+                                                        ),
                                                       ]),
-                                                      flex: 2,
                                                     ),
-                                                    Expanded(
-                                                      child: Text(
-                                                        // line.totalCost.toInt().toString(),
-                                                        state.positions![index]
-                                                            .allCost
-                                                            .toString(),
-                                                        textAlign:
-                                                            TextAlign.right,
-                                                        style: TextStyle(
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    229,
-                                                                    229,
-                                                                    229),
-                                                            fontSize: 18),
-                                                      ),
-                                                      flex: 1,
-                                                    ),
-                                                  ]),
-                                                  SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                ]),
-                                              ),
-                                            ],
-                                          ),
-                                          Divider(
+                                                  ],
+                                                ),
+                                                Divider(
+                                                    color: Color.fromARGB(
+                                                        255, 229, 229, 229)),
+                                              ],
+                                            ),
+                                          );
+                                        });
+                                  },
+                                ),
+                                Container(
+                                    width: width * 0.9,
+                                    child: Column(children: [
+                                      Row(children: [
+                                        Text('Ближайшее время:',
+                                            style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 229, 229, 229),
+                                                fontSize: 18)),
+                                        Text(
+                                          ' ' + mytime + ' ',
+                                          style: TextStyle(
                                               color: Color.fromARGB(
-                                                  255, 229, 229, 229)),
-                                        ],
-                                      ),
-                                    );
-                                  });
-                            },
-                          ),
-                          Container(
-                              width: width * 0.9,
-                              child: Column(children: [
-                                Row(children: [
-                                  Text('Ближайшее время:',
-                                      style: TextStyle(
-                                          color: Color.fromARGB(
-                                              255, 229, 229, 229),
-                                          fontSize: 18)),
-                                  Text(
-                                    ' ' + mytime + ' ',
-                                    style: TextStyle(
-                                        color:
-                                            Color.fromARGB(255, 229, 229, 229),
-                                        fontSize: 18),
-                                  )
-                                ]),
-                                Padding(
-                                    padding:
-                                        EdgeInsets.only(top: height * 0.01)),
+                                                  255, 229, 229, 229),
+                                              fontSize: 18),
+                                        )
+                                      ]),
+                                      Padding(
+                                          padding: EdgeInsets.only(
+                                              top: height * 0.01)),
+                                      Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            12), // <-- Radius
+                                                  ),
+                                                  elevation: 5,
+                                                  minimumSize: Size(
+                                                      height * 0.35,
+                                                      width * 0.12),
+                                                ),
+                                                onPressed: () async {
+                                                  // DatePicker.showPicker(
+                                                  //   context,
+                                                  //   pickerModel: CustomPicker(
+                                                  //     currentTime: DateTime.now(),
+                                                  //     locale: LocaleType.ru,
+                                                  //   ),
+                                                  //   onConfirm: (time) {
+                                                  //     print('change $time');
+                                                  //     mytime = time
+                                                  //         .toString()
+                                                  //         .substring(0, 16);
+                                                  //     // _orderObject!.requiredDateTime =
+                                                  //     //     mytime;
+                                                  //     setState(() {});
+                                                  //   },
+                                                  // );
+                                                  DatePicker.showDateTimePicker(
+                                                      context,
+                                                      showTitleActions: true,
+                                                      // minDate:DateTime.now(),
+                                                      // maxDate: DateTime.now(),
+                                                      minTime: DateTime.now(),
+                                                      maxTime: DateTime.now()
+                                                          .add(const Duration(
+                                                              days: 10)),
+                                                      onChanged: (date) {
+                                                    print('change $date');
+                                                  }, onConfirm: (date) {
+                                                    print('confirm $date');
+                                                  },
+                                                      currentTime:
+                                                          DateTime.now(),
+                                                      locale: LocaleType.ru);
+                                                },
+                                                child: Text('Выбрать время',
+                                                    style: TextStyle(
+                                                        color: Colors.white)))
+                                          ])
+                                    ])),
                                 Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      12), // <-- Radius
-                                            ),
-                                            elevation: 5,
-                                            minimumSize: Size(
-                                                height * 0.35, width * 0.12),
-                                          ),
-                                          onPressed: () async {
-                                            // DatePicker.showPicker(
-                                            //   context,
-                                            //   pickerModel: CustomPicker(
-                                            //     currentTime: DateTime.now(),
-                                            //     locale: LocaleType.ru,
-                                            //   ),
-                                            //   onConfirm: (time) {
-                                            //     print('change $time');
-                                            //     mytime = time
-                                            //         .toString()
-                                            //         .substring(0, 16);
-                                            //     // _orderObject!.requiredDateTime =
-                                            //     //     mytime;
-                                            //     setState(() {});
-                                            //   },
-                                            // );
-                                            DatePicker.showDateTimePicker(
-                                                context,
-                                                showTitleActions: true,
-                                                // minDate:DateTime.now(),
-                                                // maxDate: DateTime.now(),
-                                                minTime: DateTime.now(),
-                                                maxTime: DateTime.now().add(
-                                                    const Duration(days: 10)),
-                                                onChanged: (date) {
-                                              print('change $date');
-                                            }, onConfirm: (date) {
-                                              print('confirm $date');
-                                            },
-                                                currentTime: DateTime.now(),
-                                                locale: LocaleType.ru);
-                                          },
-                                          child: Text('Выбрать время',
-                                              style: TextStyle(
-                                                  color: Colors.white)))
-                                    ])
-                              ])),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Radio(
-                                    fillColor: MaterialStateColor.resolveWith(
-                                        (states) =>
-                                            Color.fromARGB(255, 229, 229, 229)),
-                                    focusColor: MaterialStateColor.resolveWith(
-                                        (states) =>
-                                            Color.fromARGB(255, 229, 229, 229)),
-                                    value: false,
-                                    groupValue: valueRadio,
-                                    onChanged: (bool? value) {
-                                      setState(() {
-                                        valueRadio = value!;
-                                        // _orderObject!.onPlace = valueRadio;
-                                      });
-                                    }),
-                                Text('На вынос'),
-                                Radio(
-                                    fillColor: MaterialStateColor.resolveWith(
-                                        (states) =>
-                                            Color.fromARGB(255, 229, 229, 229)),
-                                    focusColor: MaterialStateColor.resolveWith(
-                                        (states) =>
-                                            Color.fromARGB(255, 229, 229, 229)),
-                                    value: true,
-                                    groupValue: valueRadio,
-                                    onChanged: (bool? value) {
-                                      setState(() {
-                                        valueRadio = value!;
-                                        // _orderObject!.onPlace = valueRadio;
-                                      });
-                                    }),
-                                Text('Доставка'),
-                              ]),
-                          Divider(color: Color.fromARGB(255, 67, 67, 67)),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Column(
+                                      Radio(
+                                          fillColor:
+                                              MaterialStateColor.resolveWith(
+                                                  (states) => Color.fromARGB(
+                                                      255, 229, 229, 229)),
+                                          focusColor:
+                                              MaterialStateColor.resolveWith(
+                                                  (states) => Color.fromARGB(
+                                                      255, 229, 229, 229)),
+                                          value: false,
+                                          groupValue: valueRadio,
+                                          onChanged: (bool? value) {
+                                            setState(() {
+                                              valueRadio = value!;
+                                              // _orderObject!.onPlace = valueRadio;
+                                            });
+                                          }),
+                                      Text('На вынос'),
+                                      Radio(
+                                          fillColor:
+                                              MaterialStateColor.resolveWith(
+                                                  (states) => Color.fromARGB(
+                                                      255, 229, 229, 229)),
+                                          focusColor:
+                                              MaterialStateColor.resolveWith(
+                                                  (states) => Color.fromARGB(
+                                                      255, 229, 229, 229)),
+                                          value: true,
+                                          groupValue: valueRadio,
+                                          onChanged: (bool? value) {
+                                            setState(() {
+                                              valueRadio = value!;
+                                              // _orderObject!.onPlace = valueRadio;
+                                            });
+                                          }),
+                                      Text('Доставка'),
+                                    ]),
+                                Divider(color: Color.fromARGB(255, 67, 67, 67)),
+                                Row(
                                   children: [
-                                    Text(
-                                      'Итого: ',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Color.fromARGB(
-                                              255, 229, 229, 229),
-                                          fontSize: 15),
+                                    Expanded(
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            'Итого: ',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Color.fromARGB(
+                                                    255, 229, 229, 229),
+                                                fontSize: 15),
+                                          ),
+                                          Text(
+                                            state.totalCost.toString(),
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Color.fromARGB(
+                                                    255, 229, 229, 229),
+                                                fontSize: 23),
+                                          ),
+                                        ],
+                                      ),
+                                      flex: 1,
                                     ),
-                                    Text(
-                                      ' 600 руб.',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Color.fromARGB(
-                                              255, 229, 229, 229),
-                                          fontSize: 23),
+                                    Expanded(
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                12), // <-- Radius
+                                          ),
+                                          elevation: 5,
+                                          minimumSize:
+                                              Size(height * 0.23, width * 0.13),
+                                          backgroundColor: kPrimaryColor,
+                                        ),
+                                        // ignore: prefer_const_constructors
+                                        child: Text('Оплатить',
+                                            style: (TextStyle(
+                                                fontSize: 18,
+                                                color: Color.fromARGB(
+                                                    235, 227, 227, 227)))),
+                                        onPressed: () {
+                                          showModalBottomSheet(
+                                            context: context,
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.vertical(
+                                                top: Radius.circular(20),
+                                              ),
+                                            ),
+                                            builder: (ctx) =>
+                                                SbpModalBottomSheetWidget(
+                                                    informations, widget.url),
+                                          );
+                                        },
+                                      ),
+                                      flex: 2,
                                     ),
                                   ],
-                                ),
-                                flex: 1,
-                              ),
-                              Expanded(
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          12), // <-- Radius
-                                    ),
-                                    elevation: 5,
-                                    minimumSize:
-                                        Size(height * 0.23, width * 0.13),
-                                    backgroundColor: kPrimaryColor,
-                                  ),
-                                  // ignore: prefer_const_constructors
-                                  child: Text('Оплатить',
-                                      style: (TextStyle(
-                                          fontSize: 18,
-                                          color: Color.fromARGB(
-                                              235, 227, 227, 227)))),
-                                  onPressed: () {
-                                    showModalBottomSheet(
-                                      context: context,
-                                      shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.vertical(
-                                          top: Radius.circular(20),
-                                        ),
-                                      ),
-                                      builder: (ctx) =>
-                                          SbpModalBottomSheetWidget(
-                                              informations, widget.url),
-                                    );
-                                  },
-                                ),
-                                flex: 2,
-                              ),
-                            ],
-                          )
-                        ],
-                      )))),
-        ],
+                                )
+                              ],
+                            )))),
+              ],
+            );
+          else
+            return Center(
+              child: Text('Корзина пуста'),
+            );
+        },
       ),
     );
   }

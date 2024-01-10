@@ -15,4 +15,9 @@ class RemoveDishEvent extends BasketEvent {
   RemoveDishEvent({required this.dishId});
 }
 
+class RemovePositionEvent extends BasketEvent {
+  String dishId;
+  RemovePositionEvent({required this.dishId});
+}
+
 class GetBasketPositions extends BasketEvent {}

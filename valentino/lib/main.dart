@@ -9,6 +9,7 @@ import 'package:valentino/ui/menu_page/menu_screen1.dart';
 import 'package:valentino/ui/profile_page/profile_page.dart';
 import 'package:valentino/ui/store_page/store_page.dart';
 import 'package:valentino/ui/theme.dart';
+import 'package:badges/badges.dart' as badges;
 
 import 'ui/basket_page/basket_page.dart';
 
@@ -82,7 +83,18 @@ class _MainScreenState extends State<MainScreen> {
         BottomNavigationBarItem(
             icon: Icon(Icons.restaurant_menu_outlined), label: "Меню"),
         BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_basket_outlined), label: "Корзина"),
+            icon: BlocBuilder<BasketBloc, BasketState>(
+              builder: (context, state) {
+                if (state.basketStatus == BasketStatus.done &&
+                    state.positions!.isNotEmpty)
+                  return badges.Badge(
+                    badgeContent: Text(state.positions!.length.toString()),
+                      child: Icon(Icons.shopping_basket_outlined));
+                else
+                  return Icon(Icons.shopping_basket_outlined);
+              },
+            ),
+            label: "Корзина"),
         BottomNavigationBarItem(icon: Icon(Icons.history), label: "История"),
         BottomNavigationBarItem(icon: Icon(Icons.person), label: "Профиль"),
       ],

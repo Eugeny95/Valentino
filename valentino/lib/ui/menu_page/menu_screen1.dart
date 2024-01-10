@@ -7,10 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rive/rive.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:valentino/buisiness/menu_bloc/menu_bloc.dart';
-import 'package:valentino/models/menu.dart';
-import 'package:valentino/ui/constants.dart';
-
-import 'package:valentino/ui/menu_page/components/about_widget.dart';
 import 'package:valentino/ui/menu_page/components/carousel.dart';
 import 'package:valentino/ui/menu_page/components/categories.dart';
 import 'package:valentino/ui/menu_page/components/menu_card.dart';
@@ -38,9 +34,9 @@ class _MenuPageState extends State<MenuPage> {
     globalKeys = [];
     if (state.menuHttpModel!.menu == null) return Container();
     for (int i = 0; i < state.menuHttpModel!.menu!.length; i++) {
-      if (state.menuHttpModel!.menu![i].items == null) continue;
       GlobalKey globalKey = GlobalKey();
       globalKeys.add(globalKey);
+      if (state.menuHttpModel!.menu![i].items!.isEmpty) continue;
       categoriesWidget.add(MenuCategoryItem(
         key: globalKey,
         title: state.menuHttpModel!.menu![i].category_name!,
@@ -62,6 +58,7 @@ class _MenuPageState extends State<MenuPage> {
       body: Container(
         color: Color.fromARGB(0, 62, 62, 62),
         child: CustomScrollView(
+          physics: ScrollPhysics(),
           controller: scrollController,
           slivers: <Widget>[
             SliverAppBar(
@@ -101,89 +98,38 @@ class _MenuPageState extends State<MenuPage> {
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   children: <Widget>[
-                    SizedBox(
-                      width: width * 0.3,
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(12), // <-- Radius
-                            ),
-                            elevation: 5,
-                          ),
-                          onPressed: () {
-                            Scrollable.ensureVisible(
-                                globalKeys[0].currentContext!);
-                          },
-                          child: Text('Итал закуски')),
-                    ),
-                    Padding(padding: EdgeInsets.only(left: 5)),
-                    SizedBox(
-                      width: width * 0.3,
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(12), // <-- Radius
-                            ),
-                            elevation: 5,
-                          ),
-                          onPressed: () {
-                            Scrollable.ensureVisible(
-                                globalKeys[1].currentContext!);
-                          },
-                          child: Text('Напитки')),
-                    ),
-                    Padding(padding: EdgeInsets.only(left: 5)),
-                    SizedBox(
-                      width: width * 0.3,
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(12), // <-- Radius
-                            ),
-                            elevation: 5,
-                          ),
-                          onPressed: () {
-                            Scrollable.ensureVisible(
-                                globalKeys[2].currentContext!);
-                          },
-                          child: Text('Соусы')),
-                    ),
-                    Padding(padding: EdgeInsets.only(left: 5)),
-                    SizedBox(
-                      width: width * 0.3,
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(12), // <-- Radius
-                            ),
-                            elevation: 5,
-                          ),
-                          onPressed: () {
-                            Scrollable.ensureVisible(
-                                globalKeys[0].currentContext!);
-                          },
-                          child: Text('Дисерты')),
-                    ),
-                    Padding(padding: EdgeInsets.only(left: 5)),
-                    SizedBox(
-                      width: width * 0.3,
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(12), // <-- Radius
-                            ),
-                            elevation: 5,
-                          ),
-                          onPressed: () {
-                            Scrollable.ensureVisible(
-                                globalKeys[3].currentContext!);
-                          },
-                          child: Text('Итал закуски')),
+                    BlocBuilder<MenuBloc, MenuState>(
+                      builder: (context, state) {
+                        if (state.menuStatus == MenuStatus.done)
+                          return ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              shrinkWrap: true,
+                              itemCount: state.menuHttpModel!.menu!.length,
+                              itemBuilder: (context, index) {
+                                if (state.menuHttpModel!.menu![index]!.items!
+                                    .isEmpty) return Column();
+                                return SizedBox(
+                                  width: width * 0.3,
+                                  child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              12), // <-- Radius
+                                        ),
+                                        elevation: 5,
+                                      ),
+                                      onPressed: () {
+                                        Scrollable.ensureVisible(
+                                            globalKeys[index].currentContext!);
+                                      },
+                                      child: Text(state.menuHttpModel!
+                                          .menu![index].category_name
+                                          .toString())),
+                                );
+                              });
+                        else
+                          return Column();
+                      },
                     ),
                     Padding(padding: EdgeInsets.only(left: 5)),
                   ],
