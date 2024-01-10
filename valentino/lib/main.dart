@@ -88,7 +88,10 @@ class _MainScreenState extends State<MainScreen> {
                 if (state.basketStatus == BasketStatus.done &&
                     state.positions!.isNotEmpty)
                   return badges.Badge(
-                    badgeContent: Text(state.positions!.length.toString()),
+                      badgeContent: Text(
+                        state.positions!.length.toString(),
+                        style: TextStyle(fontSize: 8),
+                      ),
                       child: Icon(Icons.shopping_basket_outlined));
                 else
                   return Icon(Icons.shopping_basket_outlined);

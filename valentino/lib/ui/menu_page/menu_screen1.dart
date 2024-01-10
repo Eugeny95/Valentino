@@ -65,7 +65,7 @@ class _MenuPageState extends State<MenuPage> {
                 pinned: true,
                 snap: false,
                 floating: false,
-                expandedHeight: height / 3.2,
+                expandedHeight: height / 3.0,
                 // backgroundColor: Colors.transparent,
                 flexibleSpace: Stack(children: [
                   Container(
@@ -83,57 +83,65 @@ class _MenuPageState extends State<MenuPage> {
                             size: 25,
                             color: Color.fromARGB(189, 255, 255, 255)),
                         onPressed: () {}),
-                    top: 45,
+                    top: 35,
                     right: 10,
                   ),
                 ])),
+
             SliverAppBar(
-              toolbarHeight: height / 500,
+              toolbarHeight: height / 60,
               pinned: true,
               snap: false,
               floating: false,
-              flexibleSpace: SizedBox(
-                height: height * 0.04,
-                child: ListView(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  children: <Widget>[
-                    BlocBuilder<MenuBloc, MenuState>(
-                      builder: (context, state) {
-                        if (state.menuStatus == MenuStatus.done)
-                          return ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              shrinkWrap: true,
-                              itemCount: state.menuHttpModel!.menu!.length,
-                              itemBuilder: (context, index) {
-                                if (state.menuHttpModel!.menu![index]!.items!
-                                    .isEmpty) return Column();
-                                return SizedBox(
-                                  width: width * 0.3,
-                                  child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              12), // <-- Radius
-                                        ),
-                                        elevation: 5,
-                                      ),
-                                      onPressed: () {
-                                        Scrollable.ensureVisible(
-                                            globalKeys[index].currentContext!);
-                                      },
-                                      child: Text(state.menuHttpModel!
-                                          .menu![index].category_name
-                                          .toString())),
-                                );
-                              });
-                        else
-                          return Column();
-                      },
-                    ),
-                    Padding(padding: EdgeInsets.only(left: 5)),
-                  ],
-                ),
+              flexibleSpace: ListView(
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                children: <Widget>[
+                  BlocBuilder<MenuBloc, MenuState>(
+                    builder: (context, state) {
+                      if (state.menuStatus == MenuStatus.done)
+                        return ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            itemCount: state.menuHttpModel!.menu!.length,
+                            itemBuilder: (context, index) {
+                              if (state.menuHttpModel!.menu![index]!.items!
+                                  .isEmpty) return Column();
+                              return Container(
+                                margin: EdgeInsets.only(left: 7),
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    minimumSize:
+                                        Size(height * 0.12, width * 0.1),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          12), // <-- Radius
+                                    ),
+                                    elevation: 10,
+                                  ),
+                                  onPressed: () {
+                                    Scrollable.ensureVisible(
+                                        globalKeys[index].currentContext!);
+                                  },
+                                  child: Text(
+                                      state.menuHttpModel!.menu![index]
+                                          .category_name
+                                          .toString(),
+                                      style: TextStyle(
+                                          fontFamily: 'Moniqa',
+                                          fontWeight: FontWeight.normal,
+                                          fontSize: 23,
+                                          color: Color.fromARGB(
+                                              255, 245, 245, 245))),
+                                ),
+                              );
+                            });
+                      else
+                        return Column();
+                    },
+                  ),
+                  Padding(padding: EdgeInsets.only(left: 5)),
+                ],
               ),
             ),
 
@@ -176,7 +184,7 @@ class _MenuPageState extends State<MenuPage> {
                     builder: (context, state) {
                       return (state.menuStatus == MenuStatus.done)
                           ? generateItems(state)
-                          : CircularProgressIndicator();
+                          : Center(child: CircularProgressIndicator());
                     },
                   )
                 ],

@@ -75,7 +75,7 @@ class BasketPageState extends State<BasketPage> {
                         width: width * 0.99,
                         child: Card(
                             elevation: 15,
-                            color: kSecondaryColor,
+                            color: Color.fromARGB(191, 21, 33, 17),
                             child: Column(
                               children: [
                                 ListTile(
@@ -89,7 +89,7 @@ class BasketPageState extends State<BasketPage> {
                                   tileColor: kPrimaryColor,
                                 ),
                                 SizedBox(
-                                  height: 15,
+                                  height: 5,
                                 ),
                                 BlocBuilder<BasketBloc, BasketState>(
                                   builder: (context, state) {
@@ -100,11 +100,14 @@ class BasketPageState extends State<BasketPage> {
                                             (BuildContext context, int index) {
                                           return Container(
                                             width: width * 0.95,
-                                            height: height * 0.2,
+                                            height: height * 0.18,
                                             child: Column(
                                               children: [
                                                 Row(
                                                   children: [
+                                                    SizedBox(
+                                                      width: width * 0.02,
+                                                    ),
                                                     Container(
                                                       height: height * 0.1,
                                                       width: width * 0.25,

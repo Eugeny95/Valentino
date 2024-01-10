@@ -81,7 +81,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
         title: Text(
           dishHttpModel.name ?? '',
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 32),
+          style: TextStyle(fontSize: 22),
         ),
         actionsAlignment: MainAxisAlignment.center,
         content: Container(
@@ -93,7 +93,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                 child: Column(mainAxisSize: MainAxisSize.max, children: [
               // 666666666666665Divider(color: Colors.black),
               Container(
-                height: height / 4.5,
+                height: height / 3.5,
                 decoration: BoxDecoration(
                     color: Colors.black54,
                     borderRadius: BorderRadius.circular(20.0)),
@@ -113,17 +113,30 @@ class SelectDishDialogState extends State<SelectDishDialog> {
 
               Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Text(
-                  'Описание: ',
+                  'Состав: ',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Container(
-                    height: height / 12,
-                    child: Text('Описание и состав блюда')),
+                    height: height / 6,
+                    child: Text(dishHttpModel.description ?? '')),
+                Divider(color: Colors.black),
+                Text(
+                  'Пищевая ценность (100 грамм) ',
+                  textDirection: TextDirection.ltr,
+                  textAlign: TextAlign.right,
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+                SizedBox(
+                  height: height / 50,
+                ),
                 Row(children: [
                   SizedBox(
-                    width: width / 20,
+                    width: width / 35,
                   ),
-                  // Вес блюда
+                  // Пищевая ценность
                   Column(
                     children: [
                       Text(
@@ -136,7 +149,82 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                         ),
                       ),
                       Text(
-                        ' ${(dishHttpModel.weight! * 1000).toInt()}',
+                        ' ${dishHttpModel.proteinsAmount!.toInt()} г.',
+                        textDirection: TextDirection.ltr,
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    width: width / 40,
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        'Жиры ',
+                        textDirection: TextDirection.ltr,
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                      Text(
+                        ' ${dishHttpModel.fatAmount!.toInt()} г.',
+                        textDirection: TextDirection.ltr,
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    width: width / 40,
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        'Углеводы ',
+                        textDirection: TextDirection.ltr,
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                      Text(
+                        ' ${dishHttpModel.carbohydratesAmount!.toInt()} г.',
+                        textDirection: TextDirection.ltr,
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    width: width / 40,
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        'Энерг. ценность ',
+                        textDirection: TextDirection.ltr,
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                      Text(
+                        ' ${dishHttpModel.energyAmount!.toInt()} ккал.',
                         textDirection: TextDirection.ltr,
                         textAlign: TextAlign.right,
                         style: TextStyle(

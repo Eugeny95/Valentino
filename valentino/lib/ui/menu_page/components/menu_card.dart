@@ -24,19 +24,21 @@ class MenuCategoryItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(top: 16),
+          padding: const EdgeInsets.only(top: 6),
           child: Text(
             title,
             style: const TextStyle(
-              fontSize: 18,
+              fontSize: 20,
+              // fontFamily: 'Moniqa',
               color: Colors.white60,
               fontWeight: FontWeight.w500,
             ),
           ),
         ),
         GridView.count(
-          crossAxisSpacing: 0.8,
-          childAspectRatio: 0.83,
+          padding: const EdgeInsets.all(12),
+          crossAxisSpacing: 1,
+          childAspectRatio: 0.78,
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           crossAxisCount: 2,
@@ -73,12 +75,12 @@ class MenuCard extends StatelessWidget {
         child: Container(
             child: Stack(children: [
           Container(
-            width: width / 2.2,
+            width: width / 2.3,
             height: height / 3.7,
             padding: const EdgeInsets.only(top: 4.0),
-            margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+            margin: const EdgeInsets.symmetric(horizontal: 1, vertical: 1),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20.0),
+                borderRadius: BorderRadius.circular(15.0),
                 color: kPrimaryColor),
             child: Column(children: [
               Container(
@@ -87,9 +89,9 @@ class MenuCard extends StatelessWidget {
                 padding: EdgeInsets.all(2), // Border width
                 decoration: BoxDecoration(
                     color: Colors.grey[800],
-                    borderRadius: BorderRadius.circular(20.0)),
+                    borderRadius: BorderRadius.circular(15.0)),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20.0),
+                  borderRadius: BorderRadius.circular(15.0),
                   child: SizedBox.fromSize(
                     size: Size.fromRadius(70), // Image radius
                     child: CachedNetworkImage(
@@ -107,7 +109,7 @@ class MenuCard extends StatelessWidget {
                 ),
               ),
               Container(
-                height: height / 25,
+                height: height / 18,
                 child: Text(
                   dishHttpModel.name ?? '',
                   textDirection: TextDirection.ltr,
@@ -124,13 +126,16 @@ class MenuCard extends StatelessWidget {
                 ),
                 // Вес блюда
                 Text(
-                  '${dishHttpModel.energyFullAmount!.toInt()} ккал ',
+                  '${dishHttpModel.energyFullAmount!.toInt()} ккал',
                   textDirection: TextDirection.ltr,
                   textAlign: TextAlign.right,
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.normal,
                   ),
+                ),
+                SizedBox(
+                  width: width / 70,
                 ),
                 Icon(Icons.circle,
                     size: 5, color: Color.fromARGB(189, 255, 255, 255)),
@@ -153,7 +158,7 @@ class MenuCard extends StatelessWidget {
                 height: height / 22,
                 decoration: BoxDecoration(
                     color: Color.fromARGB(255, 246, 246, 246),
-                    borderRadius: BorderRadius.circular(14.0)),
+                    borderRadius: BorderRadius.circular(10.0)),
                 child: Center(
                   child: Text(
                     '${dishHttpModel.currentPrice!.toInt()} руб.',

@@ -39,13 +39,12 @@ class AboutWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            
                             'Ресторан итальянской кухни',
-                            style:  TextStyle(
-                              fontFamily: 'Moniqa',
-                                    color: Colors.white,
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.normal),
+                            style: TextStyle(
+                                fontFamily: 'Moniqa',
+                                color: Colors.white,
+                                fontSize: 30,
+                                fontWeight: FontWeight.normal),
                           ),
                           Row(children: [
                             //GestureDetector(
@@ -82,14 +81,14 @@ class AboutWidget extends StatelessWidget {
                                   ' Воронеж, площадь Ленина, 6',
                                   style: TextStyle(
                                     fontWeight: FontWeight.normal,
-    //                                 shadows: <Shadow>[
-    //   Shadow(
-    //     offset: Offset(0.5, 0.5),
-    //     blurRadius: 0.3,
-    //     color: Color.fromARGB(255, 226, 226, 226),
-    //   ),
-     
-    // ],
+                                    //                                 shadows: <Shadow>[
+                                    //   Shadow(
+                                    //     offset: Offset(0.5, 0.5),
+                                    //     blurRadius: 0.3,
+                                    //     color: Color.fromARGB(255, 226, 226, 226),
+                                    //   ),
+
+                                    // ],
                                   ),
                                 ),
                                 onTap: () async {

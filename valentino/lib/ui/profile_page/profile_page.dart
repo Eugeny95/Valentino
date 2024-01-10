@@ -125,18 +125,18 @@ class _ProfilePageState extends State<ProfilePage> {
                 minimumSize: Size(height * 0.43, width * 0.12),
               ),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ClientDataPage()),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => ClientDataPage()),
+                // );
               },
               child: Row(
                 children: [
-                  Icon(Icons.circle_notifications_outlined, size: 24),
+                  Icon(Icons.privacy_tip_outlined, size: 20),
                   SizedBox(
                     width: width * 0.03,
                   ),
-                  Text('Настройка уведомлений',
+                  Text('Политика конфиденциальности',
                       style:
                           TextStyle(color: Color.fromARGB(255, 221, 221, 221))),
                 ],
