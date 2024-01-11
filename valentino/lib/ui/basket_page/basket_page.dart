@@ -66,9 +66,10 @@ class BasketPageState extends State<BasketPage> {
       body: BlocBuilder<BasketBloc, BasketState>(
         builder: (context, state) {
           if (state.positions!.isNotEmpty)
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
+            return ListView(
+              // shrinkWrap: true,
+              // mainAxisAlignment: MainAxisAlignment.start,
+              // crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Center(
                     child: Container(
@@ -136,30 +137,40 @@ class BasketPageState extends State<BasketPage> {
                                                       child: Column(children: [
                                                         Row(
                                                           children: [
-                                                            Text(state.positions![index].dish!.name!,
-                                                                style: TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    color: Color
-                                                                        .fromARGB(
-                                                                            255,
-                                                                            229,
-                                                                            229,
-                                                                            229),
-                                                                    fontSize:
-                                                                        16)),
-                                                            IconButton(
-                                                                onPressed: () {
-                                                                  BlocProvider.of<BasketBloc>(context).add(RemovePositionEvent(
-                                                                      dishId: state
-                                                                          .positions![
-                                                                              index]
-                                                                          .dish!
-                                                                          .id!));
-                                                                },
-                                                                icon: Icon(Icons
-                                                                    .delete))
+                                                            Expanded(
+                                                              child: Text(
+                                                                  state
+                                                                      .positions![
+                                                                          index]
+                                                                      .dish!
+                                                                      .name!,
+                                                                  style: TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      color: Color.fromARGB(
+                                                                          255,
+                                                                          229,
+                                                                          229,
+                                                                          229),
+                                                                      fontSize:
+                                                                          14)),
+                                                              flex: 6,
+                                                            ),
+                                                            Expanded(
+                                                              child: IconButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    BlocProvider.of<BasketBloc>(context).add(RemovePositionEvent(
+                                                                        dishId: state
+                                                                            .positions![index]
+                                                                            .dish!
+                                                                            .id!));
+                                                                  },
+                                                                  icon: Icon(Icons
+                                                                      .close)),
+                                                              flex: 1,
+                                                            )
                                                           ],
                                                         ),
                                                         Row(children: [
@@ -231,7 +242,6 @@ class BasketPageState extends State<BasketPage> {
                                                                           229),
                                                                   fontSize: 18),
                                                             ),
-                                                            flex: 1,
                                                           ),
                                                         ]),
                                                         SizedBox(
@@ -258,13 +268,13 @@ class BasketPageState extends State<BasketPage> {
                                             style: TextStyle(
                                                 color: Color.fromARGB(
                                                     255, 229, 229, 229),
-                                                fontSize: 18)),
+                                                fontSize: 15)),
                                         Text(
                                           ' ' + mytime + ' ',
                                           style: TextStyle(
                                               color: Color.fromARGB(
                                                   255, 229, 229, 229),
-                                              fontSize: 18),
+                                              fontSize: 15),
                                         )
                                       ]),
                                       Padding(
@@ -323,7 +333,8 @@ class BasketPageState extends State<BasketPage> {
                                                 },
                                                 child: Text('Выбрать время',
                                                     style: TextStyle(
-                                                        color: Colors.white)))
+                                                        color: Colors.white,
+                                                        fontSize: 12)))
                                           ])
                                     ])),
                                 Row(
@@ -378,7 +389,7 @@ class BasketPageState extends State<BasketPage> {
                                                 fontWeight: FontWeight.bold,
                                                 color: Color.fromARGB(
                                                     255, 229, 229, 229),
-                                                fontSize: 15),
+                                                fontSize: 12),
                                           ),
                                           Text(
                                             state.totalCost.toString(),
@@ -386,7 +397,7 @@ class BasketPageState extends State<BasketPage> {
                                                 fontWeight: FontWeight.bold,
                                                 color: Color.fromARGB(
                                                     255, 229, 229, 229),
-                                                fontSize: 23),
+                                                fontSize: 20),
                                           ),
                                         ],
                                       ),
@@ -407,7 +418,7 @@ class BasketPageState extends State<BasketPage> {
                                         // ignore: prefer_const_constructors
                                         child: Text('Оплатить',
                                             style: (TextStyle(
-                                                fontSize: 18,
+                                                fontSize: 15,
                                                 color: Color.fromARGB(
                                                     235, 227, 227, 227)))),
                                         onPressed: () {

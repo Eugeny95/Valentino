@@ -117,7 +117,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Container(
-                    height: height / 6,
+                    height: height / 6.5,
                     child: Text(dishHttpModel.description ?? '')),
                 Divider(color: Colors.black),
                 Text(
@@ -133,9 +133,9 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                   height: height / 50,
                 ),
                 Row(children: [
-                  SizedBox(
-                    width: width / 35,
-                  ),
+                  // SizedBox(
+                  //   width: width / 70,
+                  // ),
                   // Пищевая ценность
                   Column(
                     children: [
@@ -215,7 +215,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                   Column(
                     children: [
                       Text(
-                        'Энерг. ценность ',
+                        'Энерг. цен. ',
                         textDirection: TextDirection.ltr,
                         textAlign: TextAlign.right,
                         style: TextStyle(

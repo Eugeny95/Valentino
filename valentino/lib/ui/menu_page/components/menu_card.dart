@@ -115,7 +115,7 @@ class MenuCard extends StatelessWidget {
                   textDirection: TextDirection.ltr,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 14,
                     fontWeight: FontWeight.normal,
                   ),
                 ),
@@ -130,7 +130,7 @@ class MenuCard extends StatelessWidget {
                   textDirection: TextDirection.ltr,
                   textAlign: TextAlign.right,
                   style: TextStyle(
-                    fontSize: 12,
+                    fontSize: 10,
                     fontWeight: FontWeight.normal,
                   ),
                 ),
@@ -145,7 +145,7 @@ class MenuCard extends StatelessWidget {
                   textDirection: TextDirection.ltr,
                   textAlign: TextAlign.right,
                   style: TextStyle(
-                    fontSize: 12,
+                    fontSize: 10,
                     fontWeight: FontWeight.normal,
                   ),
                 )

@@ -10,6 +10,7 @@ import 'package:valentino/buisiness/menu_bloc/menu_bloc.dart';
 import 'package:valentino/ui/menu_page/components/carousel.dart';
 import 'package:valentino/ui/menu_page/components/categories.dart';
 import 'package:valentino/ui/menu_page/components/menu_card.dart';
+import 'package:valentino/ui/menu_page/components/table_dialog.dart';
 
 class MenuPage extends StatefulWidget {
   @override
@@ -78,11 +79,33 @@ class _MenuPageState extends State<MenuPage> {
                             )),
                   ),
                   Positioned(
-                    child: IconButton(
-                        icon: Icon(Icons.notifications,
-                            size: 25,
-                            color: Color.fromARGB(189, 255, 255, 255)),
-                        onPressed: () {}),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(100), // <-- Radius
+                        ),
+                        elevation: 5,
+                        minimumSize: Size(height * 0.05, width * 0.14),
+                      ),
+                      child:
+                          // Text('Забронировать \n столик',
+                          //     textAlign: TextAlign.center,
+                          //     style: TextStyle(
+                          //         fontSize: 10,
+                          //         color: Color.fromARGB(189, 255, 255, 255))),
+                          Icon(Icons.table_bar_outlined,
+                              size: 20,
+                              color: Color.fromARGB(189, 255, 255, 255)),
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return TableDialog();
+                          },
+                        );
+                      },
+                    ),
                     top: 35,
                     right: 10,
                   ),
@@ -128,9 +151,9 @@ class _MenuPageState extends State<MenuPage> {
                                           .category_name
                                           .toString(),
                                       style: TextStyle(
-                                          fontFamily: 'Moniqa',
+                                          // fontFamily: 'Moniqa',
                                           fontWeight: FontWeight.normal,
-                                          fontSize: 23,
+                                          fontSize: 13,
                                           color: Color.fromARGB(
                                               255, 245, 245, 245))),
                                 ),
@@ -140,7 +163,6 @@ class _MenuPageState extends State<MenuPage> {
                         return Column();
                     },
                   ),
-                  Padding(padding: EdgeInsets.only(left: 5)),
                 ],
               ),
             ),
