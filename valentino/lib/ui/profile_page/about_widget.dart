@@ -56,29 +56,33 @@ class AboutWidget extends StatelessWidget {
                                   fontWeight: FontWeight.normal),
                             ),
                             Row(children: []),
-                            Row(children: [
-                              Icon(
-                                Icons.place,
-                                size: 15,
-                              ),
-                              GestureDetector(
-                                  child: Text(
-                                    ' Воронеж, площадь Ленина, 6',
-                                    style: TextStyle(fontSize: 15),
-                                  ),
-                                  onTap: () async {
-                                    final url =
-                                        "https://yandex.ru/maps/org/valentino/124027389896/?ll=39.198355%2C51.660954&z=15";
-                                    if (await canLaunch(url)) {
-                                      await launch(
-                                        url,
-                                      );
-                                    }
-                                  }),
-                            ]),
+                            InkWell(
+                              onTap: () {},
+                              child: Row(children: [
+                                Icon(
+                                  Icons.place,
+                                  size: 15,
+                                ),
+                                GestureDetector(
+                                    child: Text(
+                                      ' Воронеж, площадь Ленина, 6',
+                                      style: TextStyle(fontSize: 15),
+                                    ),
+                                    onTap: () async {
+                                      final url =
+                                          "https://yandex.ru/maps/org/valentino/124027389896/?ll=39.198355%2C51.660954&z=15";
+                                      if (await canLaunch(url)) {
+                                        await launch(
+                                          url,
+                                        );
+                                      }
+                                    }),
+                              ]),
+                            ),
                             Padding(
                                 padding: EdgeInsets.only(top: height * 0.005)),
-                            Row(children: [
+                           InkWell( onTap: () {},
+                           child:  Row(children: [
                               Icon(
                                 Icons.phone_iphone,
                                 size: 15,
@@ -98,7 +102,7 @@ class AboutWidget extends StatelessWidget {
                                       );
                                     }
                                   }),
-                            ]),
+                            ])),
                           ]),
                       Center(
                           child: Icon(

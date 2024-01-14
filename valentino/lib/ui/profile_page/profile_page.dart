@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:valentino/ui/profile_page/about_widget.dart';
 import 'package:valentino/ui/profile_page/clientdata_page.dart';
+import 'package:valentino/ui/profile_page/social_network_widget.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -193,6 +194,13 @@ class _ProfilePageState extends State<ProfilePage> {
                           TextStyle(color: Color.fromARGB(255, 221, 221, 221))),
                 ],
               )),
+          Padding(padding: EdgeInsets.only(top: 10)),
+          Align(
+              alignment: Alignment.center, //or choose another Alignment
+              child: Container(
+                  color: Colors.transparent,
+                  width: width - (0.01 * width),
+                  child: SocialNetworkWidget())),
         ]),
       ],
     );

@@ -88,6 +88,9 @@ flutter:
    - assets/Valentino.png
    - assets/VB.png
    - assets/icon1.png
+   - assets/VK.png
+   - assets/WA.png
+   - assets/Telegram.png
    - packages/sbp/assets/sbp.png
    - packages/sbp/assets/icons/tinkoff.png
    - packages/sbp/assets/icons/sber.png

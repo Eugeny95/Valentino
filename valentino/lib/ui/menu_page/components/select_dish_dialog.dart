@@ -85,7 +85,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
         ),
         actionsAlignment: MainAxisAlignment.center,
         content: Container(
-          height: height * 0.9,
+          //  height: height * 0.9,
           width: width * 0.96,
           child: ListView(shrinkWrap: true, children: [
             Container(
@@ -112,13 +112,17 @@ class SelectDishDialogState extends State<SelectDishDialog> {
               Divider(color: Colors.black),
 
               Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Text(
-                  'Состав: ',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Container(
-                    height: height / 6.5,
-                    child: Text(dishHttpModel.description ?? '')),
+                (dishHttpModel.description != '')
+                    ? Text(
+                        'Состав: ',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      )
+                    : Container(),
+                (dishHttpModel.description != '')
+                    ? Container(
+                        height: height / 6.5,
+                        child: Text(dishHttpModel.description ?? ''))
+                    : Container(),
                 Divider(color: Colors.black),
                 Text(
                   'Пищевая ценность (100 грамм) ',

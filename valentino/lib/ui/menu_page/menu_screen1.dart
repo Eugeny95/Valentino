@@ -81,11 +81,12 @@ class _MenuPageState extends State<MenuPage> {
                   Positioned(
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
+                        // backgroundColor: Color.fromARGB(0, 77, 77, 77),
                         shape: RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.circular(100), // <-- Radius
                         ),
-                        elevation: 5,
+                        // elevation: 5,
                         minimumSize: Size(height * 0.05, width * 0.14),
                       ),
                       child:
@@ -95,7 +96,7 @@ class _MenuPageState extends State<MenuPage> {
                           //         fontSize: 10,
                           //         color: Color.fromARGB(189, 255, 255, 255))),
                           Icon(Icons.table_bar_outlined,
-                              size: 20,
+                              size: 24,
                               color: Color.fromARGB(189, 255, 255, 255)),
                       onPressed: () {
                         showDialog(
