@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:valentino/ui/profile_page/about_widget.dart';
 import 'package:valentino/ui/profile_page/clientdata_page.dart';
 import 'package:valentino/ui/profile_page/social_network_widget.dart';
+import 'package:valentino/ui/profile_page/user_data_page.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -54,7 +55,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 fontFamily: 'SHAL',
                 color: Color.fromARGB(255, 69, 161, 48),
                 fontSize: 65,
-                height: 0.4,
+                height: 0.2,
                 fontWeight: FontWeight.normal),
           ),
           Padding(padding: EdgeInsets.only(top: 30)),
@@ -76,7 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ClientDataPage()),
+                  MaterialPageRoute(builder: (context) => UserDataPage()),
                 );
               },
               child: Row(
@@ -116,7 +117,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           TextStyle(color: Color.fromARGB(255, 221, 221, 221))),
                 ],
               )),
-          Padding(padding: EdgeInsets.only(top: 40)),
+          Padding(padding: EdgeInsets.only(top: 20)),
           ElevatedButton(
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
@@ -142,7 +143,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           TextStyle(color: Color.fromARGB(255, 221, 221, 221))),
                 ],
               )),
-          Padding(padding: EdgeInsets.only(top: 40)),
+          Padding(padding: EdgeInsets.only(top: 20)),
           ElevatedButton(
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(

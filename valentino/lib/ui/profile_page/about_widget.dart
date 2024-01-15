@@ -66,7 +66,7 @@ class AboutWidget extends StatelessWidget {
                                 GestureDetector(
                                     child: Text(
                                       ' Воронеж, площадь Ленина, 6',
-                                      style: TextStyle(fontSize: 15),
+                                      style: TextStyle(fontSize: 13),
                                     ),
                                     onTap: () async {
                                       final url =
@@ -81,28 +81,29 @@ class AboutWidget extends StatelessWidget {
                             ),
                             Padding(
                                 padding: EdgeInsets.only(top: height * 0.005)),
-                           InkWell( onTap: () {},
-                           child:  Row(children: [
-                              Icon(
-                                Icons.phone_iphone,
-                                size: 15,
-                              ),
-                              GestureDetector(
-                                  child: Text(
-                                    " +7 (473) 233-12-33",
-                                    style: (TextStyle(
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 13)),
+                            InkWell(
+                                onTap: () {},
+                                child: Row(children: [
+                                  Icon(
+                                    Icons.phone_iphone,
+                                    size: 15,
                                   ),
-                                  onTap: () async {
-                                    final url = "tel://+7(473)2331233";
-                                    if (await canLaunch(url)) {
-                                      await launch(
-                                        url,
-                                      );
-                                    }
-                                  }),
-                            ])),
+                                  GestureDetector(
+                                      child: Text(
+                                        " +7 (473) 233-12-33",
+                                        style: (TextStyle(
+                                            fontWeight: FontWeight.w800,
+                                            fontSize: 13)),
+                                      ),
+                                      onTap: () async {
+                                        final url = "tel://+7(473)2331233";
+                                        if (await canLaunch(url)) {
+                                          await launch(
+                                            url,
+                                          );
+                                        }
+                                      }),
+                                ])),
                           ]),
                       Center(
                           child: Icon(

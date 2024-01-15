@@ -7,6 +7,7 @@ import 'package:valentino/ui/auth_page/signin_or_signup_screen.dart';
 import 'package:valentino/ui/constants.dart';
 import 'package:valentino/ui/menu_page/menu_screen1.dart';
 import 'package:valentino/ui/profile_page/profile_page.dart';
+import 'package:valentino/ui/profile_page/user_data_page.dart';
 import 'package:valentino/ui/store_page/store_page.dart';
 import 'package:valentino/ui/theme.dart';
 import 'package:badges/badges.dart' as badges;

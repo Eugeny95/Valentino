@@ -109,7 +109,9 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                       fit: BoxFit.cover),
                 ),
               ),
-              Divider(color: Colors.black),
+              (dishHttpModel.description != '')
+                  ? Divider(color: Colors.black)
+                  : Container(),
 
               Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                 (dishHttpModel.description != '')

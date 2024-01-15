@@ -36,6 +36,10 @@ ThemeData darkThemeData(BuildContext context) {
   return ThemeData.dark().copyWith(
     primaryColor: kPrimaryColor,
     scaffoldBackgroundColor: kContentColorLightTheme,
+    elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+      backgroundColor: kFourthColor,
+    )),
     appBarTheme: appBarTheme.copyWith(backgroundColor: kContentColorLightTheme),
     iconTheme: IconThemeData(color: kContentColorDarkTheme),
     textTheme: GoogleFonts.montserratTextTheme(Theme.of(context).textTheme)

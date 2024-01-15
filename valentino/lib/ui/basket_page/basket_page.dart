@@ -67,6 +67,8 @@ class BasketPageState extends State<BasketPage> {
         builder: (context, state) {
           if (state.positions!.isNotEmpty)
             return ListView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              scrollDirection: Axis.vertical,
               // shrinkWrap: true,
               // mainAxisAlignment: MainAxisAlignment.start,
               // crossAxisAlignment: CrossAxisAlignment.center,
@@ -95,6 +97,7 @@ class BasketPageState extends State<BasketPage> {
                                 BlocBuilder<BasketBloc, BasketState>(
                                   builder: (context, state) {
                                     return ListView.builder(
+                                        physics: NeverScrollableScrollPhysics(),
                                         shrinkWrap: true,
                                         itemCount: state.positions!.length,
                                         itemBuilder:

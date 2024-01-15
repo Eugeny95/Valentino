@@ -10,91 +10,108 @@ class SocialNetworkWidget extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
 
     // TODO: implement build
-    return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  // <-- Radius
-                ),
-                padding: EdgeInsets.all(2),
-                elevation: 5,
-                minimumSize: Size(height * 0.06, width * 0.13),
-              ),
-              onPressed: () async {
-                final url = "https://vk.com/valentino_vrn";
-                if (await canLaunch(url)) {
-                  await launch(
-                    url,
-                  );
-                }
-              },
-              clipBehavior: Clip.antiAlias,
-              child: Container(
-                child: Image.asset(
-                  "assets/VK.png",
-                  width: width * 0.12,
-                  fit: BoxFit.cover,
-                ),
-              )),
+    return Column(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+              color: Color.fromARGB(83, 98, 113, 84),
+              borderRadius: BorderRadius.circular(20)),
+          width: width * 0.7,
+          height: height * 0.11,
+          child: Column(
+            children: [
+              Text('Мы в соцсетях'),
+              SizedBox(height: height * 0.01),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            // <-- Radius
+                          ),
+                          padding: EdgeInsets.all(2),
+                          elevation: 5,
+                          minimumSize: Size(height * 0.06, width * 0.13),
+                        ),
+                        onPressed: () async {
+                          final url = "https://vk.com/valentino_vrn";
+                          if (await canLaunch(url)) {
+                            await launch(
+                              url,
+                            );
+                          }
+                        },
+                        clipBehavior: Clip.antiAlias,
+                        child: Container(
+                          child: Image.asset(
+                            "assets/VK.png",
+                            width: width * 0.12,
+                            fit: BoxFit.cover,
+                          ),
+                        )),
 
-          // Padding(padding: EdgeInsets.only(left: 10)),
-          ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  // <-- Radius
-                ),
-                padding: EdgeInsets.all(2),
-                elevation: 5,
-                minimumSize: Size(height * 0.06, width * 0.13),
-              ),
-              onPressed: () async {
-                final url =
-                    "https://api.whatsapp.com/send/?phone=79515542002&text&type=phone_number&app_absent=0";
-                if (await canLaunch(url)) {
-                  await launch(
-                    url,
-                  );
-                }
-              },
-              clipBehavior: Clip.antiAlias,
-              child: Container(
-                child: Image.asset(
-                  "assets/WA.png",
-                  width: width * 0.08,
-                  fit: BoxFit.cover,
-                ),
-              )),
-          ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  // <-- Radius
-                ),
-                padding: EdgeInsets.all(2),
-                elevation: 5,
-                minimumSize: Size(height * 0.06, width * 0.13),
-              ),
-              onPressed: () async {
-                final url = "https://t.me/Valentino_vrn";
-                if (await canLaunch(url)) {
-                  await launch(
-                    url,
-                  );
-                }
-              },
-              clipBehavior: Clip.antiAlias,
-              child: Container(
-                child: Image.asset(
-                  "assets/Telegram.png",
-                  width: width * 0.1,
-                  fit: BoxFit.cover,
-                ),
-              )),
-        ]);
+                    // Padding(padding: EdgeInsets.only(left: 10)),
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            // <-- Radius
+                          ),
+                          padding: EdgeInsets.all(2),
+                          elevation: 5,
+                          minimumSize: Size(height * 0.06, width * 0.13),
+                        ),
+                        onPressed: () async {
+                          final url =
+                              "https://api.whatsapp.com/send/?phone=79515542002&text&type=phone_number&app_absent=0";
+                          if (await canLaunch(url)) {
+                            await launch(
+                              url,
+                            );
+                          }
+                        },
+                        clipBehavior: Clip.antiAlias,
+                        child: Container(
+                          child: Image.asset(
+                            "assets/WA.png",
+                            width: width * 0.08,
+                            fit: BoxFit.cover,
+                          ),
+                        )),
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            // <-- Radius
+                          ),
+                          padding: EdgeInsets.all(2),
+                          elevation: 5,
+                          minimumSize: Size(height * 0.06, width * 0.13),
+                        ),
+                        onPressed: () async {
+                          final url = "https://t.me/Valentino_vrn";
+                          if (await canLaunch(url)) {
+                            await launch(
+                              url,
+                            );
+                          }
+                        },
+                        clipBehavior: Clip.antiAlias,
+                        child: Container(
+                          child: Image.asset(
+                            "assets/Telegram.png",
+                            width: width * 0.1,
+                            fit: BoxFit.cover,
+                          ),
+                        )),
+                  ]),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }

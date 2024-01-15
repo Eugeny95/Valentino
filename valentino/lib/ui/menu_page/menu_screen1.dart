@@ -9,6 +9,7 @@ import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:valentino/buisiness/menu_bloc/menu_bloc.dart';
 import 'package:valentino/ui/menu_page/components/carousel.dart';
 import 'package:valentino/ui/menu_page/components/categories.dart';
+import 'package:valentino/ui/auth_page/forget_password_dialog.dart';
 import 'package:valentino/ui/menu_page/components/menu_card.dart';
 import 'package:valentino/ui/menu_page/components/table_dialog.dart';
 
@@ -79,25 +80,9 @@ class _MenuPageState extends State<MenuPage> {
                             )),
                   ),
                   Positioned(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        // backgroundColor: Color.fromARGB(0, 77, 77, 77),
-                        shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(100), // <-- Radius
-                        ),
-                        // elevation: 5,
-                        minimumSize: Size(height * 0.05, width * 0.14),
-                      ),
-                      child:
-                          // Text('Забронировать \n столик',
-                          //     textAlign: TextAlign.center,
-                          //     style: TextStyle(
-                          //         fontSize: 10,
-                          //         color: Color.fromARGB(189, 255, 255, 255))),
-                          Icon(Icons.table_bar_outlined,
-                              size: 24,
-                              color: Color.fromARGB(189, 255, 255, 255)),
+                    child: IconButton(
+                      icon: Icon(Icons.table_bar_outlined,
+                          size: 24, color: Color.fromARGB(189, 255, 255, 255)),
                       onPressed: () {
                         showDialog(
                           context: context,
