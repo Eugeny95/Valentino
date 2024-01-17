@@ -49,6 +49,8 @@ dependencies:
 
   bloc: any
   flutter_bloc: any
+  easy_image_viewer: ^1.4.0
+ 
   
 
   

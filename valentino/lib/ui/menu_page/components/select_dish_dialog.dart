@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:data_layer/models/dish_http_model.dart';
+import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -78,6 +81,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
     //
     return AlertDialog(
         insetPadding: EdgeInsets.all(20),
+        backgroundColor: Color.fromARGB(240, 79, 102, 59),
         title: Text(
           dishHttpModel.name ?? '',
           textAlign: TextAlign.center,
@@ -92,25 +96,33 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                 //width: width * 0.8,
                 child: Column(mainAxisSize: MainAxisSize.max, children: [
               // 666666666666665Divider(color: Colors.black),
-              Container(
-                height: height / 3.5,
-                decoration: BoxDecoration(
-                    color: Colors.black54,
-                    borderRadius: BorderRadius.circular(20.0)),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20.0),
-                  child: CachedNetworkImage(
-                      imageUrl: (dishHttpModel.imageLinks.isEmpty)
-                          ? ''
-                          : dishHttpModel.imageLinks.first,
-                      placeholder: (context, url) =>
-                          CircularProgressIndicator(),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
-                      fit: BoxFit.cover),
+              InkWell(
+                onTap: () {
+                  final imageProvider =
+                      Image.network(dishHttpModel.imageLinks.first).image;
+                  showImageViewer(context, imageProvider,
+                      swipeDismissible: true, doubleTapZoomable: true);
+                },
+                child: Container(
+                  height: height / 3.5,
+                  decoration: BoxDecoration(
+                      color: Colors.black54,
+                      borderRadius: BorderRadius.circular(20.0)),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20.0),
+                    child: CachedNetworkImage(
+                        imageUrl: (dishHttpModel.imageLinks.isEmpty)
+                            ? ''
+                            : dishHttpModel.imageLinks.first,
+                        placeholder: (context, url) =>
+                            CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                        fit: BoxFit.cover),
+                  ),
                 ),
               ),
               (dishHttpModel.description != '')
-                  ? Divider(color: Colors.black)
+                  ? Divider(color: const Color.fromARGB(255, 255, 255, 255))
                   : Container(),
 
               Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -125,7 +137,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                         height: height / 6.5,
                         child: Text(dishHttpModel.description ?? ''))
                     : Container(),
-                Divider(color: Colors.black),
+                Divider(color: const Color.fromARGB(255, 255, 255, 255)),
                 Text(
                   'Пищевая ценность (100 грамм) ',
                   textDirection: TextDirection.ltr,
@@ -249,7 +261,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
 
               Column(children: volumesWidget),
               propertiesWidget.isNotEmpty
-                  ? Divider(color: Colors.black)
+                  ? Divider(color: const Color.fromARGB(255, 255, 255, 255))
                   : Row(),
 
               propertiesWidget.isNotEmpty
@@ -289,7 +301,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
               //   }),
               // ),
               propertiesWidget.isNotEmpty
-                  ? Divider(color: Colors.black)
+                  ? Divider(color: const Color.fromARGB(255, 255, 255, 255))
                   : Row(),
               propertiesWidget.isNotEmpty
                   ? Row(children: [
@@ -307,6 +319,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
               Padding(padding: EdgeInsets.only(top: height * 0.02)),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12), // <-- Radius
                     ),
@@ -320,7 +333,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                   },
                   child: Text(
                     'Добавить в корзину',
-                    style: TextStyle(color: Color.fromARGB(227, 238, 238, 238)),
+                    style: TextStyle(color: Color.fromARGB(225, 66, 66, 66)),
                   )),
             ]))
           ]),

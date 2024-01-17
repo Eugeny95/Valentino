@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:valentino/ui/constants.dart';
 
 // as datetimepic;
 
@@ -26,13 +27,13 @@ class TableDialogState extends State<TableDialog> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return AlertDialog(
-      backgroundColor: Color.fromARGB(241, 50, 50, 50),
+      backgroundColor: Color.fromARGB(255, 79, 102, 59),
       insetPadding: EdgeInsets.all(30),
       title: Column(
         children: [
           Text(
             'Забронировать столик',
-            style: TextStyle(color: Color.fromARGB(172, 255, 255, 255)),
+            style: TextStyle(color: Color.fromARGB(248, 255, 255, 255)),
           ),
         ],
       ),
@@ -44,13 +45,7 @@ class TableDialogState extends State<TableDialog> {
             Text(
               'С Вами свяжется наш менеджер и уточнит детали',
               style: TextStyle(
-                  color: Color.fromARGB(
-                    172,
-                    255,
-                    255,
-                    255,
-                  ),
-                  fontSize: 12),
+                  color: Color.fromARGB(239, 255, 255, 255), fontSize: 12),
             ),
             Form(
                 key: _formKey,
@@ -59,6 +54,7 @@ class TableDialogState extends State<TableDialog> {
                   children: [
                     Padding(padding: EdgeInsets.only(top: height * 0.01)),
                     TextFormField(
+                      textCapitalization: TextCapitalization.words,
                       cursorColor: Color.fromARGB(139, 255, 255, 255),
                       // validator: (value) => Validator.isEmptyValid(value!),
                       onChanged: (String value) {
@@ -73,12 +69,12 @@ class TableDialogState extends State<TableDialog> {
                                   color: Color.fromARGB(139, 255, 255, 255),
                                   width: 2.0)),
                           prefixIcon: Icon(Icons.person_add,
-                              color: Color.fromARGB(139, 255, 255, 255)),
+                              color: Color.fromARGB(211, 255, 255, 255)),
                           labelText: 'Имя',
                           labelStyle: TextStyle(
-                              color: Color.fromARGB(139, 255, 255, 255))),
+                              color: Color.fromARGB(205, 255, 255, 255))),
                     ),
-                    Padding(padding: EdgeInsets.only(top: height * 0.03)),
+                    Padding(padding: EdgeInsets.only(top: height * 0.01)),
                     TextFormField(
                       cursorColor: Color.fromARGB(139, 255, 255, 255),
                       keyboardType: TextInputType.number,
@@ -98,12 +94,12 @@ class TableDialogState extends State<TableDialog> {
                                   color: Color.fromARGB(139, 255, 255, 255),
                                   width: 2.0)),
                           prefixIcon: Icon(Icons.phone_iphone,
-                              color: Color.fromARGB(139, 255, 255, 255)),
+                              color: Color.fromARGB(211, 255, 255, 255)),
                           labelText: 'Телефон',
                           labelStyle: TextStyle(
-                              color: Color.fromARGB(139, 255, 255, 255))),
+                              color: Color.fromARGB(211, 255, 255, 255))),
                     ),
-                    Padding(padding: EdgeInsets.only(top: height * 0.05)),
+                    Padding(padding: EdgeInsets.only(top: height * 0.03)),
 
                     // BlocBuilder<AuthBloc, AuthState>(
                     //   builder: (context, state) {
@@ -117,13 +113,13 @@ class TableDialogState extends State<TableDialog> {
 
                     ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(12), // <-- Radius
-                          ),
-                          elevation: 5,
-                          minimumSize: Size(height * 0.75, width * 0.12),
-                        ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(12), // <-- Radius
+                            ),
+                            elevation: 5,
+                            minimumSize: Size(height * 0.75, width * 0.12),
+                            backgroundColor: Colors.white),
                         onPressed: () async {
                           if (!_formKey.currentState!.validate()) return;
                           try {
@@ -151,16 +147,22 @@ class TableDialogState extends State<TableDialog> {
                           //         password: password));
                         },
                         child: Text('Отправить')),
-                    Padding(padding: EdgeInsets.only(top: height * 0.02)),
+                    Padding(padding: EdgeInsets.only(top: height * 0.003)),
                     TextButton(
                       child: Text('Отмена',
                           style: TextStyle(
-                              color: Color.fromARGB(139, 255, 255, 255),
+                              color: Color.fromARGB(210, 255, 255, 255),
                               fontSize: 14)),
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                    )
+                    ),
+                    Text(
+                      '*Нажимая на кнопку «Отправить» вы даете согласие на обработку персональных данных',
+                      style: TextStyle(
+                          color: Color.fromARGB(209, 255, 255, 255),
+                          fontSize: 8),
+                    ),
                   ],
                 ))
           ])),

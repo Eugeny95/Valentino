@@ -381,6 +381,40 @@ class BasketPageState extends State<BasketPage> {
                                       Text('Доставка'),
                                     ]),
                                 Divider(color: Color.fromARGB(255, 67, 67, 67)),
+                                TextFormField(
+                                  keyboardType: TextInputType.multiline,
+                                  maxLines: 5,
+                                  minLines: 2,
+
+                                  textCapitalization: TextCapitalization.words,
+                                  cursorColor:
+                                      Color.fromARGB(139, 255, 255, 255),
+                                  // validator: (value) => Validator.isEmptyValid(value!),
+                                  onChanged: (String value) {},
+                                  decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          borderSide: BorderSide(
+                                              color: Color.fromARGB(
+                                                  139, 255, 255, 255),
+                                              width: 2.0)),
+                                      prefixIcon: Icon(Icons.comment,
+                                          size: 20,
+                                          color: Color.fromARGB(
+                                              211, 255, 255, 255)),
+                                      labelText: 'Комментарий к заказу',
+                                      labelStyle: TextStyle(
+                                          fontSize: 12,
+                                          color: Color.fromARGB(
+                                              205, 255, 255, 255))),
+                                ),
+                                Padding(
+                                    padding:
+                                        EdgeInsets.only(top: height * 0.02)),
                                 Row(
                                   children: [
                                     Expanded(
@@ -416,10 +450,10 @@ class BasketPageState extends State<BasketPage> {
                                           elevation: 5,
                                           minimumSize:
                                               Size(height * 0.23, width * 0.13),
-                                          backgroundColor: kPrimaryColor,
+                                          backgroundColor: kFourthColor,
                                         ),
                                         // ignore: prefer_const_constructors
-                                        child: Text('Оплатить',
+                                        child: Text('Оформить заказ',
                                             style: (TextStyle(
                                                 fontSize: 15,
                                                 color: Color.fromARGB(
