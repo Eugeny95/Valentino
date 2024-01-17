@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:valentino/buisiness/basket_bloc/basket_bloc_bloc.dart';
-import 'package:valentino/buisiness/menu_bloc/menu_bloc.dart';
-import 'package:valentino/ui/auth_page/signin_or_signup_screen.dart';
-import 'package:valentino/ui/constants.dart';
-import 'package:valentino/ui/menu_page/menu_screen1.dart';
+import 'package:valentino/buisiness/menu_page_bloc/menu_bloc/menu_bloc.dart';
+import 'package:valentino/buisiness/menu_page_bloc/select_category_bloc/bloc/select_category_bloc.dart';
+import 'package:valentino/ui/menu_page/menu_screen.dart';
 import 'package:valentino/ui/profile_page/profile_page.dart';
-import 'package:valentino/ui/profile_page/user_data_page.dart';
-
 import 'package:valentino/ui/store_page/store_page.dart';
 import 'package:valentino/ui/theme.dart';
 import 'package:badges/badges.dart' as badges;
@@ -43,6 +40,9 @@ class MyApp extends StatelessWidget {
             BasketBloc basketBloc = BasketBloc();
             basketBloc.add(EmptyBasketEvent());
             return basketBloc;
+          }),
+          BlocProvider(create: (context) {
+            return SelectCategoryBloc();
           })
         ],
         child: MainScreen(),

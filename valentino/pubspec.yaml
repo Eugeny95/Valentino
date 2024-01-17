@@ -50,6 +50,7 @@ dependencies:
   bloc: any
   flutter_bloc: any
   easy_image_viewer: ^1.4.0
+  visibility_detector: ^0.4.0+2
  
   
 
