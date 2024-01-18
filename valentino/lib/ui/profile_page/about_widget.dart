@@ -24,8 +24,8 @@ class AboutWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               gradient: LinearGradient(colors: [
                 Color.fromARGB(255, 98, 113, 84),
-                Color.fromARGB(149, 68, 80, 58),
-                Color.fromARGB(196, 62, 90, 47),
+                Color.fromARGB(147, 113, 134, 97),
+                Color.fromARGB(196, 102, 133, 86),
                 Color.fromARGB(255, 63, 74, 53),
               ])),
           child: Column(children: [

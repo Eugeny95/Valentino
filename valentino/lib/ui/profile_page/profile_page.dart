@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:valentino/ui/profile_page/about_restaurant_page.dart';
 import 'package:valentino/ui/profile_page/about_widget.dart';
-import 'package:valentino/ui/profile_page/clientdata_page.dart';
+
 import 'package:valentino/ui/profile_page/social_network_widget.dart';
-import 'package:valentino/ui/profile_page/user_data_page.dart';
+import 'package:valentino/ui/profile_page/client_data_page.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -77,18 +78,22 @@ class _ProfilePageState extends State<ProfilePage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => UserDataPage()),
+                  MaterialPageRoute(builder: (context) => ClientDataPage()),
                 );
               },
               child: Row(
                 children: [
-                  Icon(Icons.person_2_outlined, size: 22),
+                  Icon(
+                    Icons.person,
+                    size: 22,
+                    color: Colors.white,
+                  ),
                   SizedBox(
                     width: width * 0.03,
                   ),
                   Text('Данные пользователя',
                       style:
-                          TextStyle(color: Color.fromARGB(255, 221, 221, 221))),
+                          TextStyle(color: Color.fromARGB(255, 255, 255, 255))),
                 ],
               )),
           Padding(padding: EdgeInsets.only(top: 6)),
@@ -117,7 +122,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           TextStyle(color: Color.fromARGB(255, 221, 221, 221))),
                 ],
               )),
-          Padding(padding: EdgeInsets.only(top: 20)),
+          Padding(padding: EdgeInsets.only(top: 6)),
           ElevatedButton(
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
@@ -127,10 +132,42 @@ class _ProfilePageState extends State<ProfilePage> {
                 minimumSize: Size(height * 0.43, width * 0.12),
               ),
               onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => ClientDataPage()),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => AboutRestaurantPage()),
+                );
+              },
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.restaurant,
+                    size: 18,
+                    color: Colors.white,
+                  ),
+                  SizedBox(
+                    width: width * 0.03,
+                  ),
+                  Text('О ресторане',
+                      style:
+                          TextStyle(color: Color.fromARGB(255, 255, 255, 255))),
+                ],
+              )),
+          Padding(padding: EdgeInsets.only(top: 10)),
+          ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12), // <-- Radius
+                ),
+                elevation: 5,
+                minimumSize: Size(height * 0.43, width * 0.12),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => AboutRestaurantPage()),
+                );
               },
               child: Row(
                 children: [
@@ -143,7 +180,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           TextStyle(color: Color.fromARGB(255, 221, 221, 221))),
                 ],
               )),
-          Padding(padding: EdgeInsets.only(top: 20)),
+          Padding(padding: EdgeInsets.only(top: 10)),
           ElevatedButton(
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
@@ -165,32 +202,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     width: width * 0.03,
                   ),
                   Text('О приложении',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 221, 221, 221))),
-                ],
-              )),
-          Padding(padding: EdgeInsets.only(top: 6)),
-          ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12), // <-- Radius
-                ),
-                elevation: 5,
-                minimumSize: Size(height * 0.43, width * 0.12),
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ClientDataPage()),
-                );
-              },
-              child: Row(
-                children: [
-                  Icon(Icons.update, size: 22),
-                  SizedBox(
-                    width: width * 0.03,
-                  ),
-                  Text('Обратная связь',
                       style:
                           TextStyle(color: Color.fromARGB(255, 221, 221, 221))),
                 ],

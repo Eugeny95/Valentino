@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:valentino/buisiness/menu_page_bloc/menu_bloc/menu_bloc.dart';
 import 'package:valentino/buisiness/menu_page_bloc/select_category_bloc/bloc/select_category_bloc.dart';
+import 'package:valentino/ui/constants.dart';
 import 'package:valentino/ui/menu_page/components/carousel.dart';
 import 'package:valentino/ui/menu_page/components/menu_card.dart';
 import 'package:valentino/ui/menu_page/components/table_dialog.dart';
@@ -84,7 +85,7 @@ class _MenuPageState extends State<MenuPage> {
                 pinned: true,
                 snap: false,
                 floating: false,
-                expandedHeight: height / 3.0,
+                expandedHeight: height / 3.3,
                 // backgroundColor: Colors.transparent,
                 flexibleSpace: Stack(children: [
                   Container(
@@ -114,72 +115,80 @@ class _MenuPageState extends State<MenuPage> {
                   ),
                 ])),
             SliverAppBar(
-              toolbarHeight: height / 60,
+              backgroundColor: kContentColorLightTheme,
+              toolbarHeight: height / 35,
               pinned: true,
               snap: false,
               floating: false,
-              flexibleSpace: ListView(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  BlocBuilder<MenuBloc, MenuState>(
-                    builder: (context, state) {
-                      if (state.menuStatus == MenuStatus.done) {
-                        return BlocBuilder<SelectCategoryBloc,
-                                SelectCategoryState>(
-                            builder: (context, stateCategory) {
-                          return ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              shrinkWrap: true,
-                              itemCount: state.menuHttpModel!.menu!.length,
-                              itemBuilder: (context, index) {
-                                if (state.menuHttpModel!.menu![index]!.items!
-                                    .isEmpty) return Column();
-                                return Container(
-                                  margin: const EdgeInsets.only(left: 7),
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          (index == stateCategory.selectedIndex)
-                                              ? Colors.blue
-                                              : null,
-                                      minimumSize:
-                                          Size(height * 0.12, width * 0.1),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            12), // <-- Radius
+              flexibleSpace: Container(
+                color: kContentColorLightTheme,
+                child: SizedBox(
+                  height: height * 0.05,
+                  child: ListView(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    children: <Widget>[
+                      BlocBuilder<MenuBloc, MenuState>(
+                        builder: (context, state) {
+                          if (state.menuStatus == MenuStatus.done) {
+                            return BlocBuilder<SelectCategoryBloc,
+                                    SelectCategoryState>(
+                                builder: (context, stateCategory) {
+                              return ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  shrinkWrap: true,
+                                  itemCount: state.menuHttpModel!.menu!.length,
+                                  itemBuilder: (context, index) {
+                                    if (state.menuHttpModel!.menu![index]!
+                                        .items!.isEmpty) return Column();
+                                    return Container(
+                                      margin: const EdgeInsets.only(left: 7),
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: (index ==
+                                                  stateCategory.selectedIndex)
+                                              ? kFourthColor
+                                              : kContentColorLightTheme,
+                                          minimumSize:
+                                              Size(height * 0.12, width * 0.1),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                12), // <-- Radius
+                                          ),
+                                          // elevation: 5,
+                                        ),
+                                        onPressed: () {
+                                          lock = true;
+                                          BlocProvider.of<SelectCategoryBloc>(
+                                                  context)
+                                              .add(SelectCategoryIndexEvent(
+                                                  selectedIndex: index));
+                                          Scrollable.ensureVisible(
+                                              globalKeys[index]
+                                                  .currentContext!);
+                                        },
+                                        child: Text(
+                                            state.menuHttpModel!.menu![index]
+                                                .category_name
+                                                .toString(),
+                                            style: const TextStyle(
+                                                // fontFamily: 'Moniqa',
+                                                fontWeight: FontWeight.normal,
+                                                fontSize: 13,
+                                                color: Color.fromARGB(
+                                                    255, 245, 245, 245))),
                                       ),
-                                      elevation: 10,
-                                    ),
-                                    onPressed: () {
-                                      lock = true;
-                                      BlocProvider.of<SelectCategoryBloc>(
-                                              context)
-                                          .add(SelectCategoryIndexEvent(
-                                              selectedIndex: index));
-                                      Scrollable.ensureVisible(
-                                          globalKeys[index].currentContext!);
-                                    },
-                                    child: Text(
-                                        state.menuHttpModel!.menu![index]
-                                            .category_name
-                                            .toString(),
-                                        style: const TextStyle(
-                                            // fontFamily: 'Moniqa',
-                                            fontWeight: FontWeight.normal,
-                                            fontSize: 13,
-                                            color: Color.fromARGB(
-                                                255, 245, 245, 245))),
-                                  ),
-                                );
-                              });
-                        });
-                      } else {
-                        return const Column();
-                      }
-                    },
+                                    );
+                                  });
+                            });
+                          } else {
+                            return const Column();
+                          }
+                        },
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
             SliverList(

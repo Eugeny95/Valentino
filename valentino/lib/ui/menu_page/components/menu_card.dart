@@ -37,7 +37,7 @@ class MenuCategoryItem extends StatelessWidget {
         GridView.count(
           padding: const EdgeInsets.all(12),
           crossAxisSpacing: 1,
-          childAspectRatio: 0.78,
+          childAspectRatio: 0.76,
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           crossAxisCount: 2,
@@ -75,7 +75,7 @@ class MenuCard extends StatelessWidget {
             child: Stack(children: [
           Container(
             width: width / 2.3,
-            height: height / 3.7,
+            height: height / 3.6,
             padding: const EdgeInsets.only(top: 4.0),
             margin: const EdgeInsets.symmetric(horizontal: 1, vertical: 1),
             decoration: BoxDecoration(
@@ -84,7 +84,7 @@ class MenuCard extends StatelessWidget {
             child: Column(children: [
               Container(
                 width: width / 2.4,
-                height: height / 7.8,
+                height: height / 7.6,
                 padding: EdgeInsets.all(2), // Border width
                 decoration: BoxDecoration(
                     color: Colors.grey[800],
@@ -108,7 +108,7 @@ class MenuCard extends StatelessWidget {
                 ),
               ),
               Container(
-                height: height / 18,
+                height: height / 17,
                 child: Text(
                   dishHttpModel.name ?? '',
                   textDirection: TextDirection.ltr,
@@ -116,48 +116,61 @@ class MenuCard extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.normal,
+                    height: 0.97,
                   ),
                 ),
               ),
-              Row(children: [
-                SizedBox(
-                  width: width / 20,
-                ),
-                // Вес блюда
-                Text(
-                  '${dishHttpModel.energyFullAmount!.toInt()} ккал',
-                  textDirection: TextDirection.ltr,
-                  textAlign: TextAlign.right,
-                  style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.normal,
+              Container(
+                height: height * 0.02,
+                child: Row(children: [
+                  SizedBox(
+                    width: width / 40,
                   ),
-                ),
-                SizedBox(
-                  width: width / 70,
-                ),
-                Icon(Icons.circle,
-                    size: 5, color: Color.fromARGB(189, 255, 255, 255)),
-                // Энергетическая ценность
-                Text(
-                  ' ${(dishHttpModel.weight! * 1000).toInt()} гр',
-                  textDirection: TextDirection.ltr,
-                  textAlign: TextAlign.right,
-                  style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.normal,
+                  // Вес блюда
+                  (dishHttpModel.energyFullAmount != 0)
+                      ? Text(
+                          '${dishHttpModel.energyFullAmount!.toInt()} ккал',
+                          textDirection: TextDirection.ltr,
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        )
+                      : Container(),
+                  SizedBox(
+                    width: width / 70,
                   ),
-                )
-              ]),
+                  (dishHttpModel.energyFullAmount != 0)
+                      ? Icon(Icons.circle,
+                          size: 5, color: Color.fromARGB(189, 255, 255, 255))
+                      : Container(),
+                  // Энергетическая ценность
+                  (dishHttpModel.weight != 0)
+                      ? Text(
+                          ' ${(dishHttpModel.weight! * 1000).toInt()} гр',
+                          textDirection: TextDirection.ltr,
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        )
+                      : Container()
+                ]),
+              ),
               SizedBox(
-                height: height * 0.01,
+                height: height * 0.005,
               ),
               Container(
                 width: width / 2.5,
                 height: height / 22,
                 decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 246, 246, 246),
-                    borderRadius: BorderRadius.circular(10.0)),
+                  border: Border.all(
+                      width: 1, color: const Color.fromARGB(187, 0, 0, 0)),
+                  color: Color.fromARGB(255, 246, 246, 246),
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
                 child: Center(
                   child: Text(
                     '${dishHttpModel.currentPrice!.toInt()} руб.',
