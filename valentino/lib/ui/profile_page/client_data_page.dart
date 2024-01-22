@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:valentino/ui/auth_page/signin_or_signup_screen.dart';
 import 'package:valentino/ui/constants.dart';
 
 class ClientDataPage extends StatefulWidget {
@@ -46,219 +47,134 @@ class _ClientDataPageState extends State<ClientDataPage> {
           // ),
           Padding(padding: EdgeInsets.only(top: 40)),
           Container(
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(
+                      "assets/VB.png",
+                    ),
+                    opacity: 0.15)),
             width: width * 0.9,
             child: Column(children: [
               Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      color: Color.fromARGB(255, 95, 93, 93),
-                      width: 1,
-                    )),
+                height: height * 0.06,
                 child: IntrinsicHeight(
-                    child: Row(
+                    child: Column(
                   children: [
-                    Icon(Icons.person, size: 40),
-                    VerticalDivider(
-                      color: Color.fromARGB(255, 97, 97, 97),
-                      width: 5,
-                      thickness: 1,
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.person,
+                          size: 25,
+                          color: kIconsColor,
+                        ),
+                        SizedBox(width: width * 0.05),
+                        Text(
+                          'Константин',
+                          style: TextStyle(fontSize: 17),
+                        ),
+                      ],
                     ),
-                    Expanded(
-                      child: Text('Имя'),
-                      flex: 7,
-                    ),
-                    Expanded(
-                        flex: 1,
-                        child: GestureDetector(
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color: Color.fromARGB(0, 97, 97, 97),
-                                  width: 1,
-                                )),
-                            child: Icon(Icons.edit, size: 20),
-                          ),
-                          onTap: () async {
-                            // showDialog(
-                            //     context: context,
-                            //     builder: (BuildContext context) {
-                            //       return EditTextDialog(
-                            //           'Введите имя', userProfile.name, (text) {
-                            //         userProfile.name = text;
-                            //         setState(() {});
-                            //       });
-                            //     });
-                          },
-                        ))
+                    Divider(color: const Color.fromARGB(224, 255, 255, 255)),
                   ],
                 )),
               ),
               SizedBox(
-                height: height * 0.02,
+                height: height * 0.01,
               ),
               Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      color: Color.fromARGB(255, 99, 99, 99),
-                      width: 1,
-                    )),
+                height: height * 0.06,
                 child: IntrinsicHeight(
-                    child: Row(
+                    child: Column(
                   children: [
-                    Icon(Icons.phone_iphone, size: 40),
-                    VerticalDivider(
-                      color: Color.fromARGB(255, 97, 97, 97),
-                      width: 5,
-                      thickness: 1,
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.phone_iphone,
+                          size: 25,
+                          color: kIconsColor,
+                        ),
+                        SizedBox(width: width * 0.05),
+                        Text(
+                          '89991112233',
+                          style: TextStyle(fontSize: 17),
+                        ),
+                      ],
                     ),
-                    Expanded(
-                      child: Text('89952519951'),
-                      flex: 7,
-                    ),
-                    Expanded(
-                        flex: 1,
-                        child: GestureDetector(
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color: Color.fromARGB(0, 97, 97, 97),
-                                  width: 1,
-                                )),
-                            child: Icon(Icons.edit, size: 20),
-                          ),
-                          onTap: () async {
-                            // showDialog(
-                            //     context: context,
-                            //     builder: (BuildContext context) {
-                            //       return EditTextDialog(
-                            //           'Введите телефон', userProfile.phone, (text) {
-                            //         userProfile.phone = text;
-                            //         setState(() {});
-                            //       });
-                            //     });
-                          },
-                        ))
+                    Divider(color: const Color.fromARGB(224, 255, 255, 255)),
                   ],
                 )),
               ),
               SizedBox(
-                height: height * 0.02,
+                height: height * 0.01,
               ),
               Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      color: Color.fromARGB(255, 97, 97, 97),
-                      width: 1,
-                    )),
+                height: height * 0.06,
                 child: IntrinsicHeight(
-                    child: Row(
+                    child: Column(
                   children: [
-                    Icon(Icons.email, size: 40),
-                    VerticalDivider(
-                      color: Color.fromARGB(255, 97, 97, 97),
-                      width: 5,
-                      thickness: 1,
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.date_range,
+                          size: 25,
+                          color: kIconsColor,
+                        ),
+                        SizedBox(width: width * 0.05),
+                        Text(
+                          '18.07.1994',
+                          style: TextStyle(fontSize: 17),
+                        ),
+                      ],
                     ),
-                    Expanded(
-                      child: Text('anemail@mail.ru'),
-                      flex: 7,
-                    ),
-                    Expanded(
-                        flex: 1,
-                        child: GestureDetector(
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color: Color.fromARGB(0, 97, 97, 97),
-                                  width: 1,
-                                )),
-                            child: Icon(Icons.edit, size: 20),
-                          ),
-                          onTap: () async {
-                            // showDialog(
-                            //     context: context,
-                            //     builder: (BuildContext context) {
-                            //       return EditTextDialog(
-                            //           'Введите email', userProfile.email, (text) {
-                            //         userProfile.email = text;
-                            //         setState(() {});
-                            //       });
-                            //     }
-                            //     );
-                          },
-                        ))
+                    Divider(color: const Color.fromARGB(224, 255, 255, 255)),
                   ],
                 )),
               ),
               SizedBox(
-                height: height * 0.02,
+                height: height * 0.01,
               ),
               Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      color: Color.fromARGB(255, 97, 97, 97),
-                      width: 1,
-                    )),
+                height: height * 0.06,
                 child: IntrinsicHeight(
-                    child: Row(
+                    child: Column(
                   children: [
-                    Icon(Icons.home_filled, size: 40),
-                    VerticalDivider(
-                      color: Color.fromARGB(255, 97, 97, 97),
-                      width: 5,
-                      thickness: 1,
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.email,
+                          size: 25,
+                          color: kIconsColor,
+                        ),
+                        SizedBox(width: width * 0.05),
+                        Text(
+                          'example@yandex.ru',
+                          style: TextStyle(fontSize: 17),
+                        ),
+                      ],
                     ),
-                    Expanded(
-                      child: Text('Воронеж, ул. Мира, д.5'),
-                      flex: 7,
-                    ),
-                    Expanded(
-                        flex: 1,
-                        child: GestureDetector(
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color: Color.fromARGB(0, 97, 97, 97),
-                                  width: 1,
-                                )),
-                            child: Icon(Icons.edit, size: 20),
-                          ),
-                          onTap: () async {
-                            // showDialog(
-                            //     context: context,
-                            //     builder: (BuildContext context) {
-                            //       return EditTextDialog(
-                            //           'Введите email', userProfile.email, (text) {
-                            //         userProfile.email = text;
-                            //         setState(() {});
-                            //       });
-                            //     }
-                            //     );
-                          },
-                        ))
+                    Divider(color: const Color.fromARGB(224, 255, 255, 255)),
                   ],
                 )),
               ),
               SizedBox(
-                height: height * 0.02,
+                height: height * 0.04,
               ),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12), // <-- Radius
-                    ),
+                        borderRadius: BorderRadius.circular(12),
+                        side: BorderSide(
+                            color: Colors.white, width: 0.3) // <-- Radius
+                        ),
                     elevation: 5,
                     minimumSize: Size(height * 0.43, width * 0.13),
                   ),
                   onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SigninOrSignupScreen()),
+                    );
                     // userProfile.requestUserData();
 
                     // if (Validator.isPhoneValid(userProfile.phone) != null) {
@@ -279,7 +195,7 @@ class _ClientDataPageState extends State<ClientDataPage> {
 
                     // TODO: validator
                   },
-                  child: Text('Обновить профиль',
+                  child: Text('Изменить данные',
                       style: TextStyle(
                           color: Color.fromARGB(255, 220, 220, 220)))),
               SizedBox(
@@ -288,8 +204,10 @@ class _ClientDataPageState extends State<ClientDataPage> {
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12), // <-- Radius
-                    ),
+                        borderRadius: BorderRadius.circular(12),
+                        side: BorderSide(
+                            color: Colors.white, width: 0.3) // <-- Radius
+                        ),
                     elevation: 5,
                     minimumSize: Size(height * 0.43, width * 0.13),
                   ),
@@ -316,7 +234,7 @@ class _ClientDataPageState extends State<ClientDataPage> {
                   },
                   child: Text('Выйти из профиля',
                       style:
-                          TextStyle(color: Color.fromARGB(167, 247, 45, 45)))),
+                          TextStyle(color: Color.fromARGB(229, 227, 52, 52)))),
             ]),
           ),
         ]),
