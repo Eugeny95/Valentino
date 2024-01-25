@@ -42,69 +42,99 @@ class SigninOrSignupScreenState extends State<SigninOrSignupScreen> {
                                     bottomLeft: Radius.circular(25),
                                     bottomRight: Radius.circular(25)),
                                 image: DecorationImage(
-                                  image: AssetImage("assets/VB.png"),
+                                  image: AssetImage(
+                                    "assets/VB.png",
+                                  ),
+                                  opacity: 0.60,
                                   fit: BoxFit.fitWidth,
                                 ),
                               )),
                           //Spacer(flex: 1),
-                          TextFormField(
-                            cursorColor: Color.fromARGB(139, 255, 255, 255),
-                            //controller: TextEditingController()..text = dateTime,
+                          SizedBox(height: kDefaultPadding * 0.9),
+                          SizedBox(
+                            height: height * 0.07,
+                            child: TextFormField(
+                              cursorColor: Color.fromARGB(139, 255, 255, 255),
 
-                            //initialValue: dateTime,
-                            keyboardType: TextInputType.number,
-                            inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.allow(
-                                  RegExp(r'[0-9.,]'))
-                            ],
-                            // validator: (value) => Validator.isPhoneValid(value),
-                            onChanged: (String value) {
-                              login = value;
-                            },
-                            decoration: InputDecoration(
-                                fillColor: Color.fromARGB(139, 255, 255, 255),
-                                focusColor: Color.fromARGB(139, 255, 255, 255),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10)),
-                                focusedBorder: OutlineInputBorder(
+                              //controller: TextEditingController()..text = dateTime,
+
+                              //initialValue: dateTime,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.allow(
+                                    RegExp(r'[0-9.,]'))
+                              ],
+                              // validator: (value) => Validator.isPhoneValid(value),
+                              onChanged: (String value) {
+                                login = value;
+                              },
+                              decoration: InputDecoration(
+                                  fillColor: Color.fromARGB(139, 255, 255, 255),
+                                  focusColor:
+                                      Color.fromRGBO(255, 255, 255, 0.545),
+                                  border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10),
-                                    borderSide: BorderSide(
-                                        color:
-                                            Color.fromARGB(139, 255, 255, 255),
-                                        width: 2.0)),
-                                prefixIcon: Icon(Icons.phone_iphone,
-                                    color: Color.fromARGB(139, 255, 255, 255)),
-                                labelText: 'Телефон',
-                                labelStyle: TextStyle(
-                                    color: Color.fromARGB(139, 255, 255, 255))),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: BorderSide(
+                                          color: Color.fromARGB(
+                                              199, 255, 255, 255),
+                                          width: 1.0)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: BorderSide(
+                                          color: Color.fromRGBO(
+                                              255, 255, 255, 0.545),
+                                          width: 1.0)),
+                                  prefixIcon: Icon(Icons.phone_iphone,
+                                      color:
+                                          Color.fromARGB(139, 255, 255, 255)),
+                                  labelText: 'Телефон',
+                                  labelStyle: TextStyle(
+                                      color: Color.fromARGB(139, 255, 255, 255),
+                                      fontSize: 14)),
+                            ),
                           ),
-                          SizedBox(height: kDefaultPadding * 1.5),
-                          TextFormField(
-                            cursorColor: Color.fromARGB(139, 255, 255, 255),
-                            //controller: TextEditingController()..text = dateTime,
-                            obscureText: true,
-                            //initialValue: dateTime,
-                            // validator: (value) =>
-                            //     Validator.isPasswordValid(value),
-                            onChanged: (String value) {
-                              password = value;
-                            },
-                            decoration: InputDecoration(
-                                fillColor: Color.fromARGB(139, 255, 255, 255),
-                                focusColor: Color.fromARGB(139, 255, 255, 255),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10)),
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: BorderSide(
-                                        color:
-                                            Color.fromARGB(139, 255, 255, 255),
-                                        width: 2.0)),
-                                prefixIcon: Icon(Icons.key,
-                                    color: Color.fromARGB(139, 255, 255, 255)),
-                                labelText: 'Пароль',
-                                labelStyle: TextStyle(
-                                    color: Color.fromARGB(139, 255, 255, 255))),
+                          SizedBox(height: kDefaultPadding * 0.7),
+                          SizedBox(
+                            height: height * 0.07,
+                            child: TextFormField(
+                              cursorColor: Color.fromARGB(139, 255, 255, 255),
+                              //controller: TextEditingController()..text = dateTime,
+                              obscureText: true,
+                              //initialValue: dateTime,
+                              // validator: (value) =>
+                              //     Validator.isPasswordValid(value),
+                              onChanged: (String value) {
+                                password = value;
+                              },
+                              decoration: InputDecoration(
+                                  fillColor: Color.fromARGB(139, 255, 255, 255),
+                                  focusColor:
+                                      Color.fromARGB(139, 255, 255, 255),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10)),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: BorderSide(
+                                          color: Color.fromARGB(
+                                              199, 255, 255, 255),
+                                          width: 1.0)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: BorderSide(
+                                          color: Color.fromARGB(
+                                              139, 255, 255, 255),
+                                          width: 1.0)),
+                                  prefixIcon: Icon(Icons.key,
+                                      color:
+                                          Color.fromARGB(139, 255, 255, 255)),
+                                  labelText: 'Пароль',
+                                  labelStyle: TextStyle(
+                                      color: Color.fromARGB(139, 255, 255, 255),
+                                      fontSize: 14)),
+                            ),
                           ),
                           // Spacer(flex: 2),
                           // Spacer(),
@@ -115,20 +145,23 @@ class SigninOrSignupScreenState extends State<SigninOrSignupScreen> {
                           //         style: TextStyle(color: Colors.red));
                           //   },
                           // ),
-                          SizedBox(height: kDefaultPadding * 1.5),
+                          SizedBox(height: kDefaultPadding * 0.5),
                           ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(15), // <-- Radius
-                                ),
+                                    borderRadius: BorderRadius.circular(15),
+                                    side: BorderSide(
+                                        color: Colors.white,
+                                        width: 0.3) // <-- Radius
+                                    ),
                                 elevation: 5,
-                                minimumSize: Size(height * 0.33, width * 0.12),
+                                minimumSize: Size(height * 0.4, width * 0.12),
                               ),
                               child: Text(
                                 "Войти",
                                 style: TextStyle(
-                                    color: Color.fromARGB(170, 255, 255, 255)),
+                                    color: Color.fromARGB(218, 255, 255, 255),
+                                    fontSize: 13),
                               ),
                               onPressed: () {
                                 // if (!_formKey.currentState!.validate()) return;
@@ -137,15 +170,17 @@ class SigninOrSignupScreenState extends State<SigninOrSignupScreen> {
                                 //     AuthEventLogin(
                                 //         login: login, password: password));
                               }),
-                          SizedBox(height: kDefaultPadding * 0.8),
+                          SizedBox(height: kDefaultPadding * 0.5),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(15), // <-- Radius
-                              ),
+                                  borderRadius: BorderRadius.circular(15),
+                                  side: BorderSide(
+                                      color: Colors.white,
+                                      width: 0.3) // <-- Radius
+                                  ),
                               elevation: 5,
-                              minimumSize: Size(height * 0.33, width * 0.12),
+                              minimumSize: Size(height * 0.4, width * 0.12),
                             ),
                             // color: Theme.of(context).colorScheme.secondary,
                             child: Text(

@@ -31,6 +31,7 @@ String mytime = '30 минут';
 
 class BasketPageState extends State<BasketPage> {
   int counter = 1;
+
   @override
   void initState() {
     // super.initState();
@@ -228,11 +229,7 @@ class BasketPageState extends State<BasketPage> {
                                                           Expanded(
                                                             child: Text(
                                                               // line.totalCost.toInt().toString(),
-                                                              state
-                                                                  .positions![
-                                                                      index]
-                                                                  .allCost
-                                                                  .toString(),
+                                                              '${state.positions![index].allCost!.toInt()} ₽',
                                                               textAlign:
                                                                   TextAlign
                                                                       .right,
@@ -428,13 +425,27 @@ class BasketPageState extends State<BasketPage> {
                                                     255, 229, 229, 229),
                                                 fontSize: 12),
                                           ),
-                                          Text(
-                                            state.totalCost.toString(),
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Color.fromARGB(
-                                                    255, 229, 229, 229),
-                                                fontSize: 20),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                ' ${state.totalCost!.toInt()}',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Color.fromARGB(
+                                                        255, 229, 229, 229),
+                                                    fontSize: 20),
+                                              ),
+                                              Text(
+                                                ' ₽',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Color.fromARGB(
+                                                        255, 229, 229, 229),
+                                                    fontSize: 15),
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),

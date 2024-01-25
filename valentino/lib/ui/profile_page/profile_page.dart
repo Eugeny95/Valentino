@@ -70,8 +70,10 @@ class _ProfilePageState extends State<ProfilePage> {
           ElevatedButton(
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12), // <-- Radius
-                ),
+                    borderRadius: BorderRadius.circular(12),
+                    side: BorderSide(
+                        color: Colors.white, width: 0.2) // <-- Radius
+                    ),
                 elevation: 5,
                 minimumSize: Size(height * 0.43, width * 0.12),
               ),
@@ -100,8 +102,10 @@ class _ProfilePageState extends State<ProfilePage> {
           ElevatedButton(
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12), // <-- Radius
-                ),
+                    borderRadius: BorderRadius.circular(12),
+                    side: BorderSide(
+                        color: Colors.white, width: 0.2) // <-- Radius
+                    ),
                 elevation: 5,
                 minimumSize: Size(height * 0.43, width * 0.12),
               ),
@@ -126,8 +130,10 @@ class _ProfilePageState extends State<ProfilePage> {
           ElevatedButton(
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12), // <-- Radius
-                ),
+                    borderRadius: BorderRadius.circular(12),
+                    side: BorderSide(
+                        color: Colors.white, width: 0.2) // <-- Radius
+                    ),
                 elevation: 5,
                 minimumSize: Size(height * 0.43, width * 0.12),
               ),
@@ -157,8 +163,10 @@ class _ProfilePageState extends State<ProfilePage> {
           ElevatedButton(
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12), // <-- Radius
-                ),
+                    borderRadius: BorderRadius.circular(12),
+                    side: BorderSide(
+                        color: Colors.white, width: 0.2) // <-- Radius
+                    ),
                 elevation: 5,
                 minimumSize: Size(height * 0.43, width * 0.12),
               ),
@@ -184,8 +192,10 @@ class _ProfilePageState extends State<ProfilePage> {
           ElevatedButton(
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12), // <-- Radius
-                ),
+                    borderRadius: BorderRadius.circular(12),
+                    side: BorderSide(
+                        color: Colors.white, width: 0.2) // <-- Radius
+                    ),
                 elevation: 5,
                 minimumSize: Size(height * 0.43, width * 0.12),
               ),

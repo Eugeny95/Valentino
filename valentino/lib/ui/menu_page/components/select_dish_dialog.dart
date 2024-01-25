@@ -324,7 +324,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                       ),
                       Expanded(
                         child: Text(
-                          'Цена,руб',
+                          'Цена,₽',
                           style: TextStyle(
                               color: Color.fromARGB(255, 246, 35, 35),
                               fontSize: fontSize),

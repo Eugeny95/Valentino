@@ -14,8 +14,9 @@ class SocialNetworkWidget extends StatelessWidget {
       children: [
         Container(
           decoration: BoxDecoration(
-              color: Color.fromARGB(83, 98, 113, 84),
-              borderRadius: BorderRadius.circular(20)),
+            color: Color.fromARGB(83, 98, 113, 84),
+            borderRadius: BorderRadius.circular(20),
+          ),
           width: width * 0.7,
           height: height * 0.11,
           child: Column(

@@ -173,7 +173,7 @@ class MenuCard extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    '${dishHttpModel.currentPrice!.toInt()} руб.',
+                    '${dishHttpModel.currentPrice!.toInt()} ₽',
                     textDirection: TextDirection.ltr,
                     style: TextStyle(
                       fontSize: 14,
