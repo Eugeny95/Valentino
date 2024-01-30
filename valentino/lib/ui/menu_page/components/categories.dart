@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:valentino/models/menu.dart';
+
 import 'package:valentino/ui/constants.dart';
 
 class RestaurantCategories extends SliverPersistentHeaderDelegate {
@@ -74,23 +74,7 @@ class _CategoriesState extends State<Categories> {
       child: SingleChildScrollView(
           controller: controller,
           scrollDirection: Axis.horizontal,
-          child: Row(
-              children: List.generate(
-                  demoCategoryMenus.length,
-                  (index) => Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: TextButton(
-                          onPressed: () {
-                            widget.onChanged(index);
-                          },
-                          style: TextButton.styleFrom(
-                              primary: widget.selectedIndex == index
-                                  ? Colors.white
-                                  : Colors.white60),
-                          child: Text(demoCategoryMenus[index].category,
-                              style: TextStyle(fontSize: 20)),
-                        ),
-                      )))),
+          child: Row()),
     );
   }
 }

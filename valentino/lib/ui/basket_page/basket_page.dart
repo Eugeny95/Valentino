@@ -7,10 +7,13 @@ import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:sbp/data/c2bmembers_data.dart';
 import 'package:sbp/models/c2bmembers_model.dart';
 import 'package:sbp/sbp.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 import 'package:valentino/buisiness/basket_bloc/basket_bloc_bloc.dart';
+import 'package:valentino/ui/basket_page/address_widget.dart';
 import 'package:valentino/ui/basket_page/sbp_modal_widget.dart';
 
 import 'package:valentino/ui/constants.dart';
+import 'package:valentino/ui/profile_page/about_widget.dart';
 
 class BasketPage extends StatefulWidget {
   final url =
@@ -260,124 +263,71 @@ class BasketPageState extends State<BasketPage> {
                                         });
                                   },
                                 ),
-                                Container(
-                                    width: width * 0.9,
-                                    child: Column(children: [
-                                      Row(children: [
-                                        Text('Ближайшее время:',
-                                            style: TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 229, 229, 229),
-                                                fontSize: 15)),
-                                        Text(
-                                          ' ' + mytime + ' ',
-                                          style: TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 229, 229, 229),
-                                              fontSize: 15),
-                                        )
-                                      ]),
-                                      Padding(
-                                          padding: EdgeInsets.only(
-                                              top: height * 0.01)),
-                                      Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            ElevatedButton(
-                                                style: ElevatedButton.styleFrom(
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            12), // <-- Radius
-                                                  ),
-                                                  elevation: 5,
-                                                  minimumSize: Size(
-                                                      height * 0.35,
-                                                      width * 0.12),
-                                                ),
-                                                onPressed: () async {
-                                                  // DatePicker.showPicker(
-                                                  //   context,
-                                                  //   pickerModel: CustomPicker(
-                                                  //     currentTime: DateTime.now(),
-                                                  //     locale: LocaleType.ru,
-                                                  //   ),
-                                                  //   onConfirm: (time) {
-                                                  //     print('change $time');
-                                                  //     mytime = time
-                                                  //         .toString()
-                                                  //         .substring(0, 16);
-                                                  //     // _orderObject!.requiredDateTime =
-                                                  //     //     mytime;
-                                                  //     setState(() {});
-                                                  //   },
-                                                  // );
-                                                  DatePicker.showDateTimePicker(
-                                                      context,
-                                                      showTitleActions: true,
-                                                      // minDate:DateTime.now(),
-                                                      // maxDate: DateTime.now(),
-                                                      minTime: DateTime.now(),
-                                                      maxTime: DateTime.now()
-                                                          .add(const Duration(
-                                                              days: 10)),
-                                                      onChanged: (date) {
-                                                    print('change $date');
-                                                  }, onConfirm: (date) {
-                                                    print('confirm $date');
-                                                  },
-                                                      currentTime:
-                                                          DateTime.now(),
-                                                      locale: LocaleType.ru);
-                                                },
-                                                child: Text('Выбрать время',
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 12)))
-                                          ])
-                                    ])),
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Radio(
-                                          fillColor:
-                                              MaterialStateColor.resolveWith(
-                                                  (states) => Color.fromARGB(
-                                                      255, 229, 229, 229)),
-                                          focusColor:
-                                              MaterialStateColor.resolveWith(
-                                                  (states) => Color.fromARGB(
-                                                      255, 229, 229, 229)),
-                                          value: false,
-                                          groupValue: valueRadio,
-                                          onChanged: (bool? value) {
-                                            setState(() {
-                                              valueRadio = value!;
-                                              // _orderObject!.onPlace = valueRadio;
-                                            });
-                                          }),
-                                      Text('На вынос'),
-                                      Radio(
-                                          fillColor:
-                                              MaterialStateColor.resolveWith(
-                                                  (states) => Color.fromARGB(
-                                                      255, 229, 229, 229)),
-                                          focusColor:
-                                              MaterialStateColor.resolveWith(
-                                                  (states) => Color.fromARGB(
-                                                      255, 229, 229, 229)),
-                                          value: true,
-                                          groupValue: valueRadio,
-                                          onChanged: (bool? value) {
-                                            setState(() {
-                                              valueRadio = value!;
-                                              // _orderObject!.onPlace = valueRadio;
-                                            });
-                                          }),
-                                      Text('Доставка'),
-                                    ]),
+                                ToggleSwitch(
+                                  minWidth: 150,
+                                  cornerRadius: 20,
+                                  activeBgColor: [kPrimaryColor],
+                                  inactiveBgColor:
+                                      const Color.fromARGB(255, 91, 91, 91),
+                                  inactiveFgColor: Colors.white,
+                                  initialLabelIndex: 1,
+                                  totalSwitches: 2,
+                                  labels: ['Самовывоз', 'Доставка'],
+                                  radiusStyle: true,
+                                  onToggle: (index) {
+                                    print('Доставка=show adress_widget');
+                                  },
+                                ),
+                                // Row(
+                                //     mainAxisAlignment: MainAxisAlignment.center,
+                                //     children: [
+                                //       Radio(
+                                //           fillColor:
+                                //               MaterialStateColor.resolveWith(
+                                //                   (states) => Color.fromARGB(
+                                //                       255, 229, 229, 229)),
+                                //           focusColor:
+                                //               MaterialStateColor.resolveWith(
+                                //                   (states) => Color.fromARGB(
+                                //                       255, 229, 229, 229)),
+                                //           value: false,
+                                //           groupValue: valueRadio,
+                                //           onChanged: (bool? value) {
+                                //             setState(() {
+                                //               valueRadio = value!;
+                                //               // _orderObject!.onPlace = valueRadio;
+                                //             });
+                                //           }),
+                                //       Text('На вынос'),
+                                //       Radio(
+                                //           fillColor:
+                                //               MaterialStateColor.resolveWith(
+                                //                   (states) => Color.fromARGB(
+                                //                       255, 229, 229, 229)),
+                                //           focusColor:
+                                //               MaterialStateColor.resolveWith(
+                                //                   (states) => Color.fromARGB(
+                                //                       255, 229, 229, 229)),
+                                //           value: true,
+                                //           groupValue: valueRadio,
+                                //           onChanged: (bool? value) {
+                                //             setState(() {
+                                //               valueRadio = value!;
+                                //             });
+                                //           }),
+                                //       Text('Доставка'),
+                                //     ]),
                                 Divider(color: Color.fromARGB(255, 67, 67, 67)),
+                                Align(
+                                    alignment: Alignment
+                                        .center, //or choose another Alignment
+                                    child: Container(
+                                        color: Colors.transparent,
+                                        width: width - (0.01 * width),
+                                        child: AddressWidget())),
+                                Padding(
+                                    padding:
+                                        EdgeInsets.only(top: height * 0.01)),
                                 TextFormField(
                                   keyboardType: TextInputType.multiline,
                                   maxLines: 5,
