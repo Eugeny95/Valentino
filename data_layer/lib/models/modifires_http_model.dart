@@ -8,7 +8,7 @@ class ModifiresHttpModel {
   /// The generated code assumes these values exist in JSON.
   String? id;
   String? name;
-  bool isSelected = false;
+  bool? isSelected = false;
 
   ModifiresHttpModel({required this.id, required this.name});
 

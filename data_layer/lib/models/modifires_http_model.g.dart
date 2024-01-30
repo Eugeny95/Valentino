@@ -10,10 +10,11 @@ ModifiresHttpModel _$ModifiresHttpModelFromJson(Map<String, dynamic> json) =>
     ModifiresHttpModel(
       id: json['id'] as String?,
       name: json['name'] as String?,
-    );
+    )..isSelected = json['isSelected'] as bool?;
 
 Map<String, dynamic> _$ModifiresHttpModelToJson(ModifiresHttpModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+      'isSelected': instance.isSelected,
     };
