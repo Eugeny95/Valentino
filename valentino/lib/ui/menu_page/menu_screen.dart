@@ -164,8 +164,9 @@ class _MenuPageState extends State<MenuPage> {
                                               .add(SelectCategoryIndexEvent(
                                                   selectedIndex: index));
                                           Scrollable.ensureVisible(
-                                              globalKeys[index]
-                                                  .currentContext!);
+                                              globalKeys[index].currentContext!,
+                                              duration:
+                                                  Duration(milliseconds: 1000));
                                         },
                                         child: Text(
                                             state.menuHttpModel!.menu![index]
