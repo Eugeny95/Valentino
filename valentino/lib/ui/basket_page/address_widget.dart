@@ -15,7 +15,7 @@ class _AddressWidgetState extends State<AddressWidget> {
 
   @override
   void initState() {
-    _addressController.text = 'Воронеж, Лизюкова 25';
+    _addressController.text = '';
 
     _latitudeController.text = '52.2165157';
     _longitudeController.text = '6.9437819';
@@ -59,30 +59,17 @@ class _AddressWidgetState extends State<AddressWidget> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       SizedBox(
-                        width: width * 0.7,
+                        width: width * 0.6,
                         child: TextField(
-                            autocorrect: true,
-                            // controller: _addressController,
-                            style: Theme.of(context).textTheme.bodyMedium,
-                            decoration: InputDecoration(
-                              hintText: 'Улица',
-                            )),
+                          autocorrect: true,
+                          controller: _addressController,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                          decoration: InputDecoration(
+                            hintText: 'Улица и дом',
+                          ),
+                          keyboardType: TextInputType.text,
+                        ),
                       ),
-                      SizedBox(
-                        width: width * 0.1,
-                        child: TextField(
-                            autocorrect: true,
-                            // controller: _addressController,
-                            style: Theme.of(context).textTheme.bodyMedium,
-                            decoration: InputDecoration(
-                              hintText: 'Дом',
-                            )),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
                       SizedBox(
                         width: width * 0.2,
                         child: TextField(
@@ -93,8 +80,13 @@ class _AddressWidgetState extends State<AddressWidget> {
                               hintText: 'Квартира',
                             )),
                       ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
                       SizedBox(
-                        width: width * 0.2,
+                        width: width * 0.3,
                         child: TextField(
                             autocorrect: true,
                             // controller: _addressController,
@@ -104,7 +96,7 @@ class _AddressWidgetState extends State<AddressWidget> {
                             )),
                       ),
                       SizedBox(
-                        width: width * 0.15,
+                        width: width * 0.2,
                         child: TextField(
                             autocorrect: true,
                             // controller: _addressController,
@@ -128,15 +120,6 @@ class _AddressWidgetState extends State<AddressWidget> {
                 ],
               ),
               Padding(padding: EdgeInsets.only(top: 10)),
-              TextField(
-                autocorrect: true,
-                controller: _addressController,
-                style: Theme.of(context).textTheme.bodyMedium,
-                decoration: InputDecoration(
-                  hintText: 'Адрес',
-                ),
-                keyboardType: TextInputType.text,
-              ),
               const Padding(
                 padding: EdgeInsets.only(top: 8),
               ),

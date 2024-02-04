@@ -10,6 +10,7 @@ import 'package:valentino/ui/store_page/store_page.dart';
 import 'package:valentino/ui/theme.dart';
 import 'package:badges/badges.dart' as badges;
 
+import 'ui/basket_page/autocomplete_widget.dart';
 import 'ui/basket_page/basket_page.dart';
 
 void main() {
