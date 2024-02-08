@@ -45,14 +45,13 @@ class _MenuPageState extends State<MenuPage> {
           return VisibilityDetector(
             key: Key(i.toString()),
             onVisibilityChanged: (info) async {
-              print('visible ${info.key}');
               if (!lock) {
                 BlocProvider.of<SelectCategoryBloc>(context).add(
                     SelectCategoryIndexEvent(
                         selectedIndex:
                             int.parse(info.key.toString().split("'")[1])));
               }
-              await Future.delayed(Duration(seconds: 3)).then((value) {
+              await Future.delayed(const Duration(seconds: 3)).then((value) {
                 lock = false;
               });
             },
@@ -78,7 +77,7 @@ class _MenuPageState extends State<MenuPage> {
       body: Container(
         color: const Color.fromARGB(0, 62, 62, 62),
         child: CustomScrollView(
-          physics: ScrollPhysics(),
+          physics: const ScrollPhysics(),
           controller: scrollController,
           slivers: <Widget>[
             SliverAppBar(
@@ -95,7 +94,7 @@ class _MenuPageState extends State<MenuPage> {
                             // bottomRight: Radius.circular(30),
                             // bottomLeft: Radius.circular(30),
                             )),
-                    child: Cerousel(),
+                    child: const Cerousel(),
                   ),
                   Positioned(
                     top: 35,
@@ -165,8 +164,8 @@ class _MenuPageState extends State<MenuPage> {
                                                   selectedIndex: index));
                                           Scrollable.ensureVisible(
                                               globalKeys[index].currentContext!,
-                                              duration:
-                                                  Duration(milliseconds: 1000));
+                                              duration: const Duration(
+                                                  milliseconds: 1000));
                                         },
                                         child: Text(
                                             state.menuHttpModel!.menu![index]

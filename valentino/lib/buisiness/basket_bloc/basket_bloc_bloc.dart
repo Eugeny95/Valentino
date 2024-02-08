@@ -1,14 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:data_layer/models/dish_http_model.dart';
-
 import 'package:meta/meta.dart';
-
 part 'basket_bloc_event.dart';
 part 'basket_bloc_state.dart';
 
 class BasketBloc extends Bloc<BasketEvent, BasketState> {
+  List<Position> positions = [];
+  double totalCost = 0;
   BasketBloc() : super(BasketState(basketStatus: BasketStatus.initial)) {
-    List<Position> positions = [];
     on<AddDishEvent>((event, emit) {
       bool noAddflag = false;
       for (Position position in positions) {
@@ -28,7 +27,7 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
         else
           return false;
       }).calculateCost();
-      double totalCost = 0;
+
       for (Position position in positions) {
         totalCost = totalCost + position.allCost;
       }
@@ -49,7 +48,7 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
           break;
         }
       }
-      double totalCost = 0;
+      totalCost = 0;
       for (Position position in positions) {
         totalCost = totalCost + position.allCost;
       }
@@ -66,7 +65,7 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
           break;
         }
       }
-      double totalCost = 0;
+      totalCost = 0;
       for (Position position in positions) {
         totalCost = totalCost + position.allCost;
       }
@@ -82,7 +81,7 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
 
     on<GetBasketPositions>((event, emit) {
       print('get basket positions');
-      double totalCost = 0;
+      totalCost = 0;
       for (Position position in positions) {
         totalCost = totalCost + position.allCost;
       }
@@ -91,5 +90,13 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
           positions: positions,
           totalCost: totalCost));
     });
+  }
+
+  List<Position> getPositions() {
+    return positions;
+  }
+
+  double getTotalCost() {
+    return totalCost;
   }
 }

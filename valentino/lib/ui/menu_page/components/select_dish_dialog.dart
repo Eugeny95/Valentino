@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:data_layer/models/dish_http_model.dart';
 import 'package:easy_image_viewer/easy_image_viewer.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:valentino/buisiness/basket_bloc/basket_bloc_bloc.dart';
@@ -11,6 +10,7 @@ import 'package:valentino/ui/constants.dart';
 
 // TODO можно в будущем сделать категории подгружаемыми с интернета
 
+// ignore: must_be_immutable
 class SelectDishDialog extends StatefulWidget {
   DishHttpModel dishHttpModel;
 
@@ -33,7 +33,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
     BlocProvider.of<BasketBloc>(context).add(EmptyBasketEvent());
     List<Widget> propertiesWidget = [];
     List<Widget> volumesWidget = [];
-    DishHttpModel dishHttpModel = this.widget.dishHttpModel;
+    DishHttpModel dishHttpModel = widget.dishHttpModel;
     for (int i = 0; i < dishHttpModel.modifiers!.length; i++) {
       if (dishHttpModel.modifiers![i].name == 'на вынос' ||
           dishHttpModel.modifiers![i].name == '-одновременно' ||
@@ -41,15 +41,14 @@ class SelectDishDialogState extends State<SelectDishDialog> {
           dishHttpModel.modifiers![i].name == 'лист') continue;
       propertiesWidget.add(Row(children: [
         Expanded(
-          child: Text(dishHttpModel.modifiers![i].name!),
           flex: 3,
+          child: Text(dishHttpModel.modifiers![i].name!),
         ),
         Checkbox(
-          activeColor: Color.fromARGB(255, 89, 89, 89),
+          activeColor: const Color.fromARGB(255, 89, 89, 89),
           value: dishHttpModel.modifiers![i].isSelected,
           onChanged: (value) {
             setState(() {
-              print('used ${value}');
               dishHttpModel.modifiers![i].isSelected = value!;
             });
           },
@@ -81,21 +80,19 @@ class SelectDishDialogState extends State<SelectDishDialog> {
     double fontSize = width / 25;
     //
     return AlertDialog(
-        insetPadding: EdgeInsets.all(20),
-        backgroundColor: Color.fromARGB(247, 79, 102, 59),
+        insetPadding: const EdgeInsets.all(20),
+        backgroundColor: const Color.fromARGB(247, 79, 102, 59),
         title: Text(
           dishHttpModel.name ?? '',
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 22),
+          style: const TextStyle(fontSize: 22),
         ),
         actionsAlignment: MainAxisAlignment.center,
-        content: Container(
+        content: SizedBox(
           //  height: height * 0.9,
           width: width * 0.96,
           child: ListView(shrinkWrap: true, children: [
-            Container(
-                //width: width * 0.8,
-                child: Column(mainAxisSize: MainAxisSize.max, children: [
+            Column(mainAxisSize: MainAxisSize.max, children: [
               // 666666666666665Divider(color: Colors.black),
               InkWell(
                 onTap: () {
@@ -109,7 +106,8 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                   decoration: BoxDecoration(
                       color: Colors.black54,
                       border: Border.all(
-                          width: 2, color: Color.fromARGB(211, 45, 45, 45)),
+                          width: 2,
+                          color: const Color.fromARGB(211, 45, 45, 45)),
                       borderRadius: BorderRadius.circular(20.0)),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20.0),
@@ -118,8 +116,9 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                             ? ''
                             : dishHttpModel.imageLinks.first,
                         placeholder: (context, url) =>
-                            CircularProgressIndicator(),
-                        errorWidget: (context, url, error) => Icon(Icons.error),
+                            const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
                         fit: BoxFit.cover),
                   ),
                 ),
@@ -128,18 +127,18 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                 height: height / 90,
               ),
               (dishHttpModel.description != '')
-                  ? Divider(color: const Color.fromARGB(255, 255, 255, 255))
+                  ? const Divider(color: Color.fromARGB(255, 255, 255, 255))
                   : Container(),
 
               Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                 (dishHttpModel.description != '')
-                    ? Text(
+                    ? const Text(
                         'Состав: ',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       )
                     : Container(),
                 (dishHttpModel.description != '')
-                    ? Container(
+                    ? SizedBox(
                         height: height / 6.5,
                         child: Text(dishHttpModel.description ?? ''))
                     : Container(),
@@ -148,7 +147,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                   width: width * 0.9,
                   height: height * 0.002,
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         gradient: LinearGradient(colors: [
                       Color.fromARGB(0, 255, 255, 255),
                       Color.fromARGB(220, 255, 255, 255),
@@ -161,7 +160,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                         (dishHttpModel.fatAmount != 0) &
                         (dishHttpModel.carbohydratesAmount != 0) &
                         (dishHttpModel.energyAmount != 0)
-                    ? Text(
+                    ? const Text(
                         'Пищевая ценность (100 грамм) ',
                         textDirection: TextDirection.ltr,
                         textAlign: TextAlign.right,
@@ -187,7 +186,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                   (dishHttpModel.proteinsAmount != 0)
                       ? Column(
                           children: [
-                            Text(
+                            const Text(
                               'Белки ',
                               textDirection: TextDirection.ltr,
                               textAlign: TextAlign.right,
@@ -200,7 +199,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                               ' ${dishHttpModel.proteinsAmount!.toInt()} г.',
                               textDirection: TextDirection.ltr,
                               textAlign: TextAlign.right,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.normal,
                               ),
@@ -214,7 +213,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                   (dishHttpModel.fatAmount != 0)
                       ? Column(
                           children: [
-                            Text(
+                            const Text(
                               'Жиры ',
                               textDirection: TextDirection.ltr,
                               textAlign: TextAlign.right,
@@ -227,7 +226,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                               ' ${dishHttpModel.fatAmount!.toInt()} г.',
                               textDirection: TextDirection.ltr,
                               textAlign: TextAlign.right,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.normal,
                               ),
@@ -242,7 +241,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                       ? Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
+                            const Text(
                               'Углеводы ',
                               textDirection: TextDirection.ltr,
                               textAlign: TextAlign.right,
@@ -255,7 +254,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                               ' ${dishHttpModel.carbohydratesAmount!.toInt()} г.',
                               textDirection: TextDirection.ltr,
                               textAlign: TextAlign.right,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.normal,
                               ),
@@ -269,7 +268,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                   (dishHttpModel.energyAmount != 0)
                       ? Column(
                           children: [
-                            Text(
+                            const Text(
                               'Энерг. цен. ',
                               textDirection: TextDirection.ltr,
                               textAlign: TextAlign.right,
@@ -282,7 +281,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                               ' ${dishHttpModel.energyAmount!.toInt()} ккал.',
                               textDirection: TextDirection.ltr,
                               textAlign: TextAlign.right,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.normal,
                               ),
@@ -305,7 +304,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                   : Row(),
 
               propertiesWidget.isNotEmpty
-                  ? Text(
+                  ? const Text(
                       'Выберите добавки',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     )
@@ -316,23 +315,23 @@ class SelectDishDialogState extends State<SelectDishDialog> {
               propertiesWidget.isNotEmpty
                   ? Row(children: [
                       Expanded(
+                        flex: 6,
                         child: Text('Название добавки',
                             style: TextStyle(
-                                color: Color.fromARGB(255, 236, 43, 43),
+                                color: const Color.fromARGB(255, 236, 43, 43),
                                 fontSize: fontSize)),
-                        flex: 6,
                       ),
                       Expanded(
+                        flex: 2,
                         child: Text(
                           'Цена,₽',
                           style: TextStyle(
-                              color: Color.fromARGB(255, 246, 35, 35),
+                              color: const Color.fromARGB(255, 246, 35, 35),
                               fontSize: fontSize),
                         ),
-                        flex: 2,
                       ),
                     ])
-                  : Row(),
+                  : const Row(),
               Column(children: propertiesWidget),
 
               // CounterWidget(
@@ -341,26 +340,26 @@ class SelectDishDialogState extends State<SelectDishDialog> {
               //   }),
               // ),
               propertiesWidget.isNotEmpty
-                  ? Divider(color: const Color.fromARGB(255, 255, 255, 255))
-                  : Row(),
+                  ? const Divider(color: Color.fromARGB(255, 255, 255, 255))
+                  : const Row(),
               propertiesWidget.isNotEmpty
-                  ? Row(children: [
+                  ? const Row(children: [
                       Expanded(
+                        flex: 2,
                         child: Text(
                           'Цена,руб',
                           style: TextStyle(
                               color: Color.fromARGB(255, 226, 226, 226),
                               fontSize: 15),
                         ),
-                        flex: 2,
                       ),
                     ])
-                  : Row(),
+                  : const Row(),
               Padding(padding: EdgeInsets.only(top: height * 0.01)),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     'Цена:',
                     textDirection: TextDirection.ltr,
                     style: TextStyle(
@@ -375,7 +374,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                   Text(
                     '${dishHttpModel.currentPrice!.toInt()} руб.',
                     textDirection: TextDirection.ltr,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       color: Color.fromARGB(238, 243, 243, 243),
                     ),
@@ -399,14 +398,14 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                         .add(AddDishEvent(dishHttpModel: dishHttpModel));
                     Navigator.pop(context);
                   },
-                  child: Text(
+                  child: const Text(
                     'Добавить в корзину',
                     style: TextStyle(color: Color.fromARGB(225, 66, 66, 66)),
                   )),
-            ]))
+            ])
           ]),
         ),
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(30))));
     // TODO: implement build
   }

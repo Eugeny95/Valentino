@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:valentino/buisiness/basket_bloc/basket_bloc_bloc.dart';
 import 'package:valentino/buisiness/menu_page_bloc/menu_bloc/menu_bloc.dart';
 import 'package:valentino/buisiness/menu_page_bloc/select_category_bloc/bloc/select_category_bloc.dart';
+import 'package:valentino/buisiness/order_bloc/order_bloc.dart';
 import 'package:valentino/ui/menu_page/menu_screen.dart';
 import 'package:valentino/ui/profile_page/profile_page.dart';
 import 'package:valentino/ui/store_page/store_page.dart';
@@ -35,6 +36,9 @@ class MyApp extends StatelessWidget {
             MenuBloc menuBloc = MenuBloc();
             menuBloc.add(GetMenuEvent());
             return menuBloc;
+          }),
+          BlocProvider(create: (context) {
+            return OrderBloc();
           }),
           BlocProvider(create: (context) {
             BasketBloc basketBloc = BasketBloc();

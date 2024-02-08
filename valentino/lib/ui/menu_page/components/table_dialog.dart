@@ -29,7 +29,7 @@ class TableDialogState extends State<TableDialog> {
     return AlertDialog(
       backgroundColor: Color.fromARGB(255, 79, 102, 59),
       insetPadding: EdgeInsets.all(30),
-      title: Column(
+      title: const Column(
         children: [
           Text(
             'Забронировать столик',
@@ -38,11 +38,11 @@ class TableDialogState extends State<TableDialog> {
         ],
       ),
       actionsAlignment: MainAxisAlignment.center,
-      content: Container(
+      content: SizedBox(
           width: width,
           height: height * 0.45,
           child: Column(children: [
-            Text(
+            const Text(
               'С Вами свяжется наш менеджер и уточнит детали',
               style: TextStyle(
                   color: Color.fromARGB(239, 255, 255, 255), fontSize: 12),
@@ -65,18 +65,18 @@ class TableDialogState extends State<TableDialog> {
                               borderRadius: BorderRadius.circular(10)),
                           focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                   color: Color.fromARGB(139, 255, 255, 255),
                                   width: 2.0)),
-                          prefixIcon: Icon(Icons.person_add,
+                          prefixIcon: const Icon(Icons.person_add,
                               color: Color.fromARGB(211, 255, 255, 255)),
                           labelText: 'Имя',
-                          labelStyle: TextStyle(
+                          labelStyle: const TextStyle(
                               color: Color.fromARGB(205, 255, 255, 255))),
                     ),
                     Padding(padding: EdgeInsets.only(top: height * 0.01)),
                     TextFormField(
-                      cursorColor: Color.fromARGB(139, 255, 255, 255),
+                      cursorColor: const Color.fromARGB(139, 255, 255, 255),
                       keyboardType: TextInputType.number,
                       inputFormatters: <TextInputFormatter>[
                         FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))
@@ -90,13 +90,13 @@ class TableDialogState extends State<TableDialog> {
                               borderRadius: BorderRadius.circular(10)),
                           focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                   color: Color.fromARGB(139, 255, 255, 255),
                                   width: 2.0)),
-                          prefixIcon: Icon(Icons.phone_iphone,
+                          prefixIcon: const Icon(Icons.phone_iphone,
                               color: Color.fromARGB(211, 255, 255, 255)),
                           labelText: 'Телефон',
-                          labelStyle: TextStyle(
+                          labelStyle: const TextStyle(
                               color: Color.fromARGB(211, 255, 255, 255))),
                     ),
                     Padding(padding: EdgeInsets.only(top: height * 0.03)),
@@ -128,10 +128,11 @@ class TableDialogState extends State<TableDialog> {
                             if (result.isNotEmpty &&
                                 result[0].rawAddress.isNotEmpty) {}
                           } on SocketException catch (_) {
+                            // ignore: use_build_context_synchronously
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return AlertDialog(
+                                  return const AlertDialog(
                                     title: Text('Внимание'),
                                     content: Text('Нед доступа к Интернету'),
                                   );
@@ -146,10 +147,10 @@ class TableDialogState extends State<TableDialog> {
                           //         email: email,
                           //         password: password));
                         },
-                        child: Text('Отправить')),
+                        child: const Text('Отправить')),
                     Padding(padding: EdgeInsets.only(top: height * 0.003)),
                     TextButton(
-                      child: Text('Отмена',
+                      child: const Text('Отмена',
                           style: TextStyle(
                               color: Color.fromARGB(210, 255, 255, 255),
                               fontSize: 14)),
@@ -157,7 +158,7 @@ class TableDialogState extends State<TableDialog> {
                         Navigator.pop(context);
                       },
                     ),
-                    Text(
+                    const Text(
                       '*Нажимая на кнопку «Отправить» вы даете согласие на обработку персональных данных',
                       style: TextStyle(
                           color: Color.fromARGB(209, 255, 255, 255),
@@ -166,7 +167,7 @@ class TableDialogState extends State<TableDialog> {
                   ],
                 ))
           ])),
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20))),
     );
 

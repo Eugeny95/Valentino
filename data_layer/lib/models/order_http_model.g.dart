@@ -27,8 +27,8 @@ Map<String, dynamic> _$OrderHttpModelToJson(OrderHttpModel instance) =>
     <String, dynamic>{
       'type_order': _$OrderServiceTypeEnumMap[instance.type_order],
       'phone': instance.phone,
-      'items': instance.items,
-      'adress': instance.adress,
+      'items': instance.items!.map((e) => e.toJson()).toList(),
+      'adress': instance.adress!.toJson(),
       'type_payment': _$PaymentTypeEnumMap[instance.type_payment],
       'summa': instance.summa,
       'comment': instance.comment,

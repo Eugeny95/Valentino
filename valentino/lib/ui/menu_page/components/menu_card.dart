@@ -39,7 +39,7 @@ class MenuCategoryItem extends StatelessWidget {
           crossAxisSpacing: 1,
           childAspectRatio: 0.76,
           shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           crossAxisCount: 2,
           children: [...items],
         )
@@ -71,8 +71,7 @@ class MenuCard extends StatelessWidget {
             },
           );
         },
-        child: Container(
-            child: Stack(children: [
+        child: Stack(children: [
           Container(
             width: width / 2.3,
             height: height / 3.6,
@@ -85,14 +84,14 @@ class MenuCard extends StatelessWidget {
               Container(
                 width: width / 2.4,
                 height: height / 7.6,
-                padding: EdgeInsets.all(2), // Border width
+                padding: const EdgeInsets.all(2), // Border width
                 decoration: BoxDecoration(
                     color: Colors.grey[800],
                     borderRadius: BorderRadius.circular(15.0)),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15.0),
                   child: SizedBox.fromSize(
-                    size: Size.fromRadius(70), // Image radius
+                    size: const Size.fromRadius(70), // Image radius
                     child: CachedNetworkImage(
                         filterQuality: FilterQuality.low,
                         imageUrl:
@@ -101,26 +100,27 @@ class MenuCard extends StatelessWidget {
                                 ? ''
                                 : dishHttpModel.imageLinks.first,
                         placeholder: (context, url) =>
-                            CircularProgressIndicator(),
-                        errorWidget: (context, url, error) => Icon(Icons.error),
+                            const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
                         fit: BoxFit.cover),
                   ),
                 ),
               ),
-              Container(
+              SizedBox(
                 height: height / 17,
                 child: Text(
                   dishHttpModel.name ?? '',
                   textDirection: TextDirection.ltr,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.normal,
                     height: 0.97,
                   ),
                 ),
               ),
-              Container(
+              SizedBox(
                 height: height * 0.02,
                 child: Row(children: [
                   SizedBox(
@@ -132,7 +132,7 @@ class MenuCard extends StatelessWidget {
                           '${dishHttpModel.energyFullAmount!.toInt()} ккал',
                           textDirection: TextDirection.ltr,
                           textAlign: TextAlign.right,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 10,
                             fontWeight: FontWeight.normal,
                           ),
@@ -142,7 +142,7 @@ class MenuCard extends StatelessWidget {
                     width: width / 70,
                   ),
                   (dishHttpModel.energyFullAmount != 0)
-                      ? Icon(Icons.circle,
+                      ? const Icon(Icons.circle,
                           size: 5, color: Color.fromARGB(189, 255, 255, 255))
                       : Container(),
                   // Энергетическая ценность
@@ -151,7 +151,7 @@ class MenuCard extends StatelessWidget {
                           ' ${(dishHttpModel.weight! * 1000).toInt()} гр',
                           textDirection: TextDirection.ltr,
                           textAlign: TextAlign.right,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 10,
                             fontWeight: FontWeight.normal,
                           ),
@@ -168,22 +168,22 @@ class MenuCard extends StatelessWidget {
                 decoration: BoxDecoration(
                   border: Border.all(
                       width: 1, color: const Color.fromARGB(187, 0, 0, 0)),
-                  color: Color.fromARGB(255, 246, 246, 246),
+                  color: const Color.fromARGB(255, 246, 246, 246),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 child: Center(
                   child: Text(
                     '${dishHttpModel.currentPrice!.toInt()} ₽',
                     textDirection: TextDirection.ltr,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14,
-                      color: const Color.fromARGB(204, 0, 0, 0),
+                      color: Color.fromARGB(204, 0, 0, 0),
                     ),
                   ),
                 ),
               ),
             ]),
           ),
-        ])));
+        ]));
   }
 }

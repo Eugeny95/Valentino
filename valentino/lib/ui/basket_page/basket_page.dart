@@ -1,16 +1,22 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:data_layer/models/address_http_model.dart';
+import 'package:data_layer/models/order_http_model.dart';
+import 'package:data_layer/models/position_http_model.dart';
+import 'package:data_layer/network/order_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
-
 import 'package:sbp/data/c2bmembers_data.dart';
 import 'package:sbp/models/c2bmembers_model.dart';
 import 'package:sbp/sbp.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 import 'package:valentino/buisiness/basket_bloc/basket_bloc_bloc.dart';
+import 'package:valentino/ui/basket_page/address_widget.dart';
+import 'package:valentino/ui/basket_page/data/models.dart';
 import 'package:valentino/ui/basket_page/sbp_modal_widget.dart';
-
 import 'package:valentino/ui/constants.dart';
+import 'package:valentino/ui/profile_page/about_widget.dart';
 
 class BasketPage extends StatefulWidget {
   final url =
@@ -28,15 +34,22 @@ class BasketPage extends StatefulWidget {
 Set onPlace = {true, false};
 bool valueRadio = true;
 String mytime = '30 минут';
+String phone = '';
 
 class BasketPageState extends State<BasketPage> {
   int counter = 1;
+  int toggleIndex = 0;
+  String comment = '';
+  double totalCost = 0;
+  AddressData addressData = AddressData(
+      street: '', house: '', flat: 0, entrance: 0, floor: 0, doorphone: '');
 
   @override
   void initState() {
-    // super.initState();
+    super.initState();
     // getInstalledBanks();
   }
+
   List<C2bmemberModel> informations = [];
 
   /// Получаем установленные банки
@@ -60,13 +73,15 @@ class BasketPageState extends State<BasketPage> {
 
     return Scaffold(
       appBar: AppBar(
-          iconTheme: IconThemeData(color: Color.fromARGB(180, 253, 253, 253)),
+          iconTheme:
+              IconThemeData(color: const Color.fromARGB(180, 253, 253, 253)),
           backgroundColor: kPrimaryColor,
           title: Text('Оформление заказа',
-              style: TextStyle(color: Color.fromARGB(202, 255, 255, 255)))),
+              style:
+                  TextStyle(color: const Color.fromARGB(202, 255, 255, 255)))),
       body: BlocBuilder<BasketBloc, BasketState>(
         builder: (context, state) {
-          if (state.positions!.isNotEmpty)
+          if (state.positions!.isNotEmpty) {
             return ListView(
               physics: const AlwaysScrollableScrollPhysics(),
               scrollDirection: Axis.vertical,
@@ -83,7 +98,7 @@ class BasketPageState extends State<BasketPage> {
                             child: Column(
                               children: [
                                 ListTile(
-                                  shape: RoundedRectangleBorder(
+                                  shape: const RoundedRectangleBorder(
                                       borderRadius: BorderRadius.only(
                                           topLeft: Radius.circular(10),
                                           topRight: Radius.circular(10),
@@ -260,124 +275,98 @@ class BasketPageState extends State<BasketPage> {
                                         });
                                   },
                                 ),
-                                Container(
-                                    width: width * 0.9,
-                                    child: Column(children: [
-                                      Row(children: [
-                                        Text('Ближайшее время:',
-                                            style: TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 229, 229, 229),
-                                                fontSize: 15)),
-                                        Text(
-                                          ' ' + mytime + ' ',
-                                          style: TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 229, 229, 229),
-                                              fontSize: 15),
-                                        )
-                                      ]),
-                                      Padding(
-                                          padding: EdgeInsets.only(
-                                              top: height * 0.01)),
-                                      Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            ElevatedButton(
-                                                style: ElevatedButton.styleFrom(
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            12), // <-- Radius
-                                                  ),
-                                                  elevation: 5,
-                                                  minimumSize: Size(
-                                                      height * 0.35,
-                                                      width * 0.12),
-                                                ),
-                                                onPressed: () async {
-                                                  // DatePicker.showPicker(
-                                                  //   context,
-                                                  //   pickerModel: CustomPicker(
-                                                  //     currentTime: DateTime.now(),
-                                                  //     locale: LocaleType.ru,
-                                                  //   ),
-                                                  //   onConfirm: (time) {
-                                                  //     print('change $time');
-                                                  //     mytime = time
-                                                  //         .toString()
-                                                  //         .substring(0, 16);
-                                                  //     // _orderObject!.requiredDateTime =
-                                                  //     //     mytime;
-                                                  //     setState(() {});
-                                                  //   },
-                                                  // );
-                                                  DatePicker.showDateTimePicker(
-                                                      context,
-                                                      showTitleActions: true,
-                                                      // minDate:DateTime.now(),
-                                                      // maxDate: DateTime.now(),
-                                                      minTime: DateTime.now(),
-                                                      maxTime: DateTime.now()
-                                                          .add(const Duration(
-                                                              days: 10)),
-                                                      onChanged: (date) {
-                                                    print('change $date');
-                                                  }, onConfirm: (date) {
-                                                    print('confirm $date');
-                                                  },
-                                                      currentTime:
-                                                          DateTime.now(),
-                                                      locale: LocaleType.ru);
-                                                },
-                                                child: Text('Выбрать время',
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 12)))
-                                          ])
-                                    ])),
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Radio(
-                                          fillColor:
-                                              MaterialStateColor.resolveWith(
-                                                  (states) => Color.fromARGB(
-                                                      255, 229, 229, 229)),
-                                          focusColor:
-                                              MaterialStateColor.resolveWith(
-                                                  (states) => Color.fromARGB(
-                                                      255, 229, 229, 229)),
-                                          value: false,
-                                          groupValue: valueRadio,
-                                          onChanged: (bool? value) {
-                                            setState(() {
-                                              valueRadio = value!;
-                                              // _orderObject!.onPlace = valueRadio;
-                                            });
-                                          }),
-                                      Text('На вынос'),
-                                      Radio(
-                                          fillColor:
-                                              MaterialStateColor.resolveWith(
-                                                  (states) => Color.fromARGB(
-                                                      255, 229, 229, 229)),
-                                          focusColor:
-                                              MaterialStateColor.resolveWith(
-                                                  (states) => Color.fromARGB(
-                                                      255, 229, 229, 229)),
-                                          value: true,
-                                          groupValue: valueRadio,
-                                          onChanged: (bool? value) {
-                                            setState(() {
-                                              valueRadio = value!;
-                                              // _orderObject!.onPlace = valueRadio;
-                                            });
-                                          }),
-                                      Text('Доставка'),
-                                    ]),
+                                ToggleSwitch(
+                                  minWidth: 150,
+                                  cornerRadius: 20,
+                                  activeBgColor: [kPrimaryColor],
+                                  inactiveBgColor:
+                                      const Color.fromARGB(255, 91, 91, 91),
+                                  inactiveFgColor: Colors.white,
+                                  initialLabelIndex: toggleIndex,
+                                  totalSwitches: 2,
+                                  labels: ['Самовывоз', 'Доставка'],
+                                  radiusStyle: true,
+                                  onToggle: (index) {
+                                    setState(() {
+                                      toggleIndex = index!;
+                                    });
+                                  },
+                                ),
+                                // Row(
+                                //     mainAxisAlignment: MainAxisAlignment.center,
+                                //     children: [
+                                //       Radio(
+                                //           fillColor:
+                                //               MaterialStateColor.resolveWith(
+                                //                   (states) => Color.fromARGB(
+                                //                       255, 229, 229, 229)),
+                                //           focusColor:
+                                //               MaterialStateColor.resolveWith(
+                                //                   (states) => Color.fromARGB(
+                                //                       255, 229, 229, 229)),
+                                //           value: false,
+                                //           groupValue: valueRadio,
+                                //           onChanged: (bool? value) {
+                                //             setState(() {
+                                //               valueRadio = value!;
+                                //               // _orderObject!.onPlace = valueRadio;
+                                //             });
+                                //           }),
+                                //       Text('На вынос'),
+                                //       Radio(
+                                //           fillColor:
+                                //               MaterialStateColor.resolveWith(
+                                //                   (states) => Color.fromARGB(
+                                //                       255, 229, 229, 229)),
+                                //           focusColor:
+                                //               MaterialStateColor.resolveWith(
+                                //                   (states) => Color.fromARGB(
+                                //                       255, 229, 229, 229)),
+                                //           value: true,
+                                //           groupValue: valueRadio,
+                                //           onChanged: (bool? value) {
+                                //             setState(() {
+                                //               valueRadio = value!;
+                                //             });
+                                //           }),
+                                //       Text('Доставка'),
+                                //     ]),
                                 Divider(color: Color.fromARGB(255, 67, 67, 67)),
+                                Align(
+                                    alignment: Alignment
+                                        .center, //or choose another Alignment
+                                    child: Container(
+                                        color: Colors.transparent,
+                                        width: width - (0.01 * width),
+                                        child: (toggleIndex == 1)
+                                            ? AddressWidget(
+                                                onChange: (addressData) {
+                                                  this.addressData =
+                                                      addressData;
+                                                },
+                                              )
+                                            : Container())),
+                                Padding(
+                                    padding:
+                                        EdgeInsets.only(top: height * 0.01)),
+                                SizedBox(
+                                  width: width * 0.8,
+                                  child: TextField(
+                                      onChanged: (value) {
+                                        phone = value;
+                                      },
+                                      autocorrect: true,
+                                      // controller: _addressController,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium,
+                                      decoration: InputDecoration(
+                                        hintText: 'Телефон',
+                                      )),
+                                ),
+                                Padding(
+                                    padding:
+                                        EdgeInsets.only(top: height * 0.01)),
                                 TextFormField(
                                   keyboardType: TextInputType.multiline,
                                   maxLines: 5,
@@ -387,7 +376,9 @@ class BasketPageState extends State<BasketPage> {
                                   cursorColor:
                                       Color.fromARGB(139, 255, 255, 255),
                                   // validator: (value) => Validator.isEmptyValid(value!),
-                                  onChanged: (String value) {},
+                                  onChanged: (String value) {
+                                    comment = value;
+                                  },
                                   decoration: InputDecoration(
                                       border: OutlineInputBorder(
                                           borderRadius:
@@ -395,16 +386,16 @@ class BasketPageState extends State<BasketPage> {
                                       focusedBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(10),
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                               color: Color.fromARGB(
                                                   139, 255, 255, 255),
                                               width: 2.0)),
-                                      prefixIcon: Icon(Icons.comment,
+                                      prefixIcon: const Icon(Icons.comment,
                                           size: 20,
                                           color: Color.fromARGB(
                                               211, 255, 255, 255)),
                                       labelText: 'Комментарий к заказу',
-                                      labelStyle: TextStyle(
+                                      labelStyle: const TextStyle(
                                           fontSize: 12,
                                           color: Color.fromARGB(
                                               205, 255, 255, 255))),
@@ -415,11 +406,12 @@ class BasketPageState extends State<BasketPage> {
                                 Row(
                                   children: [
                                     Expanded(
+                                      flex: 1,
                                       child: Column(
                                         children: [
                                           Text(
                                             'Итого: ',
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 color: Color.fromARGB(
                                                     255, 229, 229, 229),
@@ -431,7 +423,7 @@ class BasketPageState extends State<BasketPage> {
                                             children: [
                                               Text(
                                                 ' ${state.totalCost!.toInt()}',
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     color: Color.fromARGB(
                                                         255, 229, 229, 229),
@@ -449,7 +441,6 @@ class BasketPageState extends State<BasketPage> {
                                           ),
                                         ],
                                       ),
-                                      flex: 1,
                                     ),
                                     Expanded(
                                       child: ElevatedButton(
@@ -470,18 +461,64 @@ class BasketPageState extends State<BasketPage> {
                                                 color: Color.fromARGB(
                                                     235, 227, 227, 227)))),
                                         onPressed: () {
-                                          showModalBottomSheet(
-                                            context: context,
-                                            shape: const RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.vertical(
-                                                top: Radius.circular(20),
-                                              ),
-                                            ),
-                                            builder: (ctx) =>
-                                                SbpModalBottomSheetWidget(
-                                                    informations, widget.url),
-                                          );
+                                          List<Position> items =
+                                              BlocProvider.of<BasketBloc>(
+                                                      context)
+                                                  .getPositions();
+
+                                          totalCost =
+                                              BlocProvider.of<BasketBloc>(
+                                                      context)
+                                                  .getTotalCost();
+                                          List<PositionHttpModel> itemsHttp =
+                                              [];
+                                          for (int i = 0;
+                                              i < items.length;
+                                              i++) {
+                                            itemsHttp.add(PositionHttpModel(
+                                                amount: items[i].count,
+                                                modifiers: [],
+                                                productId: items[i].dish!.id));
+                                          }
+                                          AddressHttpModel addressHttpModel =
+                                              AddressHttpModel(
+                                                  doorphone:
+                                                      addressData.doorphone,
+                                                  entrance:
+                                                      addressData.entrance,
+                                                  flat: addressData.flat,
+                                                  floor: addressData.floor,
+                                                  house: "233/19",
+                                                  street: addressData.street);
+
+                                          OrderHttpModel orderHttpModel =
+                                              OrderHttpModel(
+                                                  type_order: (toggleIndex == 0)
+                                                      ? OrderServiceType
+                                                          .DeliveryPickUp
+                                                      : OrderServiceType
+                                                          .DeliveryByCourier,
+                                                  phone: phone,
+                                                  items: itemsHttp,
+                                                  adress: addressHttpModel,
+                                                  comment: comment,
+                                                  summa: totalCost,
+                                                  type_payment:
+                                                      PaymentType.Cash);
+                                          OrderRepository()
+                                              .createOrder(orderHttpModel);
+                                          // showModalBottomSheet(
+                                          //   context: context,
+                                          //   shape: const RoundedRectangleBorder(
+                                          //     borderRadius:
+                                          //         BorderRadius.vertical(
+                                          //       top: Radius.circular(20),
+                                          //     ),
+                                          //   ),
+                                          //   builder: (ctx) =>
+                                          //       SbpModalBottomSheetWidget(
+                                          //           informations, widget.url),
+                                          // );
                                         },
                                       ),
                                       flex: 2,
@@ -492,7 +529,7 @@ class BasketPageState extends State<BasketPage> {
                             )))),
               ],
             );
-          else
+          } else
             return Center(
               child: Text('Корзина пуста'),
             );
