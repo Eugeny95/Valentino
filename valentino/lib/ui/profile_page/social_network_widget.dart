@@ -67,7 +67,7 @@ class SocialNetworkWidget extends StatelessWidget {
                         ),
                         onPressed: () async {
                           final url =
-                              "https://api.whatsapp.com/send/?phone=79515542002&text&type=phone_number&app_absent=0";
+                              "whatsapp://api.whatsapp.com/send/?phone=79515542002&text&type=phone_number&app_absent=0";
                           if (await canLaunch(url)) {
                             await launch(
                               url,

@@ -347,7 +347,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                       Expanded(
                         flex: 2,
                         child: Text(
-                          'Цена,руб',
+                          'Цена,₽',
                           style: TextStyle(
                               color: Color.fromARGB(255, 226, 226, 226),
                               fontSize: 15),
@@ -372,7 +372,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                     width: width * 0.03,
                   ),
                   Text(
-                    '${dishHttpModel.currentPrice!.toInt()} руб.',
+                    '${dishHttpModel.currentPrice!.toInt()} ₽',
                     textDirection: TextDirection.ltr,
                     style: const TextStyle(
                       fontSize: 16,

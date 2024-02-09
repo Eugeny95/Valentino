@@ -23,7 +23,7 @@ class MenuCategoryItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(top: 6),
+          padding: const EdgeInsets.only(top: 6, left: 10),
           child: Text(
             title,
             style: const TextStyle(
@@ -34,15 +34,27 @@ class MenuCategoryItem extends StatelessWidget {
             ),
           ),
         ),
-        GridView.count(
-          padding: const EdgeInsets.all(12),
-          crossAxisSpacing: 1,
-          childAspectRatio: 0.76,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          crossAxisCount: 2,
-          children: [...items],
-        )
+        Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: GridView.count(
+              padding: const EdgeInsets.all(5),
+              crossAxisSpacing: 1,
+              childAspectRatio: 0.76,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              crossAxisCount: 2,
+              children: [...items],
+            ))
+        // Center(
+        //   child: GridView(
+        //     gridDelegate:
+        //         SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+        //     children: [...items],
+        //     padding: const EdgeInsets.all(5),
+        //     shrinkWrap: true,
+        //     physics: const NeverScrollableScrollPhysics(),
+        //   ),
+        // )
       ],
     );
   }

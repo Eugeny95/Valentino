@@ -18,7 +18,6 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
-  double restaurantInfoHeighth = 220 + 120 - kToolbarHeight;
   List<GlobalKey> globalKeys = [];
   bool lock = false;
 
@@ -84,7 +83,7 @@ class _MenuPageState extends State<MenuPage> {
                 pinned: true,
                 snap: false,
                 floating: false,
-                expandedHeight: height / 3.3,
+                expandedHeight: height / 3.2,
                 // backgroundColor: Colors.transparent,
                 flexibleSpace: Stack(children: [
                   Container(
@@ -97,97 +96,100 @@ class _MenuPageState extends State<MenuPage> {
                     child: const Cerousel(),
                   ),
                   Positioned(
-                    top: 35,
+                    top: 55,
                     right: 10,
-                    child: IconButton(
-                      icon: const Icon(Icons.table_bar_outlined,
-                          size: 24, color: Color.fromARGB(189, 255, 255, 255)),
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return TableDialog();
-                          },
-                        );
-                      },
+                    child: CircleAvatar(
+                      backgroundColor: Color.fromARGB(139, 98, 113, 84),
+                      child: IconButton(
+                        icon: const Icon(Icons.table_bar_outlined,
+                            size: 24,
+                            color: Color.fromARGB(189, 255, 255, 255)),
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return TableDialog();
+                            },
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ])),
             SliverAppBar(
               backgroundColor: kContentColorLightTheme,
-              toolbarHeight: height / 35,
+              toolbarHeight: height * 0.01,
               pinned: true,
               snap: false,
               floating: false,
               flexibleSpace: Container(
                 color: kContentColorLightTheme,
-                child: SizedBox(
-                  height: height * 0.05,
-                  child: ListView(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    children: <Widget>[
-                      BlocBuilder<MenuBloc, MenuState>(
-                        builder: (context, state) {
-                          if (state.menuStatus == MenuStatus.done) {
-                            return BlocBuilder<SelectCategoryBloc,
-                                    SelectCategoryState>(
-                                builder: (context, stateCategory) {
-                              return ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  shrinkWrap: true,
-                                  itemCount: state.menuHttpModel!.menu!.length,
-                                  itemBuilder: (context, index) {
-                                    if (state.menuHttpModel!.menu![index]!
-                                        .items!.isEmpty) return Column();
-                                    return Container(
-                                      margin: const EdgeInsets.only(left: 7),
-                                      child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: (index ==
-                                                  stateCategory.selectedIndex)
-                                              ? kFourthColor
-                                              : kContentColorLightTheme,
-                                          minimumSize:
-                                              Size(height * 0.12, width * 0.1),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                12), // <-- Radius
-                                          ),
-                                          // elevation: 5,
+                child: ListView(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  children: <Widget>[
+                    BlocBuilder<MenuBloc, MenuState>(
+                      builder: (context, state) {
+                        if (state.menuStatus == MenuStatus.done) {
+                          return BlocBuilder<SelectCategoryBloc,
+                                  SelectCategoryState>(
+                              builder: (context, stateCategory) {
+                            return ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                shrinkWrap: true,
+                                itemCount: state.menuHttpModel!.menu!.length,
+                                itemBuilder: (context, index) {
+                                  if (state.menuHttpModel!.menu![index]!.items!
+                                      .isEmpty) return Column();
+                                  return Container(
+                                    margin: const EdgeInsets.only(
+                                        left: 7, bottom: 7),
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: (index ==
+                                                stateCategory.selectedIndex)
+                                            ? kFourthColor
+                                            : kContentColorLightTheme,
+                                        minimumSize:
+                                            Size(height * 0.12, width * 0.1),
+
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              12), // <-- Radius
                                         ),
-                                        onPressed: () {
-                                          lock = true;
-                                          BlocProvider.of<SelectCategoryBloc>(
-                                                  context)
-                                              .add(SelectCategoryIndexEvent(
-                                                  selectedIndex: index));
-                                          Scrollable.ensureVisible(
-                                              globalKeys[index].currentContext!,
-                                              duration: const Duration(
-                                                  milliseconds: 1000));
-                                        },
-                                        child: Text(
-                                            state.menuHttpModel!.menu![index]
-                                                .category_name
-                                                .toString(),
-                                            style: const TextStyle(
-                                                // fontFamily: 'Moniqa',
-                                                fontWeight: FontWeight.normal,
-                                                fontSize: 13,
-                                                color: Color.fromARGB(
-                                                    255, 245, 245, 245))),
+                                        // elevation: 5,
                                       ),
-                                    );
-                                  });
-                            });
-                          } else {
-                            return const Column();
-                          }
-                        },
-                      ),
-                    ],
-                  ),
+                                      onPressed: () {
+                                        lock = true;
+                                        BlocProvider.of<SelectCategoryBloc>(
+                                                context)
+                                            .add(SelectCategoryIndexEvent(
+                                                selectedIndex: index));
+                                        Scrollable.ensureVisible(
+                                            globalKeys[index].currentContext!,
+                                            duration: const Duration(
+                                                milliseconds: 1000));
+                                      },
+                                      child: Text(
+                                          state.menuHttpModel!.menu![index]
+                                              .category_name
+                                              .toString(),
+                                          style: const TextStyle(
+                                              // fontFamily: 'Moniqa',
+                                              fontWeight: FontWeight.normal,
+                                              fontSize: 13,
+                                              color: Color.fromARGB(
+                                                  255, 245, 245, 245))),
+                                    ),
+                                  );
+                                });
+                          });
+                        } else {
+                          return const Column();
+                        }
+                      },
+                    ),
+                  ],
                 ),
               ),
             ),

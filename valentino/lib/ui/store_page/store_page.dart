@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:valentino/ui/constants.dart';
+import 'package:valentino/ui/store_page/components/history_preview.dart';
 
 class StorePage extends StatefulWidget {
   @override
@@ -29,14 +30,15 @@ class StorePageState extends State<StorePage> {
     return Scaffold(
         appBar: AppBar(
             backgroundColor: kPrimaryColor,
-            title:
-                Text('История заказов', style: TextStyle(color: const Color.fromARGB(255, 239, 239, 239)))),
+            title: Text('История заказов',
+                style: TextStyle(
+                    color: const Color.fromARGB(255, 239, 239, 239)))),
         body: ListView(
           children: [
             Column(children: positions),
-            Column(
-                // children: orders,
-                )
+            Container(
+              child: HistoryPreview(),
+            )
           ],
         ));
   }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:valentino/ui/auth_page/forget_password_dialog.dart';
 import 'package:valentino/ui/auth_page/register_dialog.dart';
 import 'package:valentino/ui/constants.dart';
+import 'package:valentino/utils/Validator.dart';
 
 class SigninOrSignupScreen extends StatefulWidget {
   @override
@@ -21,6 +23,12 @@ class SigninOrSignupScreenState extends State<SigninOrSignupScreen> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      appBar: AppBar(
+          iconTheme: IconThemeData(color: Color.fromARGB(180, 253, 253, 253)),
+          backgroundColor: kPrimaryColor,
+          title: Text('Авторизация',
+              style: TextStyle(
+                  color: Color.fromARGB(202, 255, 255, 255), fontSize: 18))),
       body: ListView(
         children: [
           Padding(
@@ -36,7 +44,7 @@ class SigninOrSignupScreenState extends State<SigninOrSignupScreen> {
                             child: Column(children: [
                           SizedBox(height: kDefaultPadding * 3),
                           Container(
-                              height: height / 3,
+                              height: height / 5,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.only(
                                     bottomLeft: Radius.circular(25),
@@ -46,7 +54,7 @@ class SigninOrSignupScreenState extends State<SigninOrSignupScreen> {
                                     "assets/VB.png",
                                   ),
                                   opacity: 0.60,
-                                  fit: BoxFit.fitWidth,
+                                  fit: BoxFit.fitHeight,
                                 ),
                               )),
                           //Spacer(flex: 1),
@@ -64,7 +72,8 @@ class SigninOrSignupScreenState extends State<SigninOrSignupScreen> {
                                 FilteringTextInputFormatter.allow(
                                     RegExp(r'[0-9.,]'))
                               ],
-                              // validator: (value) => Validator.isPhoneValid(value),
+                              validator: (value) =>
+                                  Validator.isPhoneValid(value),
                               onChanged: (String value) {
                                 login = value;
                               },
@@ -104,8 +113,8 @@ class SigninOrSignupScreenState extends State<SigninOrSignupScreen> {
                               //controller: TextEditingController()..text = dateTime,
                               obscureText: true,
                               //initialValue: dateTime,
-                              // validator: (value) =>
-                              //     Validator.isPasswordValid(value),
+                              validator: (value) =>
+                                  Validator.isPasswordValid(value),
                               onChanged: (String value) {
                                 password = value;
                               },
@@ -197,6 +206,20 @@ class SigninOrSignupScreenState extends State<SigninOrSignupScreen> {
                               );
                             },
                           ),
+                          SizedBox(height: kDefaultPadding * 1.5),
+                          TextButton(
+                              onPressed: () async {
+                                await showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return ForgetPasswordDialog();
+                                  },
+                                );
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                    content: Text(
+                                        'Ссылка для сброса пароля отпарвлена на  Вашу почту!')));
+                              },
+                              child: Text('Забыли пароль?')),
                           //Spacer(flex: 1),
                         ])),
                       ],
