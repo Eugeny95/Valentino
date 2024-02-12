@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:data_layer/models/order_http_model.dart';
+import 'package:data_layer/models/http_models/order_http_model.dart';
 import 'package:meta/meta.dart';
 
 part 'order_event.dart';

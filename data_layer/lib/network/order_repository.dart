@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:data_layer/models/menu_http_model.dart';
-import 'package:data_layer/models/order_http_model.dart';
+import 'package:data_layer/models/http_models/menu_http_model.dart';
+import 'package:data_layer/models/http_models/order_http_model.dart';
 import 'package:data_layer/network/mock.dart';
 import 'package:dio/dio.dart';
 import 'package:hive_flutter/hive_flutter.dart';

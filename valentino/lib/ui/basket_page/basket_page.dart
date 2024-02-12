@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:data_layer/models/address_http_model.dart';
-import 'package:data_layer/models/order_http_model.dart';
-import 'package:data_layer/models/position_http_model.dart';
+import 'package:data_layer/models/http_models/address_http_model.dart';
+import 'package:data_layer/models/http_models/order_http_model.dart';
+import 'package:data_layer/models/http_models/position_http_model.dart';
 import 'package:data_layer/network/order_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -409,9 +409,9 @@ class BasketPageState extends State<BasketPage> {
                                       flex: 1,
                                       child: Column(
                                         children: [
-                                          Text(
+                                          const Text(
                                             'Итого: ',
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 color: Color.fromARGB(
                                                     255, 229, 229, 229),
@@ -443,6 +443,7 @@ class BasketPageState extends State<BasketPage> {
                                       ),
                                     ),
                                     Expanded(
+                                      flex: 2,
                                       child: ElevatedButton(
                                         style: ElevatedButton.styleFrom(
                                           shape: RoundedRectangleBorder(
@@ -521,7 +522,6 @@ class BasketPageState extends State<BasketPage> {
                                           // );
                                         },
                                       ),
-                                      flex: 2,
                                     ),
                                   ],
                                 )

@@ -1,5 +1,5 @@
-import 'package:data_layer/models/address_http_model.dart';
-import 'package:data_layer/models/position_http_model.dart';
+import 'package:data_layer/models/http_models/address_http_model.dart';
+import 'package:data_layer/models/http_models/position_http_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'order_http_model.g.dart';

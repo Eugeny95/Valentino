@@ -1,4 +1,4 @@
-import 'package:data_layer/models/modifires_http_model.dart';
+import 'package:data_layer/models/http_models/modifires_http_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'dish_http_model.g.dart';

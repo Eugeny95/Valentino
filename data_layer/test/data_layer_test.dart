@@ -1,12 +1,12 @@
-import 'package:data_layer/models/menu_http_model.dart';
+import 'package:data_layer/models/http_models/menu_http_model.dart';
 import 'package:data_layer/network/menu_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:data_layer/data_layer.dart';
 
 void main() {
-  test('adds one to input values', () async {
-    MenuHttpModel menuHttpModel = await MenuRepository().getMenu();
+  test('get internet menu test', () async {
+    MenuHttpModel menuHttpModel = await MenuRepository().syncMenu();
     print(menuHttpModel.menu!.length);
   });
 }

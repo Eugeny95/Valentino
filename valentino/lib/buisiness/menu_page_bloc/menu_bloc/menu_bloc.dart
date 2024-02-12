@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:data_layer/models/menu_http_model.dart';
+import 'package:data_layer/models/http_models/menu_http_model.dart';
 import 'package:data_layer/network/menu_repository.dart';
 import 'package:meta/meta.dart';
 
