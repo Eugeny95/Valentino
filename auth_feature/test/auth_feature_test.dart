@@ -1,12 +1,34 @@
+import 'package:auth_feature/data/auth_data.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:auth_feature/auth_feature.dart';
 
 void main() {
-  test('adds one to input values', () {
-    final calculator = Calculator();
-    expect(calculator.addOne(2), 3);
-    expect(calculator.addOne(-7), -6);
-    expect(calculator.addOne(0), 1);
+  test('register test', () async {
+    UserData user = UserData();
+    user.username = '89991119922';
+    user.first_name = 'Ivan';
+    user.last_name = 'Ivanov';
+    user.email = 'aqhy@ml.ru';
+    user.password = '11111';
+    user.date_birth = DateTime.now();
+
+    AuthStatus status = await AuthService().register(
+        user: user, registerUrl: 'http://91.222.236.176:8880/auth/register/');
+    print(status);
+  });
+
+  test('login test', () async {
+    UserData user = UserData();
+    user.username = '89515479808';
+    user.password = '12345678';
+
+    user = await AuthService().loginOnline(
+        username: user.username,
+        password: user.password,
+        deviceType: '',
+        message_service_token: '',
+        authUrl: 'http://91.222.236.176:8880/auth/login/');
+    print(user.authStatus);
+    print(user.accessToken);
   });
 }

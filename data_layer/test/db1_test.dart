@@ -23,7 +23,7 @@ void main() {
         totalcost: 1800.0,
         status: OrderStatus.complete,
         positions: listPositionDbModel);
-    await storageDBProvider.insertOrder(historyDbModel);
+    await storageDBProvider.insertOrder(historyDbModel: historyDbModel);
   });
 
   test('get order test', () async {

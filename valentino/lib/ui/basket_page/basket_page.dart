@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:data_layer/models/db_models/history_model.dart';
 import 'package:data_layer/models/http_models/address_http_model.dart';
 import 'package:data_layer/models/http_models/order_http_model.dart';
 import 'package:data_layer/models/http_models/position_http_model.dart';
@@ -12,6 +13,7 @@ import 'package:sbp/models/c2bmembers_model.dart';
 import 'package:sbp/sbp.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:valentino/buisiness/basket_bloc/basket_bloc_bloc.dart';
+import 'package:valentino/buisiness/history_bloc/history_bloc.dart';
 import 'package:valentino/ui/basket_page/address_widget.dart';
 import 'package:valentino/ui/basket_page/data/models.dart';
 import 'package:valentino/ui/basket_page/sbp_modal_widget.dart';
@@ -461,7 +463,7 @@ class BasketPageState extends State<BasketPage> {
                                                 fontSize: 15,
                                                 color: Color.fromARGB(
                                                     235, 227, 227, 227)))),
-                                        onPressed: () {
+                                        onPressed: () async {
                                           List<Position> items =
                                               BlocProvider.of<BasketBloc>(
                                                       context)
@@ -506,8 +508,36 @@ class BasketPageState extends State<BasketPage> {
                                                   summa: totalCost,
                                                   type_payment:
                                                       PaymentType.Cash);
-                                          OrderRepository()
-                                              .createOrder(orderHttpModel);
+                                          CreateOrderStatus orderStatus =
+                                              await OrderRepository()
+                                                  .createOrder(orderHttpModel);
+                                          if (true) {
+                                            List<PositionDbModel>
+                                                listPositionDbModel = [];
+                                            for (Position position
+                                                in BlocProvider.of<BasketBloc>(
+                                                        context)
+                                                    .getPositions()) {
+                                              listPositionDbModel.add(
+                                                  PositionDbModel(
+                                                      name: position.dish!.name,
+                                                      amount: position.count,
+                                                      cost: position
+                                                          .dish!.currentPrice));
+                                            }
+                                            HistoryDbModel historyDbModel =
+                                                HistoryDbModel(
+                                                    date_time: DateTime.now(),
+                                                    totalcost: totalCost,
+                                                    positions:
+                                                        listPositionDbModel);
+                                            BlocProvider.of<HistoryBloc>(
+                                                    context)
+                                                .add(AddHistoryOrder(
+                                                    historyDbModel:
+                                                        historyDbModel));
+                                          }
+
                                           // showModalBottomSheet(
                                           //   context: context,
                                           //   shape: const RoundedRectangleBorder(

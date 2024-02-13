@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:valentino/buisiness/history_bloc/history_bloc.dart';
 import 'package:valentino/ui/constants.dart';
 import 'package:valentino/ui/store_page/components/history_preview.dart';
 
@@ -33,13 +35,19 @@ class StorePageState extends State<StorePage> {
             title: Text('История заказов',
                 style: TextStyle(
                     color: const Color.fromARGB(255, 239, 239, 239)))),
-        body: ListView(
-          children: [
-            Column(children: positions),
-            Container(
-              child: HistoryPreview(),
-            )
-          ],
+        body: BlocBuilder<HistoryBloc, HistoryState>(
+          builder: (context, state) {
+            if (state.status == HistoryStatus.success)
+              return ListView.builder(
+                  padding: const EdgeInsets.all(8),
+                  itemCount: state.historyOrders!.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return HistoryPreview(
+                        historyDbModel: state.historyOrders![index]);
+                  });
+            else
+              return Center(child: CircularProgressIndicator());
+          },
         ));
   }
   // TODO: implement build

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:valentino/buisiness/auth_bloc/auth_bloc.dart';
 import 'package:valentino/buisiness/basket_bloc/basket_bloc_bloc.dart';
+import 'package:valentino/buisiness/history_bloc/history_bloc.dart';
 import 'package:valentino/buisiness/menu_page_bloc/menu_bloc/menu_bloc.dart';
 import 'package:valentino/buisiness/menu_page_bloc/select_category_bloc/bloc/select_category_bloc.dart';
 import 'package:valentino/buisiness/order_bloc/order_bloc.dart';
@@ -13,7 +15,7 @@ import 'package:badges/badges.dart' as badges;
 
 import 'ui/basket_page/basket_page.dart';
 
-void main() {
+void main() async {
   runApp(MyApp());
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -32,6 +34,14 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.dark,
       home: MultiBlocProvider(
         providers: [
+          BlocProvider(
+              lazy: false,
+              create: (context) {
+                HistoryBloc historyBloc = HistoryBloc();
+                historyBloc.init();
+                historyBloc.add(GetHistoryOrders());
+                return historyBloc;
+              }),
           BlocProvider(create: (context) {
             MenuBloc menuBloc = MenuBloc();
             menuBloc.add(GetMenuEvent());
@@ -47,7 +57,15 @@ class MyApp extends StatelessWidget {
           }),
           BlocProvider(create: (context) {
             return SelectCategoryBloc();
-          })
+          }),
+          BlocProvider(
+              lazy: false,
+              create: (context) {
+                AuthBloc authBloc = AuthBloc();
+                authBloc.init();
+                authBloc.add(GetUserEvent());
+                return authBloc;
+              }),
         ],
         child: MainScreen(),
       ),
@@ -78,10 +96,20 @@ class _MainScreenState extends State<MainScreen> {
       backgroundColor: Colors.transparent,
       currentIndex: _selectedIndex,
       onTap: (value) {
+        BlocProvider.of<HistoryBloc>(context).add(GetHistoryOrders());
+
+        print('selected index');
         setState(() {
           _selectedIndex = value;
+
           if (_selectedIndex == 1) {
             BlocProvider.of<BasketBloc>(context).add(GetBasketPositions());
+          }
+          if (_selectedIndex == 2) {
+            BlocProvider.of<HistoryBloc>(context).add(GetHistoryOrders());
+          }
+          if (_selectedIndex == 3) {
+            BlocProvider.of<AuthBloc>(context).add(GetUserEvent());
           }
         });
       },

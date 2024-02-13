@@ -10,6 +10,7 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
   BasketBloc() : super(BasketState(basketStatus: BasketStatus.initial)) {
     on<AddDishEvent>((event, emit) {
       bool noAddflag = false;
+
       for (Position position in positions) {
         if (position.dish == event.dishHttpModel) {
           position.count++;
@@ -27,7 +28,7 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
         else
           return false;
       }).calculateCost();
-
+      totalCost = 0;
       for (Position position in positions) {
         totalCost = totalCost + position.allCost;
       }

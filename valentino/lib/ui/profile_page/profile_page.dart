@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:valentino/buisiness/auth_bloc/auth_bloc.dart';
+import 'package:valentino/buisiness/basket_bloc/basket_bloc_bloc.dart';
 import 'package:valentino/ui/profile_page/about_restaurant_page.dart';
 import 'package:valentino/ui/profile_page/about_widget.dart';
 
@@ -14,24 +17,10 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  void rebuildAllChildren(BuildContext context) {
-    void rebuild(Element el) {
-      el.markNeedsBuild();
-      el.visitChildren(rebuild);
-    }
-
-    (context as Element).visitChildren(rebuild);
-  }
-
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    // UserProfile userProfile = Provider.of<UserProfile>(context, listen: true);
-
-    rebuildAllChildren(context);
-
-    //userProfile.addListener(setState())
     return Stack(
       children: [
         Column(children: [
@@ -78,10 +67,14 @@ class _ProfilePageState extends State<ProfilePage> {
                 minimumSize: Size(height * 0.43, width * 0.12),
               ),
               onPressed: () {
+                AuthBloc authBloc = BlocProvider.of<AuthBloc>(context);
                 Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ClientDataPage()),
-                );
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BlocProvider<AuthBloc>.value(
+                          value: authBloc, //
+                          child: ClientDataPage()),
+                    ));
               },
               child: Row(
                 children: [
@@ -110,10 +103,13 @@ class _ProfilePageState extends State<ProfilePage> {
                 minimumSize: Size(height * 0.43, width * 0.12),
               ),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ClientDataPage()),
-                );
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //       builder: (context) => BlocProvider<AuthBloc>.value(
+                //           value: BlocProvider.of<AuthBloc>(context), //
+                //           child: ClientDataPage()),
+                //     ));
               },
               child: Row(
                 children: [

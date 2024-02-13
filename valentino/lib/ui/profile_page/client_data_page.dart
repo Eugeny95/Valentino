@@ -1,5 +1,8 @@
+import 'package:auth_feature/data/auth_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:valentino/buisiness/auth_bloc/auth_bloc.dart';
 import 'package:valentino/ui/auth_page/signin_or_signup_screen.dart';
 import 'package:valentino/ui/constants.dart';
 
@@ -11,22 +14,13 @@ class ClientDataPage extends StatefulWidget {
 }
 
 class _ClientDataPageState extends State<ClientDataPage> {
-  void rebuildAllChildren(BuildContext context) {
-    void rebuild(Element el) {
-      el.markNeedsBuild();
-      el.visitChildren(rebuild);
-    }
-
-    (context as Element).visitChildren(rebuild);
-  }
-
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     // UserProfile userProfile = Provider.of<UserProfile>(context, listen: true);
 
-    rebuildAllChildren(context);
+    //rebuildAllChildren(context);
 
     //userProfile.addListener(setState())
     return Scaffold(
@@ -36,208 +30,246 @@ class _ClientDataPageState extends State<ClientDataPage> {
           title: Text('Данные пользователя',
               style: TextStyle(
                   color: Color.fromARGB(202, 255, 255, 255), fontSize: 18))),
-      body: Center(
-        child: Column(children: [
-          // Padding(padding: EdgeInsets.only(top: 40)),
-          // ElevatedButton(
-          //   onPressed: () {
-          //     Navigator.pop(context);
-          //   },
-          //   child: const Text('Go back!'),
-          // ),
-          Padding(padding: EdgeInsets.only(top: 40)),
-          Container(
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(
-                      "assets/VB.png",
+      body: BlocBuilder<AuthBloc, AuthState>(
+        builder: (context, state) {
+          if (state.status == AuthStatus.unauthorized) {
+            return Center(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Вы не авторизованы'),
+                SizedBox(
+                  height: 20,
+                ),
+                ElevatedButton(
+                    child: Text(
+                      'Войти',
+                      style: TextStyle(color: Colors.white),
                     ),
-                    opacity: 0.15)),
-            width: width * 0.9,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SigninOrSignupScreen()),
+                      );
+                    }),
+              ],
+            ));
+          }
+
+          if (state.status == AuthStatus.initial) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return Center(
             child: Column(children: [
+              // Padding(padding: EdgeInsets.only(top: 40)),
+              // ElevatedButton(
+              //   onPressed: () {
+              //     Navigator.pop(context);
+              //   },
+              //   child: const Text('Go back!'),
+              // ),
+              Padding(padding: EdgeInsets.only(top: 40)),
               Container(
-                height: height * 0.06,
-                child: IntrinsicHeight(
-                    child: Column(
-                  children: [
-                    Row(
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage(
+                          "assets/VB.png",
+                        ),
+                        opacity: 0.15)),
+                width: width * 0.9,
+                child: Column(children: [
+                  Container(
+                    height: height * 0.06,
+                    child: IntrinsicHeight(
+                        child: Column(
                       children: [
-                        Icon(
-                          Icons.person,
-                          size: 25,
-                          color: kIconsColor,
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.person,
+                              size: 25,
+                              color: kIconsColor,
+                            ),
+                            SizedBox(width: width * 0.05),
+                            Text(
+                              'Константин',
+                              style: TextStyle(fontSize: 17),
+                            ),
+                          ],
                         ),
-                        SizedBox(width: width * 0.05),
-                        Text(
-                          'Константин',
-                          style: TextStyle(fontSize: 17),
-                        ),
+                        Divider(
+                            color: const Color.fromARGB(224, 255, 255, 255)),
                       ],
-                    ),
-                    Divider(color: const Color.fromARGB(224, 255, 255, 255)),
-                  ],
-                )),
-              ),
-              SizedBox(
-                height: height * 0.01,
-              ),
-              Container(
-                height: height * 0.06,
-                child: IntrinsicHeight(
-                    child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.phone_iphone,
-                          size: 25,
-                          color: kIconsColor,
-                        ),
-                        SizedBox(width: width * 0.05),
-                        Text(
-                          '89991112233',
-                          style: TextStyle(fontSize: 17),
-                        ),
-                      ],
-                    ),
-                    Divider(color: const Color.fromARGB(224, 255, 255, 255)),
-                  ],
-                )),
-              ),
-              SizedBox(
-                height: height * 0.01,
-              ),
-              Container(
-                height: height * 0.06,
-                child: IntrinsicHeight(
-                    child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.date_range,
-                          size: 25,
-                          color: kIconsColor,
-                        ),
-                        SizedBox(width: width * 0.05),
-                        Text(
-                          '18.07.1994',
-                          style: TextStyle(fontSize: 17),
-                        ),
-                      ],
-                    ),
-                    Divider(color: const Color.fromARGB(224, 255, 255, 255)),
-                  ],
-                )),
-              ),
-              SizedBox(
-                height: height * 0.01,
-              ),
-              Container(
-                height: height * 0.06,
-                child: IntrinsicHeight(
-                    child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.email,
-                          size: 25,
-                          color: kIconsColor,
-                        ),
-                        SizedBox(width: width * 0.05),
-                        Text(
-                          'example@yandex.ru',
-                          style: TextStyle(fontSize: 17),
-                        ),
-                      ],
-                    ),
-                    Divider(color: const Color.fromARGB(224, 255, 255, 255)),
-                  ],
-                )),
-              ),
-              SizedBox(
-                height: height * 0.04,
-              ),
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        side: BorderSide(
-                            color: Colors.white, width: 0.3) // <-- Radius
-                        ),
-                    elevation: 5,
-                    minimumSize: Size(height * 0.43, width * 0.13),
+                    )),
                   ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SigninOrSignupScreen()),
-                    );
-                    // userProfile.requestUserData();
-
-                    // if (Validator.isPhoneValid(userProfile.phone) != null) {
-                    //   const snackBar = SnackBar(
-                    //     content: Text('Введите корректный телефон'),
-                    //   );
-                    //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    //   return;
-                    // }
-                    // if (Validator.isEmailValid(userProfile.email) != null) {
-                    //   const snackBar = SnackBar(
-                    //     content: Text('Введите корректный email'),
-                    //   );
-                    //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    //   return;
-                    // }
-                    // userProfile.updateProfile();
-
-                    // TODO: validator
-                  },
-                  child: Text('Изменить данные',
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 220, 220, 220)))),
-              SizedBox(
-                height: height * 0.02,
-              ),
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        side: BorderSide(
-                            color: Colors.white, width: 0.3) // <-- Radius
-                        ),
-                    elevation: 5,
-                    minimumSize: Size(height * 0.43, width * 0.13),
+                  SizedBox(
+                    height: height * 0.01,
                   ),
-                  onPressed: () {
-                    // userProfile.requestUserData();
+                  Container(
+                    height: height * 0.06,
+                    child: IntrinsicHeight(
+                        child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.phone_iphone,
+                              size: 25,
+                              color: kIconsColor,
+                            ),
+                            SizedBox(width: width * 0.05),
+                            Text(
+                              '89991112233',
+                              style: TextStyle(fontSize: 17),
+                            ),
+                          ],
+                        ),
+                        Divider(
+                            color: const Color.fromARGB(224, 255, 255, 255)),
+                      ],
+                    )),
+                  ),
+                  SizedBox(
+                    height: height * 0.01,
+                  ),
+                  Container(
+                    height: height * 0.06,
+                    child: IntrinsicHeight(
+                        child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.date_range,
+                              size: 25,
+                              color: kIconsColor,
+                            ),
+                            SizedBox(width: width * 0.05),
+                            Text(
+                              '18.07.1994',
+                              style: TextStyle(fontSize: 17),
+                            ),
+                          ],
+                        ),
+                        Divider(
+                            color: const Color.fromARGB(224, 255, 255, 255)),
+                      ],
+                    )),
+                  ),
+                  SizedBox(
+                    height: height * 0.01,
+                  ),
+                  Container(
+                    height: height * 0.06,
+                    child: IntrinsicHeight(
+                        child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.email,
+                              size: 25,
+                              color: kIconsColor,
+                            ),
+                            SizedBox(width: width * 0.05),
+                            Text(
+                              'example@yandex.ru',
+                              style: TextStyle(fontSize: 17),
+                            ),
+                          ],
+                        ),
+                        Divider(
+                            color: const Color.fromARGB(224, 255, 255, 255)),
+                      ],
+                    )),
+                  ),
+                  SizedBox(
+                    height: height * 0.04,
+                  ),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            side: BorderSide(
+                                color: Colors.white, width: 0.3) // <-- Radius
+                            ),
+                        elevation: 5,
+                        minimumSize: Size(height * 0.43, width * 0.13),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SigninOrSignupScreen()),
+                        );
+                        // userProfile.requestUserData();
 
-                    // if (Validator.isPhoneValid(userProfile.phone) != null) {
-                    //   const snackBar = SnackBar(
-                    //     content: Text('Введите корректный телефон'),
-                    //   );
-                    //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    //   return;
-                    // }
-                    // if (Validator.isEmailValid(userProfile.email) != null) {
-                    //   const snackBar = SnackBar(
-                    //     content: Text('Введите корректный email'),
-                    //   );
-                    //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    //   return;
-                    // }
-                    // userProfile.updateProfile();
+                        // if (Validator.isPhoneValid(userProfile.phone) != null) {
+                        //   const snackBar = SnackBar(
+                        //     content: Text('Введите корректный телефон'),
+                        //   );
+                        //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        //   return;
+                        // }
+                        // if (Validator.isEmailValid(userProfile.email) != null) {
+                        //   const snackBar = SnackBar(
+                        //     content: Text('Введите корректный email'),
+                        //   );
+                        //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        //   return;
+                        // }
+                        // userProfile.updateProfile();
 
-                    // TODO: validator
-                  },
-                  child: Text('Выйти из профиля',
-                      style:
-                          TextStyle(color: Color.fromARGB(229, 227, 52, 52)))),
+                        // TODO: validator
+                      },
+                      child: Text('Изменить данные',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 220, 220, 220)))),
+                  SizedBox(
+                    height: height * 0.02,
+                  ),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            side: BorderSide(
+                                color: Colors.white, width: 0.3) // <-- Radius
+                            ),
+                        elevation: 5,
+                        minimumSize: Size(height * 0.43, width * 0.13),
+                      ),
+                      onPressed: () {
+                        // userProfile.requestUserData();
+
+                        // if (Validator.isPhoneValid(userProfile.phone) != null) {
+                        //   const snackBar = SnackBar(
+                        //     content: Text('Введите корректный телефон'),
+                        //   );
+                        //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        //   return;
+                        // }
+                        // if (Validator.isEmailValid(userProfile.email) != null) {
+                        //   const snackBar = SnackBar(
+                        //     content: Text('Введите корректный email'),
+                        //   );
+                        //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        //   return;
+                        // }
+                        // userProfile.updateProfile();
+
+                        // TODO: validator
+                      },
+                      child: Text('Выйти из профиля',
+                          style: TextStyle(
+                              color: Color.fromARGB(229, 227, 52, 52)))),
+                ]),
+              ),
             ]),
-          ),
-        ]),
+          );
+        },
       ),
     );
   }

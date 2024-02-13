@@ -1,10 +1,18 @@
+import 'package:data_layer/models/db_models/history_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:valentino/ui/constants.dart';
+import 'package:valentino/ui/store_page/components/position_string.dart';
 
 class HistoryPreview extends StatefulWidget {
+  HistoryDbModel historyDbModel;
+  HistoryPreview({super.key, required this.historyDbModel});
+
   @override
-  State<HistoryPreview> createState() => _HistoryPreviewState();
+  State<HistoryPreview> createState() {
+    return _HistoryPreviewState();
+  }
 }
 
 class _HistoryPreviewState extends State<HistoryPreview> {
@@ -16,6 +24,10 @@ class _HistoryPreviewState extends State<HistoryPreview> {
     // if (orderObject!.isAccepted) status = 'Заказ принят';
     // if (!orderObject!.isAccepted) status = 'Ожидает подтверждения';
     // if (orderObject!.isReady) status = 'Заказ готов';
+    List<Widget> lines = List.generate(
+        widget.historyDbModel.positions!.length,
+        (index) => PositionString(
+            positionDbModel: widget.historyDbModel.positions![index]));
 
     return Container(
         constraints: BoxConstraints(
@@ -65,7 +77,7 @@ class _HistoryPreviewState extends State<HistoryPreview> {
                                   width: width * 0.02,
                                 ),
                                 Text(
-                                  'Заказ выполнен ',
+                                  'Заказ от ',
                                   // ${orderObject!.ids}
 
                                   style: TextStyle(
@@ -78,7 +90,11 @@ class _HistoryPreviewState extends State<HistoryPreview> {
                               height: height * 0.005,
                             ),
                             Text(
-                              '09.02.2024     18:30 ',
+                              DateFormat.yMd().format(
+                                      widget.historyDbModel.date_time!) +
+                                  '   ' +
+                                  DateFormat.Hm()
+                                      .format(widget.historyDbModel.date_time!),
                               // ${orderObject!.ids}
 
                               style: TextStyle(
@@ -107,119 +123,11 @@ class _HistoryPreviewState extends State<HistoryPreview> {
                 ),
                 Column(
                   children: [
-                    SizedBox(
-                      height: height * 0.02,
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: width * 0.02,
-                        ),
-                        Expanded(
-                          child: Text('Мясное антисапи',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.normal,
-                                  color: Color.fromARGB(255, 229, 229, 229),
-                                  fontSize: 14)),
-                          flex: 7,
-                        ),
-                        Expanded(
-                            child: Row(
-                              children: [
-                                Text(
-                                  '2',
-                                  // state
-                                  //     .positions![
-                                  //         index]
-                                  //     .count
-                                  //     .toString(),
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 229, 229, 229),
-                                      fontSize: 14),
-                                ),
-                                Text(
-                                  ' x ',
-                                  // state
-                                  //     .positions![
-                                  //         index]
-                                  //     .count
-                                  //     .toString(),
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 229, 229, 229),
-                                      fontSize: 14),
-                                ),
-                                Text(
-                                  '700₽',
-                                  // line.totalCost.toInt().toString(),
-                                  // '${state.positions![index].allCost!.toInt()} ₽',
-                                  textAlign: TextAlign.right,
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 229, 229, 229),
-                                      fontSize: 14),
-                                ),
-                              ],
-                            ),
-                            flex: 2),
-                      ],
+                    Column(
+                      children: lines,
                     ),
                     SizedBox(
-                      height: height * 0.01,
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: width * 0.02,
-                        ),
-                        Expanded(
-                          child: Text(
-                              'Оливки какие-то с очень длинным названием',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.normal,
-                                  color: Color.fromARGB(255, 229, 229, 229),
-                                  fontSize: 14)),
-                          flex: 7,
-                        ),
-                        Expanded(
-                            child: Row(
-                              children: [
-                                Text(
-                                  '1',
-                                  // state
-                                  //     .positions![
-                                  //         index]
-                                  //     .count
-                                  //     .toString(),
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 229, 229, 229),
-                                      fontSize: 14),
-                                ),
-                                Text(
-                                  ' x ',
-                                  // state
-                                  //     .positions![
-                                  //         index]
-                                  //     .count
-                                  //     .toString(),
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 229, 229, 229),
-                                      fontSize: 14),
-                                ),
-                                Text(
-                                  '900₽',
-                                  // line.totalCost.toInt().toString(),
-                                  // '${state.positions![index].allCost!.toInt()} ₽',
-                                  textAlign: TextAlign.right,
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 229, 229, 229),
-                                      fontSize: 14),
-                                ),
-                              ],
-                            ),
-                            flex: 2),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
+                      height: 5,
                     ),
                     SizedBox(
                       width: width * 0.9,
@@ -246,7 +154,7 @@ class _HistoryPreviewState extends State<HistoryPreview> {
                                 fontSize: 16)),
                         SizedBox(width: width * 0.03),
                         Text(
-                          '2600 ₽',
+                          '${widget.historyDbModel.totalcost!.toInt()} ₽',
                           // line.totalCost.toInt().toString(),
                           // '${state.positions![index].allCost!.toInt()} ₽',
                           textAlign: TextAlign.right,

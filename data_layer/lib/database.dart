@@ -23,7 +23,7 @@ class StorageDBProvider {
     });
   }
 
-  Future<void> insertOrder(HistoryDbModel historyDbModel) async {
+  Future<void> insertOrder({required HistoryDbModel historyDbModel}) async {
     print('insert order');
     final db = await database;
     int orderId = await db.insert(

@@ -42,8 +42,11 @@ dependencies:
   carousel_slider: ^4.2.1
   cached_network_image: ^3.3.0
   flutter_launcher_icons: ^0.13.1
+  intl: ^0.19.0
   sbp: ^0.0.8
   flutter_datetime_picker_plus: ^2.1.0
+  auth_feature:
+    path: ../auth_feature
   data_layer:
     path: ../data_layer
   yandex_autocomplete:
