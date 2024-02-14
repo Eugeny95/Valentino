@@ -33,7 +33,7 @@ class UserData {
       'email': email,
       'first_name': first_name,
       'last_name': last_name,
-      'accessToken': accessToken,
+      'date_birth': date_birth.toString()
     };
   }
 

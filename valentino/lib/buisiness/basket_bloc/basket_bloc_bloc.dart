@@ -38,7 +38,14 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
           totalCost: totalCost));
     });
 
-    on<EmptyBasketEvent>((event, emit) {});
+    on<ClearBasketEvent>((event, emit) {
+      positions.clear();
+      totalCost = 0.0;
+      emit(BasketState(
+          basketStatus: BasketStatus.done,
+          positions: positions,
+          totalCost: totalCost));
+    });
 
     on<RemoveDishEvent>((event, emit) {
       for (Position position in positions) {

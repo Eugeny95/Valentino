@@ -1,9 +1,13 @@
 import 'dart:io';
 
+import 'package:auth_feature/data/auth_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
+import 'package:intl/intl.dart';
+import 'package:valentino/buisiness/auth_bloc/auth_bloc.dart';
 import 'package:valentino/ui/basket_page/TimePicker.dart';
 import 'package:valentino/utils/Validator.dart';
 
@@ -24,15 +28,17 @@ class RegisterDialogState extends State<RegisterDialog> {
   TextEditingController dateCtl = TextEditingController();
 
   String firstname = '';
+  String lastname = '';
 
   String phone = '';
   String email = '';
   String password = '';
   String retypePassword = '';
-  String status = '';
+  String textStatus = '';
   bool obscurePassword1 = true;
   bool obscurePassword2 = true;
   String message = '';
+  DateTime date_birth = DateTime.now();
 
   final _formKey = GlobalKey<FormState>();
   @override
@@ -73,6 +79,27 @@ class RegisterDialogState extends State<RegisterDialog> {
                           prefixIcon: Icon(Icons.person_add,
                               color: Color.fromARGB(209, 255, 255, 255)),
                           labelText: 'Имя',
+                          labelStyle: TextStyle(
+                              color: Color.fromARGB(209, 255, 255, 255))),
+                    ),
+                    Padding(padding: EdgeInsets.only(top: height * 0.015)),
+                    TextFormField(
+                      cursorColor: Color.fromARGB(217, 255, 255, 255),
+                      // validator: (value) => Validator.isEmptyValid(value!),
+                      onChanged: (String value) {
+                        lastname = value;
+                      },
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide(
+                                  color: Color.fromARGB(209, 255, 255, 255),
+                                  width: 2.0)),
+                          prefixIcon: Icon(Icons.person_add,
+                              color: Color.fromARGB(209, 255, 255, 255)),
+                          labelText: 'Фамилия',
                           labelStyle: TextStyle(
                               color: Color.fromARGB(209, 255, 255, 255))),
                     ),
@@ -144,18 +171,19 @@ class RegisterDialogState extends State<RegisterDialog> {
                           labelStyle: TextStyle(
                             color: Color.fromARGB(209, 255, 255, 255),
                           )),
+                      onChanged: (String value) {},
                       onTap: () async {
                         DateTime date = DateTime(1900);
                         FocusScope.of(context).requestFocus(new FocusNode());
-                        await showDatePicker(
-                          context: context,
-                          // locale: const Locale("fr", "FR"),
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(2018),
-                          lastDate: DateTime(2030),
-                        );
+                        date_birth = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(1950),
+                              lastDate: DateTime(2030),
+                            ) ??
+                            date;
 
-                        dateCtl.text = date.toIso8601String();
+                        dateCtl.text = DateFormat.yMd().format(date_birth);
                       },
                     ),
                     // SizedBox(
@@ -248,7 +276,7 @@ class RegisterDialogState extends State<RegisterDialog> {
                               color: Color.fromARGB(209, 255, 255, 255))),
                     ),
                     Text(
-                      status,
+                      textStatus,
                       style: TextStyle(color: Colors.red),
                     ),
                     Padding(padding: EdgeInsets.only(top: height * 0.05)),
@@ -291,12 +319,47 @@ class RegisterDialogState extends State<RegisterDialog> {
                           }
 
                           if (!_formKey.currentState!.validate()) return;
-                          // BlocProvider.of<AuthBloc>(context).add(
-                          //     AuthEventRegister(
-                          //         firstName: firstname,
-                          //         phone: phone,
-                          //         email: email,
-                          //         password: password));
+                          UserData userData = UserData();
+                          userData.first_name = firstname;
+                          userData.last_name = lastname;
+                          userData.username = phone;
+                          userData.email = email;
+                          userData.password = password;
+                          userData.date_birth = date_birth;
+
+                          AuthStatus status =
+                              await BlocProvider.of<AuthBloc>(context)
+                                  .registerUser(userData);
+                          switch (status) {
+                            case AuthStatus.authorized:
+                              {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        content: Text('Успешная регистрация')));
+                                BlocProvider.of<AuthBloc>(context)
+                                    .add(RegisterEvent());
+                                Navigator.pop(context, true);
+                                break;
+                              }
+                            case AuthStatus.initial:
+                              break;
+
+                            case AuthStatus.user_exist:
+                              {
+                                setState(() {
+                                  textStatus = 'Пользоваетель существует';
+                                });
+                                break;
+                              }
+
+                            default:
+                              {
+                                setState(() {
+                                  textStatus = 'Неизвестная ошибка сервера';
+                                });
+                                break;
+                              }
+                          }
                         },
                         child: Text('Зарегестрироваться',
                             style: TextStyle(
@@ -319,5 +382,12 @@ class RegisterDialogState extends State<RegisterDialog> {
     );
 
     // TODO: implement build
+  }
+
+  @override
+  void dispose() {
+    BlocProvider.of<AuthBloc>(context).add(RegisterEvent());
+    // TODO: implement dispose
+    super.dispose();
   }
 }

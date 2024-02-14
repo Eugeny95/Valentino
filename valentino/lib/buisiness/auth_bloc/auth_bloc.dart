@@ -10,6 +10,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthService authService = AuthService();
   AuthStatus authStatus = AuthStatus.unauthorized;
 
+  Future<AuthStatus> logIn(
+      {required String username, required String password}) async {
+    authStatus = await authService.logIn(
+        cloudMessageToken: '',
+        deviceType: '',
+        username: username,
+        password: password,
+        authUrl: 'http://91.222.236.176:8880/auth/login/');
+    return authStatus;
+  }
+
+  Future<AuthStatus> registerUser(UserData userData) async {
+    authStatus = await authService.register(
+        userData: userData,
+        registerUrl: 'http://91.222.236.176:8880/auth/register/');
+    return authStatus;
+  }
+
   void init() async {
     authStatus = await authService.logIn(
         username: '',
@@ -52,18 +70,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     });
     on<RegisterEvent>((event, emit) async {
-      UserData userData = UserData();
-      userData.username = event.username;
-      userData.password = event.password;
-      userData.email = event.email;
-      userData.date_birth = event.date_birth;
-      userData.first_name = event.first_name;
-      userData.last_name = event.last_name;
-
-      authStatus = await authService.register(
-          user: userData,
-          registerUrl: 'http://91.222.236.176:8880/auth/register/');
+      print('refresh');
+      print('firstname is ${authService.user.first_name}');
       emit(AuthState(status: authStatus, user: authService.user));
+    });
+
+    on<LogOutEvent>((event, emit) async {
+      authService.logOut();
+      emit(AuthState(status: AuthStatus.unauthorized, user: authService.user));
     });
   }
 }

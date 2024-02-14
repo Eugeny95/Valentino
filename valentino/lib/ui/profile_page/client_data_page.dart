@@ -18,11 +18,6 @@ class _ClientDataPageState extends State<ClientDataPage> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    // UserProfile userProfile = Provider.of<UserProfile>(context, listen: true);
-
-    //rebuildAllChildren(context);
-
-    //userProfile.addListener(setState())
     return Scaffold(
       appBar: AppBar(
           iconTheme: IconThemeData(color: Color.fromARGB(180, 253, 253, 253)),
@@ -32,6 +27,8 @@ class _ClientDataPageState extends State<ClientDataPage> {
                   color: Color.fromARGB(202, 255, 255, 255), fontSize: 18))),
       body: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
+          print('users firstname = ${state.user!.first_name}');
+          print('status = ${state.status}');
           if (state.status == AuthStatus.unauthorized) {
             return Center(
                 child: Column(
@@ -46,12 +43,16 @@ class _ClientDataPageState extends State<ClientDataPage> {
                       'Войти',
                       style: TextStyle(color: Colors.white),
                     ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SigninOrSignupScreen()),
-                      );
+                    onPressed: () async {
+                      AuthBloc authBloc = BlocProvider.of<AuthBloc>(context);
+                      await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => BlocProvider<AuthBloc>.value(
+                                value: authBloc, //
+                                child: SigninOrSignupScreen()),
+                          ));
+                      authBloc.add(RegisterEvent());
                     }),
               ],
             ));
@@ -95,7 +96,34 @@ class _ClientDataPageState extends State<ClientDataPage> {
                             ),
                             SizedBox(width: width * 0.05),
                             Text(
-                              'Константин',
+                              state.user!.first_name,
+                              style: TextStyle(fontSize: 17),
+                            ),
+                          ],
+                        ),
+                        Divider(
+                            color: const Color.fromARGB(224, 255, 255, 255)),
+                      ],
+                    )),
+                  ),
+                  SizedBox(
+                    height: height * 0.01,
+                  ),
+                  Container(
+                    height: height * 0.06,
+                    child: IntrinsicHeight(
+                        child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.people_alt_outlined,
+                              size: 25,
+                              color: kIconsColor,
+                            ),
+                            SizedBox(width: width * 0.05),
+                            Text(
+                              state.user!.last_name,
                               style: TextStyle(fontSize: 17),
                             ),
                           ],
@@ -122,7 +150,7 @@ class _ClientDataPageState extends State<ClientDataPage> {
                             ),
                             SizedBox(width: width * 0.05),
                             Text(
-                              '89991112233',
+                              state.user!.username,
                               style: TextStyle(fontSize: 17),
                             ),
                           ],
@@ -149,7 +177,10 @@ class _ClientDataPageState extends State<ClientDataPage> {
                             ),
                             SizedBox(width: width * 0.05),
                             Text(
-                              '18.07.1994',
+                              state.user!.date_birth
+                                  .toString()
+                                  .split(' ')
+                                  .first,
                               style: TextStyle(fontSize: 17),
                             ),
                           ],
@@ -176,7 +207,7 @@ class _ClientDataPageState extends State<ClientDataPage> {
                             ),
                             SizedBox(width: width * 0.05),
                             Text(
-                              'example@yandex.ru',
+                              state.user!.email,
                               style: TextStyle(fontSize: 17),
                             ),
                           ],
@@ -189,45 +220,6 @@ class _ClientDataPageState extends State<ClientDataPage> {
                   SizedBox(
                     height: height * 0.04,
                   ),
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            side: BorderSide(
-                                color: Colors.white, width: 0.3) // <-- Radius
-                            ),
-                        elevation: 5,
-                        minimumSize: Size(height * 0.43, width * 0.13),
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SigninOrSignupScreen()),
-                        );
-                        // userProfile.requestUserData();
-
-                        // if (Validator.isPhoneValid(userProfile.phone) != null) {
-                        //   const snackBar = SnackBar(
-                        //     content: Text('Введите корректный телефон'),
-                        //   );
-                        //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        //   return;
-                        // }
-                        // if (Validator.isEmailValid(userProfile.email) != null) {
-                        //   const snackBar = SnackBar(
-                        //     content: Text('Введите корректный email'),
-                        //   );
-                        //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        //   return;
-                        // }
-                        // userProfile.updateProfile();
-
-                        // TODO: validator
-                      },
-                      child: Text('Изменить данные',
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 220, 220, 220)))),
                   SizedBox(
                     height: height * 0.02,
                   ),
@@ -242,6 +234,7 @@ class _ClientDataPageState extends State<ClientDataPage> {
                         minimumSize: Size(height * 0.43, width * 0.13),
                       ),
                       onPressed: () {
+                        BlocProvider.of<AuthBloc>(context).add(LogOutEvent());
                         // userProfile.requestUserData();
 
                         // if (Validator.isPhoneValid(userProfile.phone) != null) {

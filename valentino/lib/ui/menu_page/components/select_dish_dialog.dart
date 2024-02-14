@@ -5,6 +5,7 @@ import 'package:data_layer/models/http_models/dish_http_model.dart';
 import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:valentino/buisiness/auth_bloc/auth_bloc.dart';
 import 'package:valentino/buisiness/basket_bloc/basket_bloc_bloc.dart';
 import 'package:valentino/ui/constants.dart';
 
@@ -30,7 +31,6 @@ class SelectDishDialogState extends State<SelectDishDialog> {
   // }
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<BasketBloc>(context).add(EmptyBasketEvent());
     List<Widget> propertiesWidget = [];
     List<Widget> volumesWidget = [];
     DishHttpModel dishHttpModel = widget.dishHttpModel;
@@ -382,26 +382,30 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                 ],
               ),
               Padding(padding: EdgeInsets.only(top: height * 0.02)),
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      // side: BorderSide(color: kFourthColor, width: 2)
-                      // <-- Radius
-                    ),
-                    elevation: 5,
-                    minimumSize: Size(height * 0.55, width * 0.12),
-                  ),
-                  onPressed: () {
-                    BlocProvider.of<BasketBloc>(context)
-                        .add(AddDishEvent(dishHttpModel: dishHttpModel));
-                    Navigator.pop(context);
-                  },
-                  child: const Text(
-                    'Добавить в корзину',
-                    style: TextStyle(color: Color.fromARGB(225, 66, 66, 66)),
-                  )),
+              BlocProvider.of<AuthBloc>(context).isAuth()
+                  ? ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          // side: BorderSide(color: kFourthColor, width: 2)
+                          // <-- Radius
+                        ),
+                        elevation: 5,
+                        minimumSize: Size(height * 0.55, width * 0.12),
+                      ),
+                      onPressed: () {
+                        BlocProvider.of<BasketBloc>(context)
+                            .add(AddDishEvent(dishHttpModel: dishHttpModel));
+                        Navigator.pop(context);
+                      },
+                      child: const Text(
+                        'Добавить в корзину',
+                        style:
+                            TextStyle(color: Color.fromARGB(225, 66, 66, 66)),
+                      ))
+                  : Text(
+                      'Добавлять в корзину могут только авторизованные пользователи'),
             ])
           ]),
         ),

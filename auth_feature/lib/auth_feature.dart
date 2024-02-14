@@ -73,15 +73,18 @@ class AuthService {
   }
 
   Future<AuthStatus> register(
-      {required UserData user, required String registerUrl}) async {
-    UserData userData = await registerInServer(user, registerUrl);
+      {required UserData userData, required String registerUrl}) async {
+    user = await registerInServer(userData, registerUrl);
+    print('auth feature = ${user.first_name}');
+    //print(userData.authStatus);
 
-    switch (userData.authStatus) {
+    switch (user.authStatus) {
       case (AuthStatus.authorized):
         {
           try {
-            await setUserData(userData);
-            user = userData;
+            await setUserData(user);
+
+            return AuthStatus.authorized;
           } catch (_) {
             print('exeption on setting user data $_');
           }

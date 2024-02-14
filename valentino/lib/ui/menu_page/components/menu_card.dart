@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:data_layer/models/http_models/dish_http_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:valentino/buisiness/auth_bloc/auth_bloc.dart';
 import 'package:valentino/buisiness/basket_bloc/basket_bloc_bloc.dart';
 import 'package:valentino/ui/constants.dart';
 
@@ -72,14 +73,17 @@ class MenuCard extends StatelessWidget {
     return GestureDetector(
         onTap: () {
           BasketBloc basketBloc = BlocProvider.of<BasketBloc>(context);
+          AuthBloc authBloc = BlocProvider.of<AuthBloc>(context);
           showDialog(
             context: context,
             builder: (BuildContext context) {
-              return BlocProvider<BasketBloc>.value(
-                  value: basketBloc, //
-                  child: SelectDishDialog(
-                    dishHttpModel: dishHttpModel,
-                  ));
+              return BlocProvider<AuthBloc>.value(
+                  value: authBloc, //
+                  child: BlocProvider<BasketBloc>.value(
+                      value: basketBloc, //
+                      child: SelectDishDialog(
+                        dishHttpModel: dishHttpModel,
+                      )));
             },
           );
         },

@@ -5,9 +5,13 @@ import 'package:dio/dio.dart';
 
 Future<UserData> registerInServer(UserData user, String registerUrl) async {
   try {
+    print(user.toJson());
     Response response = await Dio().post(registerUrl, data: user.toJson());
-    user.accessToken = response.data['access_token'];
+
+    user.accessToken = response.data['access_token'].toString();
+
     user.authStatus = AuthStatus.authorized;
+
     return user;
   } on DioError catch (_, e) {
     print('exception on register server $_');
@@ -23,10 +27,8 @@ Future<UserData> registerInServer(UserData user, String registerUrl) async {
       user.authStatus = AuthStatus.user_exist;
       return user;
     }
-  } finally {
-    user.authStatus = AuthStatus.unknown;
-    return user;
   }
+  return user;
 }
 
 Future<UserData> loginInServer(
@@ -48,7 +50,7 @@ Future<UserData> loginInServer(
         options: Options(
             //receiveDataWhenStatusError: true,
             headers: <String, String>{
-              'Authorization': 'Basic ODk1MTU0Nzk4MDk6MTIzNDU2Nzg=',
+              'Authorization': basicAuth,
               'User-Agent': 'PostmanRuntime/7.36.3',
               'Accept': '*/*',
               'Cache-Control': 'no-cache',

@@ -12,21 +12,8 @@ class LoginEvent extends AuthEvent {
   });
 }
 
-class RegisterEvent extends AuthEvent {
-  String username;
-  String password;
-  String email;
-  String first_name;
-  String last_name;
-  DateTime date_birth;
-  RegisterEvent({
-    required this.username,
-    required this.password,
-    required this.email,
-    required this.first_name,
-    required this.last_name,
-    required this.date_birth,
-  });
-}
+class RegisterEvent extends AuthEvent {}
+
+class LogOutEvent extends AuthEvent {}
 
 class GetUserEvent extends AuthEvent {}

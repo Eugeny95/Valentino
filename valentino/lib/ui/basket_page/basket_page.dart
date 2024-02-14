@@ -491,7 +491,7 @@ class BasketPageState extends State<BasketPage> {
                                                       addressData.entrance,
                                                   flat: addressData.flat,
                                                   floor: addressData.floor,
-                                                  house: "233/19",
+                                                  house: addressData.house,
                                                   street: addressData.street);
 
                                           OrderHttpModel orderHttpModel =
@@ -508,10 +508,24 @@ class BasketPageState extends State<BasketPage> {
                                                   summa: totalCost,
                                                   type_payment:
                                                       PaymentType.Cash);
+                                          print(orderHttpModel.toJson());
                                           CreateOrderStatus orderStatus =
                                               await OrderRepository()
                                                   .createOrder(orderHttpModel);
                                           if (true) {
+                                            //ECKJDBT!!!!!!
+                                            BlocProvider.of<BasketBloc>(context)
+                                                .add(ClearBasketEvent());
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(SnackBar(
+                                                    content: Column(
+                                              children: [
+                                                Text(
+                                                    'Ваш заказ успешно оформлен'),
+                                                Text(
+                                                    'Он появится в истории заказов'),
+                                              ],
+                                            )));
                                             List<PositionDbModel>
                                                 listPositionDbModel = [];
                                             for (Position position

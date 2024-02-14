@@ -32,6 +32,13 @@ class MyApp extends StatelessWidget {
       theme: lightThemeData(context),
       darkTheme: darkThemeData(context),
       themeMode: ThemeMode.dark,
+      initialRoute: '/',
+      routes: {
+        // When navigating to the "/" route, build the FirstScreen widget.
+        '/main': (context) => MainScreen(),
+        //'/call_screen': (context) => CallPage(),
+        // When navigating to the "/second" route, build the SecondScreen widget.
+      },
       home: MultiBlocProvider(
         providers: [
           BlocProvider(
@@ -52,7 +59,7 @@ class MyApp extends StatelessWidget {
           }),
           BlocProvider(create: (context) {
             BasketBloc basketBloc = BasketBloc();
-            basketBloc.add(EmptyBasketEvent());
+
             return basketBloc;
           }),
           BlocProvider(create: (context) {

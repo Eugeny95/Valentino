@@ -1,5 +1,8 @@
+import 'package:auth_feature/data/auth_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:valentino/buisiness/auth_bloc/auth_bloc.dart';
 import 'package:valentino/ui/auth_page/forget_password_dialog.dart';
 import 'package:valentino/ui/auth_page/register_dialog.dart';
 import 'package:valentino/ui/constants.dart';
@@ -16,10 +19,11 @@ class SigninOrSignupScreen extends StatefulWidget {
 class SigninOrSignupScreenState extends State<SigninOrSignupScreen> {
   String login = '';
   String password = '';
-  String status = '';
+  String textStatus = '';
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    AuthBloc authBloc = BlocProvider.of<AuthBloc>(context);
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -45,7 +49,7 @@ class SigninOrSignupScreenState extends State<SigninOrSignupScreen> {
                           SizedBox(height: kDefaultPadding * 3),
                           Container(
                               height: height / 5,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 borderRadius: BorderRadius.only(
                                     bottomLeft: Radius.circular(25),
                                     bottomRight: Radius.circular(25)),
@@ -148,6 +152,7 @@ class SigninOrSignupScreenState extends State<SigninOrSignupScreen> {
                           // Spacer(flex: 2),
                           // Spacer(),
                           SizedBox(height: kDefaultPadding * 1.5),
+                          Text(textStatus, style: TextStyle(color: Colors.red)),
                           // BlocBuilder<AuthBloc, AuthState>(
                           //   builder: (context, state) {
                           //     return Text(state.message,
@@ -172,12 +177,62 @@ class SigninOrSignupScreenState extends State<SigninOrSignupScreen> {
                                     color: Color.fromARGB(218, 255, 255, 255),
                                     fontSize: 13),
                               ),
-                              onPressed: () {
-                                // if (!_formKey.currentState!.validate()) return;
+                              onPressed: () async {
+                                if (!_formKey.currentState!.validate()) return;
 
-                                // BlocProvider.of<AuthBloc>(context).add(
-                                //     AuthEventLogin(
-                                //         login: login, password: password));
+                                AuthStatus status =
+                                    await BlocProvider.of<AuthBloc>(context)
+                                        .logIn(
+                                            username: login,
+                                            password: password);
+                                switch (status) {
+                                  case AuthStatus.authorized:
+                                    {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                              content: Text(
+                                                  'Успешная авторизация')));
+                                      BlocProvider.of<AuthBloc>(context)
+                                          .add(RegisterEvent());
+                                      Navigator.pop(context);
+
+                                      break;
+                                    }
+                                  case AuthStatus.initial:
+                                    break;
+                                  case AuthStatus.error_of_password:
+                                    {
+                                      setState(() {
+                                        textStatus = 'Неверный пароль';
+                                      });
+                                      break;
+                                    }
+                                  case AuthStatus.user_not_found:
+                                    {
+                                      setState(() {
+                                        textStatus =
+                                            ' Пользователь не зарегистрирован';
+                                      });
+                                      break;
+                                    }
+                                  case AuthStatus.unauthorized:
+                                    {
+                                      setState(() {
+                                        textStatus =
+                                            'Неверные данные пользователя';
+                                      });
+                                      break;
+                                    }
+
+                                  default:
+                                    {
+                                      setState(() {
+                                        textStatus =
+                                            'Неизвестная ошибка сервера';
+                                      });
+                                      break;
+                                    }
+                                }
                               }),
                           SizedBox(height: kDefaultPadding * 0.5),
                           ElevatedButton(
@@ -197,13 +252,19 @@ class SigninOrSignupScreenState extends State<SigninOrSignupScreen> {
                               style: TextStyle(
                                   color: Color.fromARGB(170, 255, 255, 255)),
                             ),
-                            onPressed: () {
-                              showDialog(
+                            onPressed: () async {
+                              dynamic result = await showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return RegisterDialog();
+                                  return BlocProvider<AuthBloc>.value(
+                                      value: authBloc, //
+                                      child: RegisterDialog());
                                 },
                               );
+
+                              BlocProvider.of<AuthBloc>(context)
+                                  .add(RegisterEvent());
+                              if (result == true) Navigator.pop(context);
                             },
                           ),
                           SizedBox(height: kDefaultPadding * 1.5),

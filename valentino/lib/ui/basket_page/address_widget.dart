@@ -118,6 +118,13 @@ class _AddressWidgetState extends State<AddressWidget> {
                             onSelected: (String selection) {
                               addressData.street = selection;
                               widget.onChange(addressData);
+                              addressData.street = selection.split(',').first;
+                              try {
+                                addressData.house = selection.split(',')[1];
+                              } catch (_) {
+                                addressData.house = '';
+                                print(_);
+                              }
                             },
                           )),
                       SizedBox(
@@ -196,7 +203,8 @@ class _AddressWidgetState extends State<AddressWidget> {
                       style: TextStyle(color: Colors.red),
                     ),
                     onPressed: () {
-                      locationFromAddress(_addressController.text)
+                      locationFromAddress(
+                              addressData.street + ',' + addressData.house)
                           .then((locations) {
                         var output = 'Нет результата';
                         if (locations.isNotEmpty) {
