@@ -95,15 +95,13 @@ class _MenuPageState extends State<MenuPage> {
                             )),
                     child: const Cerousel(),
                   ),
-                  Positioned(
-                    top: 55,
-                    right: 10,
-                    child: CircleAvatar(
-                      backgroundColor: Color.fromARGB(139, 98, 113, 84),
-                      child: IconButton(
-                        icon: const Icon(Icons.table_bar_outlined,
-                            size: 24,
-                            color: Color.fromARGB(189, 255, 255, 255)),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          top: height * 0.055, right: width * 0.01),
+                      child: FloatingActionButton.small(
+                        backgroundColor: kPrimaryColor,
                         onPressed: () {
                           showDialog(
                             context: context,
@@ -112,6 +110,16 @@ class _MenuPageState extends State<MenuPage> {
                             },
                           );
                         },
+                        child: Icon(
+                          Icons.table_bar_outlined,
+                          size: 22,
+                          color: Color.fromARGB(189, 255, 255, 255),
+                        ),
+                        shape: RoundedRectangleBorder(
+                            side: BorderSide(
+                                width: 1,
+                                color: Color.fromARGB(49, 255, 255, 255)),
+                            borderRadius: BorderRadius.circular(100)),
                       ),
                     ),
                   ),

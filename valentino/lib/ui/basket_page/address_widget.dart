@@ -71,14 +71,14 @@ class _AddressWidgetState extends State<AddressWidget> {
         // clipBehavior: Clip.antiAliasWithSaveLayer,
         elevation: 10,
         child: Container(
-          height: height * 0.40,
+          height: height * 0.32,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               gradient: LinearGradient(colors: [
-                Color.fromARGB(255, 88, 88, 88),
+                Color.fromARGB(255, 70, 69, 69),
                 Color.fromARGB(146, 58, 58, 58),
                 Color.fromARGB(196, 47, 47, 47),
-                Color.fromARGB(255, 131, 131, 131),
+                Color.fromARGB(255, 94, 94, 94),
               ])),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,38 +94,50 @@ class _AddressWidgetState extends State<AddressWidget> {
                     children: [
                       SizedBox(
                           width: width * 0.6,
-                          child: Autocomplete<String>(
-                            optionsBuilder:
-                                (TextEditingValue textEditingValue) async {
-                              await getData(textEditingValue.text);
-                              if (textEditingValue.text == '') {
-                                return const Iterable<String>.empty();
-                              }
-                              for (String i in suggestions) {
-                                print(i);
-                              }
-                              print(suggestions.length);
-                              print(suggestions.where((String option) {
-                                return option
-                                    .toLowerCase()
-                                    .contains(textEditingValue.text);
-                              }));
-                              return suggestions.where((String option) {
-                                return option.toLowerCase().contains(
-                                    textEditingValue.text.toLowerCase());
-                              });
-                            },
-                            onSelected: (String selection) {
-                              addressData.street = selection;
-                              widget.onChange(addressData);
-                              addressData.street = selection.split(',').first;
-                              try {
-                                addressData.house = selection.split(',')[1];
-                              } catch (_) {
-                                addressData.house = '';
-                                print(_);
-                              }
-                            },
+                          child: InputDecorator(
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 0, horizontal: 0),
+                              // border: OutlineInputBorder(gapPadding: 1),
+                              helperText: 'Улица, дом*',
+
+                              helperStyle: TextStyle(
+                                  color: Color.fromARGB(209, 255, 255, 255),
+                                  fontSize: 10),
+                            ),
+                            child: Autocomplete<String>(
+                              optionsBuilder:
+                                  (TextEditingValue textEditingValue) async {
+                                await getData(textEditingValue.text);
+                                if (textEditingValue.text == '') {
+                                  return const Iterable<String>.empty();
+                                }
+                                for (String i in suggestions) {
+                                  print(i);
+                                }
+                                print(suggestions.length);
+                                print(suggestions.where((String option) {
+                                  return option
+                                      .toLowerCase()
+                                      .contains(textEditingValue.text);
+                                }));
+                                return suggestions.where((String option) {
+                                  return option.toLowerCase().contains(
+                                      textEditingValue.text.toLowerCase());
+                                });
+                              },
+                              onSelected: (String selection) {
+                                addressData.street = selection;
+                                widget.onChange(addressData);
+                                addressData.street = selection.split(',').first;
+                                try {
+                                  addressData.house = selection.split(',')[1];
+                                } catch (_) {
+                                  addressData.house = '';
+                                  print(_);
+                                }
+                              },
+                            ),
                           )),
                       SizedBox(
                         width: width * 0.2,
@@ -138,7 +150,10 @@ class _AddressWidgetState extends State<AddressWidget> {
                             // controller: _addressController,
                             style: Theme.of(context).textTheme.bodyMedium,
                             decoration: InputDecoration(
-                              hintText: 'Квартира',
+                              helperText: 'Квартира',
+                              helperStyle: TextStyle(
+                                  color: Color.fromARGB(209, 255, 255, 255),
+                                  fontSize: 10),
                             )),
                       ),
                     ],
@@ -157,7 +172,10 @@ class _AddressWidgetState extends State<AddressWidget> {
                             // controller: _addressController,
                             style: Theme.of(context).textTheme.bodyMedium,
                             decoration: InputDecoration(
-                              hintText: 'Подъезд',
+                              helperText: 'Подъезд',
+                              helperStyle: TextStyle(
+                                  color: Color.fromARGB(209, 255, 255, 255),
+                                  fontSize: 10),
                             )),
                       ),
                       SizedBox(
@@ -171,7 +189,10 @@ class _AddressWidgetState extends State<AddressWidget> {
                             // controller: _addressController,
                             style: Theme.of(context).textTheme.bodyMedium,
                             decoration: InputDecoration(
-                              hintText: 'Этаж',
+                              helperText: 'Этаж',
+                              helperStyle: TextStyle(
+                                  color: Color.fromARGB(209, 255, 255, 255),
+                                  fontSize: 10),
                             )),
                       ),
                       SizedBox(
@@ -185,17 +206,17 @@ class _AddressWidgetState extends State<AddressWidget> {
                             // controller: _addressController,
                             style: Theme.of(context).textTheme.bodyMedium,
                             decoration: InputDecoration(
-                              hintText: 'Домофон',
+                              helperText: 'Домофон',
+                              helperStyle: TextStyle(
+                                  color: Color.fromARGB(209, 255, 255, 255),
+                                  fontSize: 10),
                             )),
                       ),
                     ],
                   ),
                 ],
               ),
-              Padding(padding: EdgeInsets.only(top: 10)),
-              const Padding(
-                padding: EdgeInsets.only(top: 8),
-              ),
+              Padding(padding: EdgeInsets.only(top: 15)),
               Center(
                 child: ElevatedButton(
                     child: Text(
@@ -228,7 +249,6 @@ class _AddressWidgetState extends State<AddressWidget> {
                   ),
                 ),
               ),
-              Text('Стоимость доставки:')
             ],
           ),
         ));

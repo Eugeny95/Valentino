@@ -24,7 +24,7 @@ class MenuCategoryItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(top: 6, left: 10),
+          padding: const EdgeInsets.only(top: 0, left: 15),
           child: Text(
             title,
             style: const TextStyle(
@@ -155,7 +155,7 @@ class MenuCard extends StatelessWidget {
                         )
                       : Container(),
                   SizedBox(
-                    width: width / 70,
+                    width: width * 0.005,
                   ),
                   (dishHttpModel.energyFullAmount != 0)
                       ? const Icon(Icons.circle,

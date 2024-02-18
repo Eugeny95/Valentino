@@ -2,6 +2,7 @@ import 'package:auth_feature/data/auth_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:valentino/buisiness/auth_bloc/auth_bloc.dart';
 import 'package:valentino/ui/auth_page/signin_or_signup_screen.dart';
 import 'package:valentino/ui/constants.dart';
@@ -31,31 +32,36 @@ class _ClientDataPageState extends State<ClientDataPage> {
           print('status = ${state.status}');
           if (state.status == AuthStatus.unauthorized) {
             return Center(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Вы не авторизованы'),
-                SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
-                    child: Text(
-                      'Войти',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () async {
-                      AuthBloc authBloc = BlocProvider.of<AuthBloc>(context);
-                      await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => BlocProvider<AuthBloc>.value(
-                                value: authBloc, //
-                                child: SigninOrSignupScreen()),
-                          ));
-                      authBloc.add(RegisterEvent());
-                    }),
-              ],
-            ));
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(padding: EdgeInsets.only(top: 100)),
+                  Container(child: Image.asset('assets/ValBon.png')),
+                  Padding(padding: EdgeInsets.only(top: 70)),
+                  Text('Вы не авторизованы'),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton(
+                      child: Text(
+                        'Войти',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () async {
+                        AuthBloc authBloc = BlocProvider.of<AuthBloc>(context);
+                        await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  BlocProvider<AuthBloc>.value(
+                                      value: authBloc, //
+                                      child: SigninOrSignupScreen()),
+                            ));
+                        authBloc.add(RegisterEvent());
+                      }),
+                ],
+              ),
+            );
           }
 
           if (state.status == AuthStatus.initial) {
@@ -177,10 +183,8 @@ class _ClientDataPageState extends State<ClientDataPage> {
                             ),
                             SizedBox(width: width * 0.05),
                             Text(
-                              state.user!.date_birth
-                                  .toString()
-                                  .split(' ')
-                                  .first,
+                              DateFormat('dd.MM.yyyy')
+                                  .format(state.user!.date_birth),
                               style: TextStyle(fontSize: 17),
                             ),
                           ],

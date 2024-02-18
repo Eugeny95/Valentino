@@ -31,7 +31,7 @@ class _HistoryPreviewState extends State<HistoryPreview> {
 
     return Container(
         constraints: BoxConstraints(
-          minHeight: height * 0.2,
+          minHeight: height * 0.15,
           minWidth: width * 0.95,
         ),
         child: Card(
@@ -45,10 +45,10 @@ class _HistoryPreviewState extends State<HistoryPreview> {
           color: Color.fromARGB(255, 79, 102, 59),
           child: Column(children: [
             SizedBox(
-              height: height * 0.01,
+              height: height * 0.003,
             ),
             Container(
-              width: width * 0.95,
+              width: width * 0.93,
               child: Column(children: [
                 Container(
                   padding: EdgeInsets.all(10),
@@ -90,7 +90,7 @@ class _HistoryPreviewState extends State<HistoryPreview> {
                               height: height * 0.005,
                             ),
                             Text(
-                              DateFormat.yMd().format(
+                              DateFormat('dd.MM.yyyy').format(
                                       widget.historyDbModel.date_time!) +
                                   '   ' +
                                   DateFormat.Hm()
@@ -121,6 +121,7 @@ class _HistoryPreviewState extends State<HistoryPreview> {
                     ],
                   ),
                 ),
+                Padding(padding: EdgeInsets.only(top: 12)),
                 Column(
                   children: [
                     Column(
@@ -144,26 +145,29 @@ class _HistoryPreviewState extends State<HistoryPreview> {
                     SizedBox(
                       height: height * 0.01,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text('Итого:',
+                    Container(
+                      width: width * 0.8,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text('Итого:',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromARGB(255, 245, 245, 245),
+                                  fontSize: 16)),
+                          SizedBox(width: width * 0.03),
+                          Text(
+                            '${widget.historyDbModel.totalcost!.toInt()} ₽',
+                            // line.totalCost.toInt().toString(),
+                            // '${state.positions![index].allCost!.toInt()} ₽',
+                            textAlign: TextAlign.right,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 245, 245, 245),
-                                fontSize: 16)),
-                        SizedBox(width: width * 0.03),
-                        Text(
-                          '${widget.historyDbModel.totalcost!.toInt()} ₽',
-                          // line.totalCost.toInt().toString(),
-                          // '${state.positions![index].allCost!.toInt()} ₽',
-                          textAlign: TextAlign.right,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 229, 229, 229),
-                              fontSize: 16),
-                        ),
-                      ],
+                                color: Color.fromARGB(255, 229, 229, 229),
+                                fontSize: 16),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

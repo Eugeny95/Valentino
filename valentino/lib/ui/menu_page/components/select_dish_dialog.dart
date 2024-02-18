@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:valentino/buisiness/auth_bloc/auth_bloc.dart';
 import 'package:valentino/buisiness/basket_bloc/basket_bloc_bloc.dart';
 import 'package:valentino/ui/constants.dart';
+import 'package:valentino/ui/menu_page/components/helper_dialog.dart';
 
 // TODO можно в будущем сделать категории подгружаемыми с интернета
 
@@ -127,9 +128,22 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                 height: height / 90,
               ),
               (dishHttpModel.description != '')
-                  ? const Divider(color: Color.fromARGB(255, 255, 255, 255))
+                  ? SizedBox(
+                      width: width * 0.9,
+                      height: height * 0.002,
+                      child: Container(
+                        decoration: const BoxDecoration(
+                            gradient: LinearGradient(colors: [
+                          Color.fromARGB(0, 255, 255, 255),
+                          Color.fromARGB(220, 255, 255, 255),
+                          Color.fromARGB(0, 255, 255, 255),
+                        ])),
+                      ),
+                    )
                   : Container(),
-
+              SizedBox(
+                height: height / 100,
+              ),
               Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                 (dishHttpModel.description != '')
                     ? const Text(
@@ -139,7 +153,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                     : Container(),
                 (dishHttpModel.description != '')
                     ? SizedBox(
-                        height: height / 6.5,
+                        height: height / 7.5,
                         child: Text(dishHttpModel.description ?? ''))
                     : Container(),
 
@@ -155,6 +169,9 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                     ])),
                   ),
                 ),
+                SizedBox(
+                  height: height / 100,
+                ),
                 // Divider(color: const Color.fromARGB(255, 255, 255, 255)),
                 (dishHttpModel.proteinsAmount != 0) &
                         (dishHttpModel.fatAmount != 0) &
@@ -165,8 +182,8 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                         textDirection: TextDirection.ltr,
                         textAlign: TextAlign.right,
                         style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.normal,
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
                         ),
                       )
                     : Container(),
@@ -175,7 +192,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                         (dishHttpModel.carbohydratesAmount != 0) &
                         (dishHttpModel.energyAmount != 0)
                     ? SizedBox(
-                        height: height / 50,
+                        height: height * 0.005,
                       )
                     : Container(),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -300,7 +317,18 @@ class SelectDishDialogState extends State<SelectDishDialog> {
 
               Column(children: volumesWidget),
               propertiesWidget.isNotEmpty
-                  ? Divider(color: const Color.fromARGB(255, 255, 255, 255))
+                  ? SizedBox(
+                      width: width * 0.9,
+                      height: height * 0.002,
+                      child: Container(
+                        decoration: const BoxDecoration(
+                            gradient: LinearGradient(colors: [
+                          Color.fromARGB(0, 255, 255, 255),
+                          Color.fromARGB(220, 255, 255, 255),
+                          Color.fromARGB(0, 255, 255, 255),
+                        ])),
+                      ),
+                    )
                   : Row(),
 
               propertiesWidget.isNotEmpty
@@ -340,7 +368,18 @@ class SelectDishDialogState extends State<SelectDishDialog> {
               //   }),
               // ),
               propertiesWidget.isNotEmpty
-                  ? const Divider(color: Color.fromARGB(255, 255, 255, 255))
+                  ? SizedBox(
+                      width: width * 0.9,
+                      height: height * 0.002,
+                      child: Container(
+                        decoration: const BoxDecoration(
+                            gradient: LinearGradient(colors: [
+                          Color.fromARGB(0, 255, 255, 255),
+                          Color.fromARGB(220, 255, 255, 255),
+                          Color.fromARGB(0, 255, 255, 255),
+                        ])),
+                      ),
+                    )
                   : const Row(),
               propertiesWidget.isNotEmpty
                   ? const Row(children: [
@@ -404,8 +443,32 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                         style:
                             TextStyle(color: Color.fromARGB(225, 66, 66, 66)),
                       ))
-                  : Text(
-                      'Добавлять в корзину могут только авторизованные пользователи'),
+                  : ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          // side: BorderSide(color: kFourthColor, width: 2)
+                          // <-- Radius
+                        ),
+                        elevation: 5,
+                        minimumSize: Size(height * 0.55, width * 0.12),
+                      ),
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return HelperDialog();
+                          },
+                        );
+                      },
+                      child: Text(
+                        'Добавлять в корзину могут только авторизованные пользователи',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Color.fromARGB(225, 66, 66, 66),
+                            fontSize: 13),
+                      ))
             ])
           ]),
         ),

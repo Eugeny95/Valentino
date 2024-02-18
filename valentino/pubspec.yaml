@@ -41,7 +41,7 @@ dependencies:
   url_launcher: ^6.1.12
   carousel_slider: ^4.2.1
   cached_network_image: ^3.3.0
-  flutter_launcher_icons: ^0.13.1
+  flutter_launcher_icons: any
   intl: ^0.19.0
   sbp: ^0.0.8
   flutter_datetime_picker_plus: ^2.1.0
@@ -60,6 +60,10 @@ dependencies:
   toggle_switch: ^2.1.0
   google_places_flutter: ^2.0.7
   easy_autocomplete: ^1.6.0
+  flutter_native_splash: ^2.3.10
+ 
+  
+
   
  
   
@@ -104,10 +108,14 @@ flutter:
    - assets/VK.png
    - assets/WA.png
    - assets/Telegram.png
+   - assets/map.png
+   - assets/SplashBack.png
+   - assets/ValBon.png
    - packages/sbp/assets/sbp.png
    - packages/sbp/assets/icons/tinkoff.png
    - packages/sbp/assets/icons/sber.png
    - packages/sbp/assets/icons/pcb.png
+  
   #   - images/a_dot_ham.jpeg
 flutter_launcher_icons:
   android: true
@@ -115,6 +123,12 @@ flutter_launcher_icons:
   image_path: "assets/icon1.png"
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
+flutter_native_splash:
+  image: assets/ValBon.png
+  background_image: assets/SplashBack.png
+  android: true
+  ios: true
+
 
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages

@@ -6,6 +6,7 @@ import 'package:data_layer/models/http_models/position_http_model.dart';
 import 'package:data_layer/network/order_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:sbp/data/c2bmembers_data.dart';
@@ -18,7 +19,8 @@ import 'package:valentino/ui/basket_page/address_widget.dart';
 import 'package:valentino/ui/basket_page/data/models.dart';
 import 'package:valentino/ui/basket_page/sbp_modal_widget.dart';
 import 'package:valentino/ui/constants.dart';
-import 'package:valentino/ui/profile_page/about_widget.dart';
+
+import 'package:valentino/utils/Validator.dart';
 
 class BasketPage extends StatefulWidget {
   final url =
@@ -133,22 +135,44 @@ class BasketPageState extends State<BasketPage> {
                                                     Container(
                                                       height: height * 0.1,
                                                       width: width * 0.25,
-                                                      child: CachedNetworkImage(
-                                                          filterQuality:
-                                                              FilterQuality.low,
-                                                          imageUrl: state
-                                                              .positions![index]
-                                                              .dish!
-                                                              .imageLinks
-                                                              .first,
-                                                          //  (dishHttpModel.imageLinks.isEmpty)?'': dishHttpModel.imageLinks.first,
-                                                          placeholder: (context,
-                                                                  url) =>
-                                                              CircularProgressIndicator(),
-                                                          errorWidget: (context,
-                                                                  url, error) =>
-                                                              Icon(Icons.error),
-                                                          fit: BoxFit.cover),
+                                                      decoration: BoxDecoration(
+                                                          color: Colors.black54,
+                                                          border: Border.all(
+                                                              width: 2,
+                                                              color: const Color
+                                                                  .fromARGB(211,
+                                                                  45, 45, 45)),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      10.0)),
+                                                      child: ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10.0),
+                                                        child:
+                                                            CachedNetworkImage(
+                                                                filterQuality:
+                                                                    FilterQuality
+                                                                        .low,
+                                                                imageUrl: state
+                                                                    .positions![
+                                                                        index]
+                                                                    .dish!
+                                                                    .imageLinks
+                                                                    .first,
+                                                                //  (dishHttpModel.imageLinks.isEmpty)?'': dishHttpModel.imageLinks.first,
+                                                                placeholder: (context,
+                                                                        url) =>
+                                                                    CircularProgressIndicator(),
+                                                                errorWidget: (context,
+                                                                        url,
+                                                                        error) =>
+                                                                    Icon(Icons
+                                                                        .error),
+                                                                fit: BoxFit
+                                                                    .cover),
+                                                      ),
                                                     ),
                                                     SizedBox(
                                                       width: width * 0.02,
@@ -351,20 +375,41 @@ class BasketPageState extends State<BasketPage> {
                                 Padding(
                                     padding:
                                         EdgeInsets.only(top: height * 0.01)),
-                                SizedBox(
-                                  width: width * 0.8,
-                                  child: TextField(
-                                      onChanged: (value) {
-                                        phone = value;
-                                      },
-                                      autocorrect: true,
-                                      // controller: _addressController,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium,
-                                      decoration: InputDecoration(
-                                        hintText: 'Телефон',
-                                      )),
+                                Padding(
+                                    padding:
+                                        EdgeInsets.only(top: height * 0.015)),
+                                TextFormField(
+                                  cursorColor:
+                                      Color.fromARGB(209, 255, 255, 255),
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp(r'[0-9.,]'))
+                                  ],
+                                  validator: (value) =>
+                                      Validator.isPhoneValid(value),
+                                  onChanged: (String value) {
+                                    phone = value;
+                                  },
+                                  decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          borderSide: BorderSide(
+                                              color: Color.fromARGB(
+                                                  209, 255, 255, 255),
+                                              width: 2.0)),
+                                      prefixIcon: Icon(Icons.phone_iphone,
+                                          color: Color.fromARGB(
+                                              209, 255, 255, 255)),
+                                      labelText: 'Телефон*',
+                                      labelStyle: TextStyle(
+                                          color: Color.fromARGB(
+                                              209, 255, 255, 255),
+                                          fontSize: 12)),
                                 ),
                                 Padding(
                                     padding:
@@ -372,7 +417,7 @@ class BasketPageState extends State<BasketPage> {
                                 TextFormField(
                                   keyboardType: TextInputType.multiline,
                                   maxLines: 5,
-                                  minLines: 2,
+                                  minLines: 1,
 
                                   textCapitalization: TextCapitalization.words,
                                   cursorColor:

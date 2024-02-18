@@ -14,8 +14,16 @@ class SocialNetworkWidget extends StatelessWidget {
       children: [
         Container(
           decoration: BoxDecoration(
-            color: Color.fromARGB(83, 98, 113, 84),
+            color: Color.fromARGB(255, 62, 65, 59),
             borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.4),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: Offset(0, 0), // changes position of shadow
+              ),
+            ],
           ),
           width: width * 0.7,
           height: height * 0.11,
@@ -67,7 +75,7 @@ class SocialNetworkWidget extends StatelessWidget {
                         ),
                         onPressed: () async {
                           final url =
-                              "whatsapp://api.whatsapp.com/send/?phone=79515542002&text&type=phone_number&app_absent=0";
+                              "https://api.whatsapp.com/send/?phone=79515542002&text&type=phone_number&app_absent=0";
                           if (await canLaunch(url)) {
                             await launch(
                               url,

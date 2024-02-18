@@ -117,7 +117,7 @@ class _AboutRestaurantPageState extends State<AboutRestaurantPage> {
                       child: CachedNetworkImage(
                           filterQuality: FilterQuality.low,
                           imageUrl:
-                              'https://restaurant.aaccent.su/upload/iblock/26f/zp74zkpwkxbfybi9o1cn3imo1k52oex0.jpg',
+                              'https://valentino-vrn.ru/upload/iblock/26f/zp74zkpwkxbfybi9o1cn3imo1k52oex0.jpg',
                           fit: BoxFit.cover),
                     ),
                   ),

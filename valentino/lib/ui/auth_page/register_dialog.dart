@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:intl/intl.dart';
 import 'package:valentino/buisiness/auth_bloc/auth_bloc.dart';
-import 'package:valentino/ui/basket_page/TimePicker.dart';
+
 import 'package:valentino/utils/Validator.dart';
 
 // as datetimepic;
@@ -64,6 +64,7 @@ class RegisterDialogState extends State<RegisterDialog> {
                     Padding(padding: EdgeInsets.only(top: height * 0.03)),
                     TextFormField(
                       cursorColor: Color.fromARGB(217, 255, 255, 255),
+                      textCapitalization: TextCapitalization.words,
                       // validator: (value) => Validator.isEmptyValid(value!),
                       onChanged: (String value) {
                         firstname = value;
@@ -85,6 +86,7 @@ class RegisterDialogState extends State<RegisterDialog> {
                     Padding(padding: EdgeInsets.only(top: height * 0.015)),
                     TextFormField(
                       cursorColor: Color.fromARGB(217, 255, 255, 255),
+                      textCapitalization: TextCapitalization.words,
                       // validator: (value) => Validator.isEmptyValid(value!),
                       onChanged: (String value) {
                         lastname = value;
@@ -183,7 +185,8 @@ class RegisterDialogState extends State<RegisterDialog> {
                             ) ??
                             date;
 
-                        dateCtl.text = DateFormat.yMd().format(date_birth);
+                        dateCtl.text =
+                            DateFormat('dd.MM.yyyy').format(date_birth);
                       },
                     ),
                     // SizedBox(
@@ -279,7 +282,7 @@ class RegisterDialogState extends State<RegisterDialog> {
                       textStatus,
                       style: TextStyle(color: Colors.red),
                     ),
-                    Padding(padding: EdgeInsets.only(top: height * 0.05)),
+
                     // BlocBuilder<AuthBloc, AuthState>(
                     //   builder: (context, state) {
                     //     if (state.message == 'Успех') {
@@ -289,7 +292,7 @@ class RegisterDialogState extends State<RegisterDialog> {
                     //         style: TextStyle(color: Colors.red));
                     //   },
                     // ),
-                    Padding(padding: EdgeInsets.only(top: height * 0.03)),
+                    Padding(padding: EdgeInsets.only(top: height * 0.01)),
                     ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(

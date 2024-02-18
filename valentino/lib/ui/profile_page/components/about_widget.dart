@@ -22,6 +22,14 @@ class AboutWidget extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.2),
+                  spreadRadius: 3,
+                  blurRadius: 5,
+                  offset: Offset(0, 2), // changes position of shadow
+                ),
+              ],
               gradient: LinearGradient(colors: [
                 Color.fromARGB(255, 98, 113, 84),
                 Color.fromARGB(147, 113, 134, 97),
@@ -52,10 +60,9 @@ class AboutWidget extends StatelessWidget {
                               style: TextStyle(
                                   fontFamily: 'Moniqa',
                                   color: Colors.white,
-                                  fontSize: 30,
+                                  fontSize: 35,
                                   fontWeight: FontWeight.normal),
                             ),
-                            Row(children: []),
                             InkWell(
                               onTap: () {},
                               child: Row(children: [
