@@ -497,10 +497,10 @@ class BasketPageState extends State<BasketPage> {
                                                 color: Color.fromARGB(
                                                     235, 227, 227, 227)))),
                                         onPressed: () async {
-                                          if (_formKey.currentState!
-                                              .validate()) {
-                                            return;
-                                          }
+                                          // if (_formKey.currentState!
+                                          //     .validate()) {
+                                          //   return;
+                                          // }
                                           List<Position> items =
                                               BlocProvider.of<BasketBloc>(
                                                       context)
