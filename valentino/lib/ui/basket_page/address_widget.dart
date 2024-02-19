@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
@@ -68,7 +69,7 @@ class _AddressWidgetState extends State<AddressWidget> {
         // clipBehavior: Clip.antiAliasWithSaveLayer,
         elevation: 10,
         child: Container(
-          height: height * 0.32,
+          height: height * 0.27,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               gradient: LinearGradient(colors: [
@@ -96,6 +97,7 @@ class _AddressWidgetState extends State<AddressWidget> {
                               contentPadding: EdgeInsets.symmetric(
                                   vertical: 0, horizontal: 0),
                               // border: OutlineInputBorder(gapPadding: 1),
+
                               helperText: 'Улица, дом*',
 
                               helperStyle: TextStyle(
@@ -123,12 +125,46 @@ class _AddressWidgetState extends State<AddressWidget> {
                                       textEditingValue.text.toLowerCase());
                                 });
                               },
-                              onSelected: (String selection) {
+                              onSelected: (String selection) async {
                                 addressData.street = selection;
                                 widget.onChange(addressData);
                                 addressData.street = selection.split(',').first;
                                 try {
                                   addressData.house = selection.split(',')[1];
+                                  locationFromAddress('Воронеж ' +
+                                          addressData.street +
+                                          ',' +
+                                          addressData.house)
+                                      .then((locations) async {
+                                    var output = 'Нет результата';
+                                    if (locations.isNotEmpty) {
+                                      print(locations[0].latitude);
+                                      output = locations[0].toString();
+                                      Response response = await Dio().post(
+                                          'http://91.222.236.176:8880/orders_info/get_area_delivery/',
+                                          data: {
+                                            "x": locations[0].latitude,
+                                            "y": locations[0].longitude
+                                          });
+
+                                      setState(() {
+                                        if (response.data.toString() ==
+                                            'Точка находится вне зоны доставки') {
+                                          _output = response.data.toString();
+                                          return;
+                                        }
+                                        String area = response.data['name'];
+                                        String cost = response.data['coast']
+                                            .toString()
+                                            .split('.')
+                                            .first;
+                                        setState(() {
+                                          _output =
+                                              'Стоимость доставки составит $cost рублей';
+                                        });
+                                      });
+                                    }
+                                  });
                                 } catch (_) {
                                   addressData.house = '';
                                   print(_);
@@ -139,6 +175,7 @@ class _AddressWidgetState extends State<AddressWidget> {
                       SizedBox(
                         width: width * 0.2,
                         child: TextField(
+                            keyboardType: TextInputType.number,
                             onChanged: (value) {
                               addressData.flat = int.parse(value);
                               widget.onChange(addressData);
@@ -161,6 +198,7 @@ class _AddressWidgetState extends State<AddressWidget> {
                       SizedBox(
                         width: width * 0.3,
                         child: TextField(
+                            keyboardType: TextInputType.phone,
                             onChanged: (value) {
                               addressData.entrance = int.parse(value);
                               widget.onChange(addressData);
@@ -178,6 +216,7 @@ class _AddressWidgetState extends State<AddressWidget> {
                       SizedBox(
                         width: width * 0.2,
                         child: TextField(
+                            keyboardType: TextInputType.number,
                             onChanged: (value) {
                               addressData.floor = int.parse(value);
                               widget.onChange(addressData);
@@ -214,33 +253,13 @@ class _AddressWidgetState extends State<AddressWidget> {
                 ],
               ),
               Padding(padding: EdgeInsets.only(top: 15)),
-              Center(
-                child: ElevatedButton(
-                    child: Text(
-                      'Узнать координаты',
-                      style: TextStyle(color: Colors.red),
-                    ),
-                    onPressed: () {
-                      locationFromAddress(
-                              addressData.street + ',' + addressData.house)
-                          .then((locations) {
-                        var output = 'Нет результата';
-                        if (locations.isNotEmpty) {
-                          output = locations[0].toString();
-                        }
-
-                        setState(() {
-                          _output = output;
-                        });
-                      });
-                    }),
-              ),
               Expanded(
                 child: SingleChildScrollView(
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     child: Text(
                       _output,
+                      textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.red),
                     ),
                   ),

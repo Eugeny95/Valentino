@@ -85,6 +85,7 @@ class BasketPageState extends State<BasketPage> {
                   TextStyle(color: const Color.fromARGB(202, 255, 255, 255)))),
       body: BlocBuilder<BasketBloc, BasketState>(
         builder: (context, state) {
+          final _formKey = GlobalKey<FormState>();
           if (state.positions!.isNotEmpty) {
             return ListView(
               physics: const AlwaysScrollableScrollPhysics(),
@@ -122,122 +123,144 @@ class BasketPageState extends State<BasketPage> {
                                         itemCount: state.positions!.length,
                                         itemBuilder:
                                             (BuildContext context, int index) {
-                                          return Container(
-                                            width: width * 0.95,
-                                            height: height * 0.18,
-                                            child: Column(
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    SizedBox(
-                                                      width: width * 0.02,
-                                                    ),
-                                                    Container(
-                                                      height: height * 0.1,
-                                                      width: width * 0.25,
-                                                      decoration: BoxDecoration(
-                                                          color: Colors.black54,
-                                                          border: Border.all(
-                                                              width: 2,
-                                                              color: const Color
-                                                                  .fromARGB(211,
-                                                                  45, 45, 45)),
+                                          return Form(
+                                            child: Container(
+                                              width: width * 0.95,
+                                              height: height * 0.18,
+                                              child: Column(
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      SizedBox(
+                                                        width: width * 0.02,
+                                                      ),
+                                                      Container(
+                                                        height: height * 0.1,
+                                                        width: width * 0.25,
+                                                        decoration: BoxDecoration(
+                                                            color:
+                                                                Colors.black54,
+                                                            border: Border.all(
+                                                                width: 2,
+                                                                color: const Color
+                                                                    .fromARGB(
+                                                                    211,
+                                                                    45,
+                                                                    45,
+                                                                    45)),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10.0)),
+                                                        child: ClipRRect(
                                                           borderRadius:
                                                               BorderRadius
                                                                   .circular(
-                                                                      10.0)),
-                                                      child: ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.0),
-                                                        child:
-                                                            CachedNetworkImage(
-                                                                filterQuality:
-                                                                    FilterQuality
-                                                                        .low,
-                                                                imageUrl: state
-                                                                    .positions![
-                                                                        index]
-                                                                    .dish!
-                                                                    .imageLinks
-                                                                    .first,
-                                                                //  (dishHttpModel.imageLinks.isEmpty)?'': dishHttpModel.imageLinks.first,
-                                                                placeholder: (context,
-                                                                        url) =>
-                                                                    CircularProgressIndicator(),
-                                                                errorWidget: (context,
-                                                                        url,
-                                                                        error) =>
-                                                                    Icon(Icons
-                                                                        .error),
-                                                                fit: BoxFit
-                                                                    .cover),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      width: width * 0.02,
-                                                    ),
-                                                    Container(
-                                                      width: width * 0.65,
-                                                      child: Column(children: [
-                                                        Row(
-                                                          children: [
-                                                            Expanded(
-                                                              child: Text(
-                                                                  state
+                                                                      10.0),
+                                                          child:
+                                                              CachedNetworkImage(
+                                                                  filterQuality:
+                                                                      FilterQuality
+                                                                          .low,
+                                                                  imageUrl: state
                                                                       .positions![
                                                                           index]
                                                                       .dish!
-                                                                      .name!,
-                                                                  style: TextStyle(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      color: Color.fromARGB(
-                                                                          255,
-                                                                          229,
-                                                                          229,
-                                                                          229),
-                                                                      fontSize:
-                                                                          14)),
-                                                              flex: 6,
-                                                            ),
-                                                            Expanded(
-                                                              child: IconButton(
-                                                                  onPressed:
-                                                                      () {
-                                                                    BlocProvider.of<BasketBloc>(context).add(RemovePositionEvent(
-                                                                        dishId: state
-                                                                            .positions![index]
-                                                                            .dish!
-                                                                            .id!));
-                                                                  },
-                                                                  icon: Icon(Icons
-                                                                      .close)),
-                                                              flex: 1,
-                                                            )
-                                                          ],
+                                                                      .imageLinks
+                                                                      .first,
+                                                                  //  (dishHttpModel.imageLinks.isEmpty)?'': dishHttpModel.imageLinks.first,
+                                                                  placeholder: (context,
+                                                                          url) =>
+                                                                      CircularProgressIndicator(),
+                                                                  errorWidget: (context,
+                                                                          url,
+                                                                          error) =>
+                                                                      Icon(Icons
+                                                                          .error),
+                                                                  fit: BoxFit
+                                                                      .cover),
                                                         ),
-                                                        Row(children: [
-                                                          Expanded(
-                                                            child: Row(
+                                                      ),
+                                                      SizedBox(
+                                                        width: width * 0.02,
+                                                      ),
+                                                      Container(
+                                                        width: width * 0.65,
+                                                        child: Column(
+                                                            children: [
+                                                              Row(
                                                                 children: [
-                                                                  IconButton(
-                                                                      onPressed:
-                                                                          () {
-                                                                        BlocProvider.of<BasketBloc>(context).add(RemoveDishEvent(
-                                                                            dishId:
-                                                                                state.positions![index].dish!.id!));
-                                                                      },
-                                                                      icon: Icon(
-                                                                          Icons
-                                                                              .remove)),
-                                                                  Text(
-                                                                    state
-                                                                        .positions![
-                                                                            index]
-                                                                        .count
-                                                                        .toString(),
+                                                                  Expanded(
+                                                                    child: Text(
+                                                                        state
+                                                                            .positions![
+                                                                                index]
+                                                                            .dish!
+                                                                            .name!,
+                                                                        style: TextStyle(
+                                                                            fontWeight: FontWeight
+                                                                                .bold,
+                                                                            color: Color.fromARGB(
+                                                                                255,
+                                                                                229,
+                                                                                229,
+                                                                                229),
+                                                                            fontSize:
+                                                                                14)),
+                                                                    flex: 6,
+                                                                  ),
+                                                                  Expanded(
+                                                                    child: IconButton(
+                                                                        onPressed: () {
+                                                                          BlocProvider.of<BasketBloc>(context)
+                                                                              .add(RemovePositionEvent(dishId: state.positions![index].dish!.id!));
+                                                                        },
+                                                                        icon: Icon(Icons.close)),
+                                                                    flex: 1,
+                                                                  )
+                                                                ],
+                                                              ),
+                                                              Row(children: [
+                                                                Expanded(
+                                                                  child: Row(
+                                                                      children: [
+                                                                        IconButton(
+                                                                            onPressed:
+                                                                                () {
+                                                                              BlocProvider.of<BasketBloc>(context).add(RemoveDishEvent(dishId: state.positions![index].dish!.id!));
+                                                                            },
+                                                                            icon:
+                                                                                Icon(Icons.remove)),
+                                                                        Text(
+                                                                          state
+                                                                              .positions![index]
+                                                                              .count
+                                                                              .toString(),
+                                                                          style: TextStyle(
+                                                                              color: Color.fromARGB(255, 229, 229, 229),
+                                                                              fontSize: 18),
+                                                                        ),
+                                                                        IconButton(
+                                                                            onPressed:
+                                                                                () {
+                                                                              setState(() {
+                                                                                BlocProvider.of<BasketBloc>(context).add(AddDishEvent(dishHttpModel: state.positions![index].dish));
+                                                                                if (counter < 0) counter = 0;
+                                                                                // onChange(counter);
+                                                                              });
+                                                                            },
+                                                                            icon:
+                                                                                Icon(Icons.add)),
+                                                                      ]),
+                                                                  flex: 2,
+                                                                ),
+                                                                Expanded(
+                                                                  child: Text(
+                                                                    // line.totalCost.toInt().toString(),
+                                                                    '${state.positions![index].allCost!.toInt()} ₽',
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .right,
                                                                     style: TextStyle(
                                                                         color: Color.fromARGB(
                                                                             255,
@@ -247,55 +270,20 @@ class BasketPageState extends State<BasketPage> {
                                                                         fontSize:
                                                                             18),
                                                                   ),
-                                                                  IconButton(
-                                                                      onPressed:
-                                                                          () {
-                                                                        setState(
-                                                                            () {
-                                                                          BlocProvider.of<BasketBloc>(context)
-                                                                              .add(AddDishEvent(dishHttpModel: state.positions![index].dish));
-                                                                          if (counter <
-                                                                              0)
-                                                                            counter =
-                                                                                0;
-                                                                          // onChange(counter);
-                                                                        });
-                                                                      },
-                                                                      icon: Icon(
-                                                                          Icons
-                                                                              .add)),
-                                                                ]),
-                                                            flex: 2,
-                                                          ),
-                                                          Expanded(
-                                                            child: Text(
-                                                              // line.totalCost.toInt().toString(),
-                                                              '${state.positions![index].allCost!.toInt()} ₽',
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .right,
-                                                              style: TextStyle(
-                                                                  color: Color
-                                                                      .fromARGB(
-                                                                          255,
-                                                                          229,
-                                                                          229,
-                                                                          229),
-                                                                  fontSize: 18),
-                                                            ),
-                                                          ),
-                                                        ]),
-                                                        SizedBox(
-                                                          height: 10,
-                                                        ),
-                                                      ]),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Divider(
-                                                    color: Color.fromARGB(
-                                                        255, 229, 229, 229)),
-                                              ],
+                                                                ),
+                                                              ]),
+                                                              SizedBox(
+                                                                height: 10,
+                                                              ),
+                                                            ]),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Divider(
+                                                      color: Color.fromARGB(
+                                                          255, 229, 229, 229)),
+                                                ],
+                                              ),
                                             ),
                                           );
                                         });
@@ -509,6 +497,10 @@ class BasketPageState extends State<BasketPage> {
                                                 color: Color.fromARGB(
                                                     235, 227, 227, 227)))),
                                         onPressed: () async {
+                                          if (_formKey.currentState!
+                                              .validate()) {
+                                            return;
+                                          }
                                           List<Position> items =
                                               BlocProvider.of<BasketBloc>(
                                                       context)
