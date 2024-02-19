@@ -1,9 +1,6 @@
-import 'package:easy_autocomplete/easy_autocomplete.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:google_places_flutter/google_places_flutter.dart';
-import 'package:google_places_flutter/model/prediction.dart';
 import 'package:valentino/ui/basket_page/data/models.dart';
 import 'package:yandex_autocomplete/models/result_object.dart';
 import 'package:yandex_autocomplete/network/place_coder.dart';

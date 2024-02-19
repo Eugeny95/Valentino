@@ -58,11 +58,6 @@ dependencies:
   visibility_detector: ^0.4.0+2
   geocoding: ^2.1.1
   toggle_switch: ^2.1.0
-  google_places_flutter: ^2.0.7
-  easy_autocomplete: ^1.6.0
-  flutter_native_splash: ^2.3.10
- 
-  
 
   
  
