@@ -20,6 +20,8 @@ class MenuCategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -40,6 +42,7 @@ class MenuCategoryItem extends StatelessWidget {
             child: GridView.count(
               padding: const EdgeInsets.all(5),
               crossAxisSpacing: 1,
+              mainAxisSpacing: 3,
               childAspectRatio: 0.76,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -100,7 +103,7 @@ class MenuCard extends StatelessWidget {
               Container(
                 width: width / 2.4,
                 height: height / 7.6,
-                padding: const EdgeInsets.all(2), // Border width
+                // padding: const EdgeInsets.all(2), // Border width
                 decoration: BoxDecoration(
                     color: Colors.grey[800],
                     borderRadius: BorderRadius.circular(15.0)),
@@ -125,6 +128,7 @@ class MenuCard extends StatelessWidget {
               ),
               SizedBox(
                 height: height / 17,
+                width: width * 0.43,
                 child: Text(
                   dishHttpModel.name ?? '',
                   textDirection: TextDirection.ltr,
@@ -135,6 +139,9 @@ class MenuCard extends StatelessWidget {
                     height: 0.97,
                   ),
                 ),
+              ),
+              SizedBox(
+                height: height * 0.005,
               ),
               SizedBox(
                 height: height * 0.02,
@@ -149,7 +156,7 @@ class MenuCard extends StatelessWidget {
                           textDirection: TextDirection.ltr,
                           textAlign: TextAlign.right,
                           style: const TextStyle(
-                            fontSize: 10,
+                            fontSize: 8,
                             fontWeight: FontWeight.normal,
                           ),
                         )
@@ -159,7 +166,7 @@ class MenuCard extends StatelessWidget {
                   ),
                   (dishHttpModel.energyFullAmount != 0)
                       ? const Icon(Icons.circle,
-                          size: 5, color: Color.fromARGB(189, 255, 255, 255))
+                          size: 4, color: Color.fromARGB(189, 255, 255, 255))
                       : Container(),
                   // Энергетическая ценность
                   (dishHttpModel.weight != 0)
@@ -168,7 +175,7 @@ class MenuCard extends StatelessWidget {
                           textDirection: TextDirection.ltr,
                           textAlign: TextAlign.right,
                           style: const TextStyle(
-                            fontSize: 10,
+                            fontSize: 8,
                             fontWeight: FontWeight.normal,
                           ),
                         )

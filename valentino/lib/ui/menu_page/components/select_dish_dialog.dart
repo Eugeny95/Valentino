@@ -81,20 +81,15 @@ class SelectDishDialogState extends State<SelectDishDialog> {
     double fontSize = width / 25;
     //
     return AlertDialog(
+        contentPadding: EdgeInsets.all(10),
         insetPadding: const EdgeInsets.all(20),
         backgroundColor: const Color.fromARGB(247, 79, 102, 59),
-        title: Text(
-          dishHttpModel.name ?? '',
-          textAlign: TextAlign.center,
-          style: const TextStyle(fontSize: 22),
-        ),
-        actionsAlignment: MainAxisAlignment.center,
+        actionsAlignment: MainAxisAlignment.start,
         content: SizedBox(
           //  height: height * 0.9,
           width: width * 0.96,
           child: ListView(shrinkWrap: true, children: [
             Column(mainAxisSize: MainAxisSize.max, children: [
-              // 666666666666665Divider(color: Colors.black),
               InkWell(
                 onTap: () {
                   final imageProvider =
@@ -125,7 +120,16 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                 ),
               ),
               SizedBox(
-                height: height / 90,
+                height: height * 0.005,
+              ),
+              Text(
+                dishHttpModel.name ?? '',
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                    fontSize: 20, fontWeight: FontWeight.normal),
+              ),
+              SizedBox(
+                height: height * 0.005,
               ),
               (dishHttpModel.description != '')
                   ? SizedBox(
@@ -142,7 +146,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                     )
                   : Container(),
               SizedBox(
-                height: height / 100,
+                height: height * 0.01,
               ),
               Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                 (dishHttpModel.description != '')
@@ -153,10 +157,13 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                     : Container(),
                 (dishHttpModel.description != '')
                     ? SizedBox(
-                        height: height / 7.5,
-                        child: Text(dishHttpModel.description ?? ''))
+                        // height: height / 7.5,
+                        child: Text(dishHttpModel.description ?? '',
+                            textAlign: TextAlign.center))
                     : Container(),
-
+                SizedBox(
+                  height: height * 0.01,
+                ),
                 SizedBox(
                   width: width * 0.9,
                   height: height * 0.002,
@@ -170,7 +177,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                   ),
                 ),
                 SizedBox(
-                  height: height / 100,
+                  height: height * 0.01,
                 ),
                 // Divider(color: const Color.fromARGB(255, 255, 255, 255)),
                 (dishHttpModel.proteinsAmount != 0) &
@@ -182,7 +189,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                         textDirection: TextDirection.ltr,
                         textAlign: TextAlign.right,
                         style: TextStyle(
-                          fontSize: 13,
+                          fontSize: 10,
                           fontWeight: FontWeight.bold,
                         ),
                       )
@@ -195,126 +202,119 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                         height: height * 0.005,
                       )
                     : Container(),
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  // SizedBox(
-                  //   width: width / 70,
-                  // ),
-                  // Пищевая ценность
-                  (dishHttpModel.proteinsAmount != 0)
-                      ? Column(
-                          children: [
-                            const Text(
-                              'Белки ',
-                              textDirection: TextDirection.ltr,
-                              textAlign: TextAlign.right,
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ),
-                            Text(
-                              ' ${dishHttpModel.proteinsAmount!.toInt()} г.',
-                              textDirection: TextDirection.ltr,
-                              textAlign: TextAlign.right,
-                              style: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.normal,
-                              ),
-                            )
-                          ],
-                        )
-                      : Container(),
-                  SizedBox(
-                    width: width / 40,
-                  ),
-                  (dishHttpModel.fatAmount != 0)
-                      ? Column(
-                          children: [
-                            const Text(
-                              'Жиры ',
-                              textDirection: TextDirection.ltr,
-                              textAlign: TextAlign.right,
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ),
-                            Text(
-                              ' ${dishHttpModel.fatAmount!.toInt()} г.',
-                              textDirection: TextDirection.ltr,
-                              textAlign: TextAlign.right,
-                              style: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.normal,
-                              ),
-                            )
-                          ],
-                        )
-                      : Container(),
-                  SizedBox(
-                    width: width / 40,
-                  ),
-                  (dishHttpModel.carbohydratesAmount != 0)
-                      ? Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
-                              'Углеводы ',
-                              textDirection: TextDirection.ltr,
-                              textAlign: TextAlign.right,
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ),
-                            Text(
-                              ' ${dishHttpModel.carbohydratesAmount!.toInt()} г.',
-                              textDirection: TextDirection.ltr,
-                              textAlign: TextAlign.right,
-                              style: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.normal,
-                              ),
-                            )
-                          ],
-                        )
-                      : Container(),
-                  SizedBox(
-                    width: width / 40,
-                  ),
-                  (dishHttpModel.energyAmount != 0)
-                      ? Column(
-                          children: [
-                            const Text(
-                              'Энерг. цен. ',
-                              textDirection: TextDirection.ltr,
-                              textAlign: TextAlign.right,
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ),
-                            Text(
-                              ' ${dishHttpModel.energyAmount!.toInt()} ккал.',
-                              textDirection: TextDirection.ltr,
-                              textAlign: TextAlign.right,
-                              style: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.normal,
-                              ),
-                            )
-                          ],
-                        )
-                      : Container(),
+                Container(
+                  width: width * 0.6,
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        (dishHttpModel.proteinsAmount != 0)
+                            ? Column(
+                                children: [
+                                  const Text(
+                                    'Белки ',
+                                    textDirection: TextDirection.ltr,
+                                    textAlign: TextAlign.right,
+                                    style: TextStyle(
+                                      fontSize: 9,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                  Text(
+                                    ' ${dishHttpModel.proteinsAmount!.toInt()} г.',
+                                    textDirection: TextDirection.ltr,
+                                    textAlign: TextAlign.right,
+                                    style: const TextStyle(
+                                      fontSize: 9,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  )
+                                ],
+                              )
+                            : Container(),
 
-                  // Энергетическая ценность
-                ]),
+                        (dishHttpModel.fatAmount != 0)
+                            ? Column(
+                                children: [
+                                  const Text(
+                                    'Жиры ',
+                                    textDirection: TextDirection.ltr,
+                                    textAlign: TextAlign.right,
+                                    style: TextStyle(
+                                      fontSize: 9,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                  Text(
+                                    ' ${dishHttpModel.fatAmount!.toInt()} г.',
+                                    textDirection: TextDirection.ltr,
+                                    textAlign: TextAlign.right,
+                                    style: const TextStyle(
+                                      fontSize: 9,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  )
+                                ],
+                              )
+                            : Container(),
+
+                        (dishHttpModel.carbohydratesAmount != 0)
+                            ? Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Text(
+                                    'Углеводы ',
+                                    textDirection: TextDirection.ltr,
+                                    textAlign: TextAlign.right,
+                                    style: TextStyle(
+                                      fontSize: 9,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                  Text(
+                                    ' ${dishHttpModel.carbohydratesAmount!.toInt()} г.',
+                                    textDirection: TextDirection.ltr,
+                                    textAlign: TextAlign.right,
+                                    style: const TextStyle(
+                                      fontSize: 9,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  )
+                                ],
+                              )
+                            : Container(),
+
+                        (dishHttpModel.energyAmount != 0)
+                            ? Column(
+                                children: [
+                                  const Text(
+                                    'Энерг. цен. ',
+                                    textDirection: TextDirection.ltr,
+                                    textAlign: TextAlign.right,
+                                    style: TextStyle(
+                                      fontSize: 9,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                  Text(
+                                    ' ${dishHttpModel.energyAmount!.toInt()} ккал.',
+                                    textDirection: TextDirection.ltr,
+                                    textAlign: TextAlign.right,
+                                    style: const TextStyle(
+                                      fontSize: 9,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  )
+                                ],
+                              )
+                            : Container(),
+
+                        // Энергетическая ценность
+                      ]),
+                ),
               ]),
-
               propertiesWidget.isNotEmpty
                   ? Padding(padding: EdgeInsets.only(top: height * 0.02))
                   : const Column(),
-
               Column(children: volumesWidget),
               propertiesWidget.isNotEmpty
                   ? SizedBox(
@@ -330,6 +330,8 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                       ),
                     )
                   : Row(),
+
+              /*Блок добавок МОДИФИКАТОРЫ
 
               propertiesWidget.isNotEmpty
                   ? const Text(
@@ -420,6 +422,8 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                   ),
                 ],
               ),
+
+              */
               Padding(padding: EdgeInsets.only(top: height * 0.02)),
               BlocProvider.of<AuthBloc>(context).isAuth()
                   ? ElevatedButton(
@@ -431,7 +435,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                           // <-- Radius
                         ),
                         elevation: 5,
-                        minimumSize: Size(height * 0.55, width * 0.12),
+                        minimumSize: Size(height * 0.25, width * 0.12),
                       ),
                       onPressed: () {
                         BlocProvider.of<BasketBloc>(context)
@@ -452,7 +456,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                           // <-- Radius
                         ),
                         elevation: 5,
-                        minimumSize: Size(height * 0.55, width * 0.12),
+                        minimumSize: Size(height * 0.25, width * 0.12),
                       ),
                       onPressed: () {
                         showDialog(
@@ -463,17 +467,18 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                         );
                       },
                       child: Text(
-                        'Добавлять в корзину могут только авторизованные пользователи',
+                        'Авторизуйтесь, чтобы добавить в корзину',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Color.fromARGB(225, 66, 66, 66),
                             fontSize: 13),
-                      ))
+                      )),
+              Padding(padding: EdgeInsets.only(top: height * 0.02)),
             ])
           ]),
         ),
         shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(30))));
+            borderRadius: BorderRadius.all(Radius.circular(23))));
     // TODO: implement build
   }
 }

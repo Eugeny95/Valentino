@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:valentino/buisiness/auth_bloc/auth_bloc.dart';
 import 'package:valentino/ui/profile_page/components/about_app_page.dart';
 import 'package:valentino/ui/profile_page/components/about_restaurant_page.dart';
@@ -28,7 +29,7 @@ class _ProfilePageState extends State<ProfilePage> {
         Container(
           width: width * 0.98,
           child: Column(children: [
-            Padding(padding: EdgeInsets.only(top: 40)),
+            Padding(padding: EdgeInsets.only(top: height * 0.04)),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -52,14 +53,14 @@ class _ProfilePageState extends State<ProfilePage> {
                   height: 0.2,
                   fontWeight: FontWeight.normal),
             ),
-            Padding(padding: EdgeInsets.only(top: 30)),
+            Padding(padding: EdgeInsets.only(top: height * 0.04)),
             Align(
                 alignment: Alignment.center, //or choose another Alignment
                 child: Container(
                     color: Colors.transparent,
                     width: width - (0.01 * width),
                     child: AboutWidget())),
-            Padding(padding: EdgeInsets.only(top: 20)),
+            Padding(padding: EdgeInsets.only(top: height * 0.015)),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
@@ -95,7 +96,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             color: Color.fromARGB(255, 255, 255, 255))),
                   ],
                 )),
-            Padding(padding: EdgeInsets.only(top: 15)),
+            Padding(padding: EdgeInsets.only(top: height * 0.015)),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
@@ -126,7 +127,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         style: TextStyle(color: Colors.white)),
                   ],
                 )),
-            Padding(padding: EdgeInsets.only(top: 6)),
+            Padding(padding: EdgeInsets.only(top: height * 0.005)),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
@@ -159,7 +160,42 @@ class _ProfilePageState extends State<ProfilePage> {
                             color: Color.fromARGB(255, 255, 255, 255))),
                   ],
                 )),
-            Padding(padding: EdgeInsets.only(top: 15)),
+            Padding(padding: EdgeInsets.only(top: height * 0.005)),
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      side: BorderSide(
+                          color: Colors.white, width: 0.2) // <-- Radius
+                      ),
+                  elevation: 5,
+                  minimumSize: Size(height * 0.43, width * 0.12),
+                ),
+                onPressed: () async {
+                  final url =
+                      "https://yandex.ru/maps/org/valentino/124027389896/panorama/?l=stv%2Csta&ll=39.198694%2C51.661022&panorama%5Bdirection%5D=291.296426%2C-0.357831&panorama%5Bfull%5D=true&panorama%5Bpoint%5D=39.198682%2C51.661021&panorama%5Bspan%5D=121.107985%2C60.000000&utm_source=share&z=20";
+                  if (await canLaunch(url)) {
+                    await launch(
+                      url,
+                    );
+                  }
+                },
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.touch_app_outlined,
+                      size: 18,
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      width: width * 0.03,
+                    ),
+                    Text('Виртуальный тур по ресторану',
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 255, 255, 255))),
+                  ],
+                )),
+            Padding(padding: EdgeInsets.only(top: height * 0.015)),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
@@ -193,7 +229,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         )),
                   ],
                 )),
-            Padding(padding: EdgeInsets.only(top: 6)),
+            Padding(padding: EdgeInsets.only(top: height * 0.005)),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
@@ -226,7 +262,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         )),
                   ],
                 )),
-            Padding(padding: EdgeInsets.only(top: 40)),
+            Padding(padding: EdgeInsets.only(top: height * 0.02)),
             Align(
                 alignment: Alignment.center, //or choose another Alignment
                 child: Container(
