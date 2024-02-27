@@ -435,7 +435,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                           // <-- Radius
                         ),
                         elevation: 5,
-                        minimumSize: Size(height * 0.25, width * 0.12),
+                        minimumSize: Size(height * 0.35, width * 0.12),
                       ),
                       onPressed: () {
                         BlocProvider.of<BasketBloc>(context)
@@ -456,7 +456,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                           // <-- Radius
                         ),
                         elevation: 5,
-                        minimumSize: Size(height * 0.25, width * 0.12),
+                        minimumSize: Size(height * 0.35, width * 0.12),
                       ),
                       onPressed: () {
                         showDialog(

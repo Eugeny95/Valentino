@@ -360,45 +360,7 @@ class BasketPageState extends State<BasketPage> {
                                                 },
                                               )
                                             : Container())),
-                                Padding(
-                                    padding:
-                                        EdgeInsets.only(top: height * 0.01)),
-                                Padding(
-                                    padding:
-                                        EdgeInsets.only(top: height * 0.015)),
-                                TextFormField(
-                                  cursorColor:
-                                      Color.fromARGB(209, 255, 255, 255),
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: <TextInputFormatter>[
-                                    FilteringTextInputFormatter.allow(
-                                        RegExp(r'[0-9.,]'))
-                                  ],
-                                  validator: (value) =>
-                                      Validator.isPhoneValid(value),
-                                  onChanged: (String value) {
-                                    phone = value;
-                                  },
-                                  decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: BorderSide(
-                                              color: Color.fromARGB(
-                                                  209, 255, 255, 255),
-                                              width: 2.0)),
-                                      prefixIcon: Icon(Icons.phone_iphone,
-                                          color: Color.fromARGB(
-                                              209, 255, 255, 255)),
-                                      labelText: 'Телефон*',
-                                      labelStyle: TextStyle(
-                                          color: Color.fromARGB(
-                                              209, 255, 255, 255),
-                                          fontSize: 12)),
-                                ),
+
                                 Padding(
                                     padding:
                                         EdgeInsets.only(top: height * 0.01)),
@@ -407,7 +369,8 @@ class BasketPageState extends State<BasketPage> {
                                   maxLines: 5,
                                   minLines: 1,
 
-                                  textCapitalization: TextCapitalization.words,
+                                  textCapitalization:
+                                      TextCapitalization.sentences,
                                   cursorColor:
                                       Color.fromARGB(139, 255, 255, 255),
                                   // validator: (value) => Validator.isEmptyValid(value!),

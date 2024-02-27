@@ -73,7 +73,7 @@ class AboutWidget extends StatelessWidget {
                                 GestureDetector(
                                     child: Text(
                                       ' Воронеж, площадь Ленина, 6',
-                                      style: TextStyle(fontSize: 13),
+                                      style: TextStyle(fontSize: 14),
                                     ),
                                     onTap: () async {
                                       final url =
@@ -115,7 +115,7 @@ class AboutWidget extends StatelessWidget {
                       Center(
                           child: Icon(
                         Icons.restaurant_menu_outlined,
-                        size: 50,
+                        size: height * 0.055,
                       )),
                     ])),
           ]),

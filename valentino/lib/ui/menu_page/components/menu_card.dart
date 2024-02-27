@@ -190,7 +190,7 @@ class MenuCard extends StatelessWidget {
                 height: height / 22,
                 decoration: BoxDecoration(
                   border: Border.all(
-                      width: 1, color: const Color.fromARGB(187, 0, 0, 0)),
+                      width: 1, color: Color.fromARGB(246, 88, 88, 88)),
                   color: const Color.fromARGB(255, 246, 246, 246),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
@@ -199,8 +199,9 @@ class MenuCard extends StatelessWidget {
                     '${dishHttpModel.currentPrice!.toInt()} ₽',
                     textDirection: TextDirection.ltr,
                     style: const TextStyle(
+                      fontWeight: FontWeight.w600,
                       fontSize: 14,
-                      color: Color.fromARGB(204, 0, 0, 0),
+                      color: Color.fromARGB(204, 59, 59, 59),
                     ),
                   ),
                 ),

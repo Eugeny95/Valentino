@@ -176,7 +176,7 @@ class _MenuPageState extends State<MenuPage> {
                                         Scrollable.ensureVisible(
                                             globalKeys[index].currentContext!,
                                             duration: const Duration(
-                                                milliseconds: 1000));
+                                                milliseconds: 0));
                                       },
                                       child: Text(
                                           state.menuHttpModel!.menu![index]

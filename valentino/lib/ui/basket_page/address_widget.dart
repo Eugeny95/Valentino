@@ -69,7 +69,7 @@ class _AddressWidgetState extends State<AddressWidget> {
         // clipBehavior: Clip.antiAliasWithSaveLayer,
         elevation: 10,
         child: Container(
-          height: height * 0.27,
+          height: height * 0.24,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               gradient: LinearGradient(colors: [
@@ -91,7 +91,7 @@ class _AddressWidgetState extends State<AddressWidget> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       SizedBox(
-                          width: width * 0.6,
+                          width: width * 0.9,
                           child: InputDecorator(
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
@@ -172,31 +172,30 @@ class _AddressWidgetState extends State<AddressWidget> {
                               },
                             ),
                           )),
-                      SizedBox(
-                        width: width * 0.2,
-                        child: TextField(
-                            keyboardType: TextInputType.number,
-                            onChanged: (value) {
-                              addressData.flat = int.parse(value);
-                              widget.onChange(addressData);
-                            },
-                            autocorrect: true,
-                            // controller: _addressController,
-                            style: Theme.of(context).textTheme.bodyMedium,
-                            decoration: InputDecoration(
-                              helperText: 'Квартира',
-                              helperStyle: TextStyle(
-                                  color: Color.fromARGB(209, 255, 255, 255),
-                                  fontSize: 10),
-                            )),
-                      ),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       SizedBox(
-                        width: width * 0.3,
+                          width: width * 0.2,
+                          child: TextField(
+                              keyboardType: TextInputType.number,
+                              onChanged: (value) {
+                                addressData.flat = int.parse(value);
+                                widget.onChange(addressData);
+                              },
+                              autocorrect: true,
+                              // controller: _addressController,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                              decoration: InputDecoration(
+                                helperText: 'Квартира',
+                                helperStyle: TextStyle(
+                                    color: Color.fromARGB(209, 255, 255, 255),
+                                    fontSize: 10),
+                              ))),
+                      SizedBox(
+                        width: width * 0.15,
                         child: TextField(
                             keyboardType: TextInputType.phone,
                             onChanged: (value) {
@@ -214,7 +213,7 @@ class _AddressWidgetState extends State<AddressWidget> {
                             )),
                       ),
                       SizedBox(
-                        width: width * 0.2,
+                        width: width * 0.15,
                         child: TextField(
                             keyboardType: TextInputType.number,
                             onChanged: (value) {
@@ -232,7 +231,7 @@ class _AddressWidgetState extends State<AddressWidget> {
                             )),
                       ),
                       SizedBox(
-                        width: width * 0.2,
+                        width: width * 0.15,
                         child: TextField(
                             onChanged: (value) {
                               addressData.doorphone = value;
@@ -252,7 +251,7 @@ class _AddressWidgetState extends State<AddressWidget> {
                   ),
                 ],
               ),
-              Padding(padding: EdgeInsets.only(top: 15)),
+              Padding(padding: EdgeInsets.only(top: height * 0.03)),
               Expanded(
                 child: SingleChildScrollView(
                   child: Container(
@@ -260,7 +259,10 @@ class _AddressWidgetState extends State<AddressWidget> {
                     child: Text(
                       _output,
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.red),
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 213, 213, 213),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15),
                     ),
                   ),
                 ),
