@@ -10,6 +10,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthService authService = AuthService();
   AuthStatus authStatus = AuthStatus.unauthorized;
 
+  UserData getUser() {
+    return authService.user;
+  }
+
   Future<AuthStatus> logIn(
       {required String username, required String password}) async {
     authStatus = await authService.logIn(
@@ -22,6 +26,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<AuthStatus> registerUser(UserData userData) async {
+    print('register user');
     authStatus = await authService.register(
         userData: userData,
         registerUrl: 'http://91.222.236.176:8880/auth/register/');
@@ -48,6 +53,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   String getAccessToken() {
     return authService.user.accessToken;
+  }
+
+  String getPhone() {
+    return authService.user.username;
   }
 
   AuthBloc() : super(AuthState(status: AuthStatus.initial)) {

@@ -13,12 +13,14 @@ import 'package:sbp/data/c2bmembers_data.dart';
 import 'package:sbp/models/c2bmembers_model.dart';
 import 'package:sbp/sbp.dart';
 import 'package:toggle_switch/toggle_switch.dart';
+import 'package:valentino/buisiness/auth_bloc/auth_bloc.dart';
 import 'package:valentino/buisiness/basket_bloc/basket_bloc_bloc.dart';
 import 'package:valentino/buisiness/history_bloc/history_bloc.dart';
 import 'package:valentino/ui/basket_page/address_widget.dart';
 import 'package:valentino/ui/basket_page/data/models.dart';
 import 'package:valentino/ui/basket_page/sbp_modal_widget.dart';
 import 'package:valentino/ui/constants.dart';
+import 'package:valentino/ui/payments/payment_feature.dart';
 
 import 'package:valentino/utils/Validator.dart';
 
@@ -46,7 +48,13 @@ class BasketPageState extends State<BasketPage> {
   String comment = '';
   double totalCost = 0;
   AddressData addressData = AddressData(
-      street: '', house: '', flat: 0, entrance: 0, floor: 0, doorphone: '');
+      deliveryCost: 0,
+      street: '',
+      house: '',
+      flat: 0,
+      entrance: 0,
+      floor: 0,
+      doorphone: '');
 
   @override
   void initState() {
@@ -191,6 +199,7 @@ class BasketPageState extends State<BasketPage> {
                                                               Row(
                                                                 children: [
                                                                   Expanded(
+                                                                    flex: 6,
                                                                     child: Text(
                                                                         state
                                                                             .positions![
@@ -207,7 +216,6 @@ class BasketPageState extends State<BasketPage> {
                                                                                 229),
                                                                             fontSize:
                                                                                 14)),
-                                                                    flex: 6,
                                                                   ),
                                                                   Expanded(
                                                                     child: IconButton(
@@ -357,6 +365,12 @@ class BasketPageState extends State<BasketPage> {
                                                 onChange: (addressData) {
                                                   this.addressData =
                                                       addressData;
+                                                  totalCost = BlocProvider.of<
+                                                                  BasketBloc>(
+                                                              context)
+                                                          .getTotalCost() +
+                                                      addressData.deliveryCost;
+                                                  setState(() {});
                                                 },
                                               )
                                             : Container())),
@@ -420,7 +434,7 @@ class BasketPageState extends State<BasketPage> {
                                                 MainAxisAlignment.center,
                                             children: [
                                               Text(
-                                                ' ${state.totalCost!.toInt()}',
+                                                ' ${state.totalCost!.toInt() + addressData.deliveryCost.toInt()}',
                                                 style: const TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     color: Color.fromARGB(
@@ -460,58 +474,52 @@ class BasketPageState extends State<BasketPage> {
                                                 color: Color.fromARGB(
                                                     235, 227, 227, 227)))),
                                         onPressed: () async {
-                                          // if (_formKey.currentState!
-                                          //     .validate()) {
-                                          //   return;
-                                          // }
-                                          List<Position> items =
-                                              BlocProvider.of<BasketBloc>(
-                                                      context)
-                                                  .getPositions();
-
-                                          totalCost =
-                                              BlocProvider.of<BasketBloc>(
-                                                      context)
-                                                  .getTotalCost();
-                                          List<PositionHttpModel> itemsHttp =
-                                              [];
-                                          for (int i = 0;
-                                              i < items.length;
-                                              i++) {
-                                            itemsHttp.add(PositionHttpModel(
-                                                amount: items[i].count,
-                                                modifiers: [],
-                                                productId: items[i].dish!.id));
+                                          OrderServiceType orderServiceType =
+                                              toggleIndex == 0
+                                                  ? OrderServiceType
+                                                      .DeliveryPickUp
+                                                  : OrderServiceType
+                                                      .DeliveryByCourier;
+                                          if (addressData.street.isEmpty &&
+                                              orderServiceType !=
+                                                  OrderServiceType
+                                                      .DeliveryPickUp) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(SnackBar(
+                                                    content: Text(
+                                                        'Поле адрес не должно быть пустым',
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.red))));
+                                            return;
                                           }
-                                          AddressHttpModel addressHttpModel =
-                                              AddressHttpModel(
-                                                  doorphone:
-                                                      addressData.doorphone,
-                                                  entrance:
-                                                      addressData.entrance,
-                                                  flat: addressData.flat,
-                                                  floor: addressData.floor,
-                                                  house: addressData.house,
-                                                  street: addressData.street);
+                                          if (addressData.house.isEmpty &&
+                                              orderServiceType !=
+                                                  OrderServiceType
+                                                      .DeliveryPickUp) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(SnackBar(
+                                                    content: Text(
+                                              'Выберите номер дома из списка',
+                                              style:
+                                                  TextStyle(color: Colors.red),
+                                            )));
+                                            return;
+                                          }
+                                          Payment()
+                                              .webviewPayment(context, 10000);
+                                          return;
+                                          BlocProvider.of<BasketBloc>(context)
+                                              .createOrder(
+                                                  addressData: addressData,
+                                                  user:
+                                                      BlocProvider.of<AuthBloc>(
+                                                              context)
+                                                          .getUser(),
+                                                  orderServiceType:
+                                                      orderServiceType,
+                                                  comment: comment);
 
-                                          OrderHttpModel orderHttpModel =
-                                              OrderHttpModel(
-                                                  type_order: (toggleIndex == 0)
-                                                      ? OrderServiceType
-                                                          .DeliveryPickUp
-                                                      : OrderServiceType
-                                                          .DeliveryByCourier,
-                                                  phone: phone,
-                                                  items: itemsHttp,
-                                                  adress: addressHttpModel,
-                                                  comment: comment,
-                                                  summa: totalCost,
-                                                  type_payment:
-                                                      PaymentType.Cash);
-                                          print(orderHttpModel.toJson());
-                                          CreateOrderStatus orderStatus =
-                                              await OrderRepository()
-                                                  .createOrder(orderHttpModel);
                                           if (true) {
                                             //ECKJDBT!!!!!!
                                             BlocProvider.of<BasketBloc>(context)

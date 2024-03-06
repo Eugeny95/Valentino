@@ -22,7 +22,13 @@ class _AddressWidgetState extends State<AddressWidget> {
   List<String> suggestions = [];
 
   AddressData addressData = AddressData(
-      house: '', street: '', flat: 0, floor: 0, entrance: 0, doorphone: '');
+      house: '',
+      street: '',
+      flat: 0,
+      floor: 0,
+      entrance: 0,
+      doorphone: '',
+      deliveryCost: 0.0);
 
   @override
   void initState() {
@@ -151,6 +157,8 @@ class _AddressWidgetState extends State<AddressWidget> {
                                         if (response.data.toString() ==
                                             'Точка находится вне зоны доставки') {
                                           _output = response.data.toString();
+                                          addressData.deliveryCost = 0.0;
+                                          widget.onChange(addressData);
                                           return;
                                         }
                                         String area = response.data['name'];
@@ -159,8 +167,11 @@ class _AddressWidgetState extends State<AddressWidget> {
                                             .split('.')
                                             .first;
                                         setState(() {
+                                          addressData.deliveryCost =
+                                              double.parse(cost);
                                           _output =
                                               'Стоимость доставки составит $cost рублей';
+                                          widget.onChange(addressData);
                                         });
                                       });
                                     }

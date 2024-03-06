@@ -1,6 +1,12 @@
+import 'package:auth_feature/data/auth_data.dart';
 import 'package:bloc/bloc.dart';
+import 'package:data_layer/models/http_models/address_http_model.dart';
 import 'package:data_layer/models/http_models/dish_http_model.dart';
+import 'package:data_layer/models/http_models/order_http_model.dart';
+import 'package:data_layer/models/http_models/position_http_model.dart';
+import 'package:data_layer/network/order_repository.dart';
 import 'package:meta/meta.dart';
+import 'package:valentino/ui/basket_page/data/models.dart';
 part 'basket_bloc_event.dart';
 part 'basket_bloc_state.dart';
 
@@ -106,5 +112,39 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
 
   double getTotalCost() {
     return totalCost;
+  }
+
+  Future<CreateOrderStatus> createOrder(
+      {required AddressData addressData,
+      required UserData user,
+      required OrderServiceType orderServiceType,
+      required String comment}) async {
+    List<PositionHttpModel> itemsHttp = [];
+    for (int i = 0; i < positions.length; i++) {
+      itemsHttp.add(PositionHttpModel(
+          amount: positions[i].count,
+          modifiers: [],
+          productId: positions[i].dish!.id));
+    }
+    AddressHttpModel addressHttpModel = AddressHttpModel(
+        doorphone: addressData.doorphone,
+        entrance: addressData.entrance,
+        flat: addressData.flat,
+        floor: addressData.floor,
+        house: addressData.house,
+        street: addressData.street);
+
+    OrderHttpModel orderHttpModel = OrderHttpModel(
+        type_order: orderServiceType,
+        phone: user.username,
+        items: itemsHttp,
+        adress: addressHttpModel,
+        comment: comment,
+        summa: getTotalCost() + addressData.deliveryCost,
+        type_payment: PaymentType.Cash);
+
+    CreateOrderStatus orderStatus =
+        await OrderRepository().createOrder(orderHttpModel, user.accessToken);
+    return orderStatus;
   }
 }
