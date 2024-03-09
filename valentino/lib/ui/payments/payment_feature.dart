@@ -22,6 +22,23 @@ class Payment {
         pageView: 'MOBILE',
       ),
     );
+    /*
+    {"errorCode":"0","errorMessage":"Успешно",
+    "orderNumber":"4",
+    "orderStatus":0,
+    "actionCode":-100,
+    "actionCodeDescription":"",
+    "amount":100,"currency":"643",
+    "date":1709726426044,
+    "orderDescription":"","merchantOrderParams":[],
+    "transactionAttributes":[{"name":"merchantIp","value":"176.59.82.235"}],
+    "attributes":[{"name":"mdOrder","value":"9d9b693d-8b57-7f03-a928-d6dc29950482"}],
+    "terminalId":"123456","paymentAmountInfo":
+    {"paymentState":"CREATED","approvedAmount":0,"depositedAmount":0,"refundedAmount":0,
+    "feeAmount":0,"totalAmount":100},
+    "bankInfo":{"bankCountryCode":"UNKNOWN",
+    "bankCountryName":"<Неизвестно>"},"chargeback":false}
+    */
 
     final String? formUrl = register.formUrl;
     print('form url !!!');
