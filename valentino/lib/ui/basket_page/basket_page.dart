@@ -18,6 +18,7 @@ import 'package:valentino/buisiness/basket_bloc/basket_bloc_bloc.dart';
 import 'package:valentino/buisiness/history_bloc/history_bloc.dart';
 import 'package:valentino/ui/basket_page/address_widget.dart';
 import 'package:valentino/ui/basket_page/data/models.dart';
+import 'package:valentino/ui/basket_page/payment_widget.dart';
 import 'package:valentino/ui/basket_page/sbp_modal_widget.dart';
 import 'package:valentino/ui/constants.dart';
 import 'package:valentino/ui/payments/payment_feature.dart';
@@ -576,6 +577,34 @@ class BasketPageState extends State<BasketPage> {
                                       ),
                                     ),
                                   ],
+                                ),
+                                SizedBox(height: 10),
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          12), // <-- Radius
+                                    ),
+                                    elevation: 5,
+                                    minimumSize:
+                                        Size(height * 0.23, width * 0.13),
+                                    backgroundColor: kFourthColor,
+                                  ),
+                                  // ignore: prefer_const_constructors
+                                  child: Text('Оплата',
+                                      style: (TextStyle(
+                                          fontSize: 15,
+                                          color: Color.fromARGB(
+                                              235, 227, 227, 227)))),
+                                  onPressed: () {
+                                    showModalBottomSheet(
+                                      context: context,
+                                      isScrollControlled: true,
+                                      builder: (BuildContext context) {
+                                        return PaymentWidget();
+                                      },
+                                    );
+                                  },
                                 )
                               ],
                             )))),

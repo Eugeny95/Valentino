@@ -65,7 +65,7 @@ class _MenuPageState extends State<MenuPage> {
                       )),
             ),
           );
-        }); //Column(children: categoriesWidget);
+        });
   }
 
   @override
@@ -89,10 +89,7 @@ class _MenuPageState extends State<MenuPage> {
                   Container(
                     decoration: const BoxDecoration(
                         color: Color.fromARGB(255, 116, 116, 116),
-                        borderRadius: BorderRadius.only(
-                            // bottomRight: Radius.circular(30),
-                            // bottomLeft: Radius.circular(30),
-                            )),
+                        borderRadius: BorderRadius.only()),
                     child: const Cerousel(),
                   ),
                   Align(
@@ -159,13 +156,13 @@ class _MenuPageState extends State<MenuPage> {
                                             ? kFourthColor
                                             : kContentColorLightTheme,
                                         minimumSize:
-                                            Size(height * 0.12, width * 0.1),
-
+                                            Size(height * 0.12, width * 0.05),
+                                        maximumSize:
+                                            Size(height * 0.5, width * 0.05),
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(
                                               12), // <-- Radius
                                         ),
-                                        // elevation: 5,
                                       ),
                                       onPressed: () {
                                         lock = true;
