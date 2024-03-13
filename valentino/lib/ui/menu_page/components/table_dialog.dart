@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:valentino/ui/constants.dart';
+import 'package:valentino/utils/Validator.dart';
 
 // as datetimepic;
 
@@ -40,7 +42,7 @@ class TableDialogState extends State<TableDialog> {
       actionsAlignment: MainAxisAlignment.center,
       content: SizedBox(
           width: width,
-          height: height * 0.45,
+          height: height * 0.4,
           child: Column(children: [
             const Text(
               'С Вами свяжется наш менеджер и уточнит детали',
@@ -56,7 +58,7 @@ class TableDialogState extends State<TableDialog> {
                     TextFormField(
                       textCapitalization: TextCapitalization.words,
                       cursorColor: Color.fromARGB(139, 255, 255, 255),
-                      // validator: (value) => Validator.isEmptyValid(value!),
+                      validator: (value) => Validator.isEmptyValid(value!),
                       onChanged: (String value) {
                         firstname = value;
                       },
@@ -81,7 +83,7 @@ class TableDialogState extends State<TableDialog> {
                       inputFormatters: <TextInputFormatter>[
                         FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))
                       ],
-                      // validator: (value) => Validator.isPhoneValid(value),
+                      validator: (value) => Validator.isPhoneValid(value),
                       onChanged: (String value) {
                         phone = value;
                       },
@@ -99,7 +101,7 @@ class TableDialogState extends State<TableDialog> {
                           labelStyle: const TextStyle(
                               color: Color.fromARGB(211, 255, 255, 255))),
                     ),
-                    Padding(padding: EdgeInsets.only(top: height * 0.03)),
+                    Padding(padding: EdgeInsets.only(top: height * 0.01)),
 
                     // BlocBuilder<AuthBloc, AuthState>(
                     //   builder: (context, state) {
@@ -128,11 +130,10 @@ class TableDialogState extends State<TableDialog> {
                             if (result.isNotEmpty &&
                                 result[0].rawAddress.isNotEmpty) {}
                           } on SocketException catch (_) {
-                            // ignore: use_build_context_synchronously
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return const AlertDialog(
+                                  return AlertDialog(
                                     title: Text('Внимание'),
                                     content: Text('Нед доступа к Интернету'),
                                   );
@@ -140,15 +141,13 @@ class TableDialogState extends State<TableDialog> {
                           }
 
                           if (!_formKey.currentState!.validate()) return;
-                          // BlocProvider.of<AuthBloc>(context).add(
-                          //     AuthEventRegister(
-                          //         firstName: firstname,
-                          //         phone: phone,
-                          //         email: email,
-                          //         password: password));
+                          Response response = await await Dio().post(
+                              'http://91.222.236.176:8880/orders_info/reserve_table/',
+                              data: {"name": firstname, "phone": phone});
+                          Navigator.pop(context);
                         },
                         child: const Text('Отправить')),
-                    Padding(padding: EdgeInsets.only(top: height * 0.003)),
+                    Padding(padding: EdgeInsets.only(top: height * 0.001)),
                     TextButton(
                       child: const Text('Отмена',
                           style: TextStyle(
@@ -158,7 +157,7 @@ class TableDialogState extends State<TableDialog> {
                         Navigator.pop(context);
                       },
                     ),
-                    const Text(
+                    Text(
                       '*Нажимая на кнопку «Отправить» вы даете согласие на обработку персональных данных',
                       style: TextStyle(
                           color: Color.fromARGB(209, 255, 255, 255),

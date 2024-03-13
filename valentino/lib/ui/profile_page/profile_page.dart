@@ -110,37 +110,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => DeliveryMapPage()),
-                  );
-                },
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.map,
-                      size: 22,
-                      color: Colors.white,
-                    ),
-                    SizedBox(
-                      width: width * 0.03,
-                    ),
-                    Text('Карта доставки',
-                        style: TextStyle(color: Colors.white)),
-                  ],
-                )),
-            Padding(padding: EdgeInsets.only(top: height * 0.005)),
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      side: BorderSide(
-                          color: Colors.white, width: 0.2) // <-- Radius
-                      ),
-                  elevation: 5,
-                  minimumSize: Size(height * 0.43, width * 0.12),
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
                     MaterialPageRoute(
                         builder: (context) => AboutRestaurantPage()),
                   );
@@ -158,6 +127,37 @@ class _ProfilePageState extends State<ProfilePage> {
                     Text('О ресторане',
                         style: TextStyle(
                             color: Color.fromARGB(255, 255, 255, 255))),
+                  ],
+                )),
+            Padding(padding: EdgeInsets.only(top: height * 0.005)),
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      side: BorderSide(
+                          color: Colors.white, width: 0.2) // <-- Radius
+                      ),
+                  elevation: 5,
+                  minimumSize: Size(height * 0.43, width * 0.12),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => DeliveryMapPage()),
+                  );
+                },
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.map,
+                      size: 22,
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      width: width * 0.03,
+                    ),
+                    Text('Карта доставки',
+                        style: TextStyle(color: Colors.white)),
                   ],
                 )),
             Padding(padding: EdgeInsets.only(top: height * 0.005)),

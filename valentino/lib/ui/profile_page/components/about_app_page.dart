@@ -29,7 +29,7 @@ class _AboutAppPageState extends State<AboutAppPage> {
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           Text(
-            'Версия 1.0.0, сборка 1',
+            'Версия 1.0.3, сборка 3',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           SizedBox(

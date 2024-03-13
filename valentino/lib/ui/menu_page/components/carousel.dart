@@ -4,12 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 final List<String> imgList = [
-  'https://lh3.googleusercontent.com/p/AF1QipN83HvGYsyX-n9vvqHqnf28hXsrQvCC4IogQ-q-=s680-w680-h510',
-  'https://avatars.mds.yandex.net/get-altay/1132477/2a00000186f3fc415c9925d5ef77e670333b/XXXL',
-  'https://valentino-vrn.ru/upload/iblock/09e/qfxsy3ekftdb600end9qljk1kxtebtci.JPG',
-  'https://media-cdn.tripadvisor.com/media/photo-s/29/c8/f5/ec/valentino.jpg',
-  'https://valentino-vrn.ru/upload/iblock/65f/u0b248kd6htfrln5jodfvj5apelc1wac.JPG',
-  'https://valentino-vrn.ru/upload/iblock/6ed/o490ig40sv2tqh1zeunkipjo1v1hwnyj.JPG'
+  'http://91.222.236.176:8880/image/image/home_1.jpg',
+  'http://91.222.236.176:8880/image/image/home_2.jpg',
+  'http://91.222.236.176:8880/image/image/home_3.jpg',
+  'http://91.222.236.176:8880/image/image/home_4.jpg',
+  'http://91.222.236.176:8880/image/image/home_5.jpg'
 ];
 
 final List<Widget> imageSliders = imgList
