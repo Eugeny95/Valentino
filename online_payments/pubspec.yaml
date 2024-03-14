@@ -1,27 +1,22 @@
-name: data_layer
-description: A new Flutter package project.
+name: online_payments
+description: "A new Flutter package project."
 version: 0.0.1
 homepage:
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: '>=3.2.3 <4.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
-  dio: 5.3.2
   flutter:
     sdk: flutter
-  hive: any
-  hive_flutter: any
-  sqflite: ^2.3.0
-  sqflite_common_ffi: any
+  webview_flutter: ^4.5.0
+  dio: 5.3.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-  json_serializable: any
-  build_runner: any
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

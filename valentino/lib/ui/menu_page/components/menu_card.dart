@@ -112,6 +112,7 @@ class MenuCard extends StatelessWidget {
                   child: SizedBox.fromSize(
                     size: const Size.fromRadius(70), // Image radius
                     child: CachedNetworkImage(
+                        useOldImageOnUrlChange: true,
                         filterQuality: FilterQuality.low,
                         imageUrl:
                             //    'https://art-lunch.ru/content/uploads/2018/07/Greek_salad_01.jpg',

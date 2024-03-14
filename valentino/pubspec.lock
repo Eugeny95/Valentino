@@ -128,14 +128,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.18.0"
-  comparer:
-    dependency: transitive
-    description:
-      name: comparer
-      sha256: "64682a5ab5767ebf840bc4027abc8b41a8a28f1c32bca252e4456f4236e2ac4e"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.1"
   convert:
     dependency: transitive
     description:
@@ -171,10 +163,10 @@ packages:
     dependency: "direct main"
     description:
       name: dio
-      sha256: "797e1e341c3dd2f69f2dad42564a6feff3bfb87187d05abb93b9609e6f1645c3"
+      sha256: ce75a1b40947fea0a0e16ce73337122a86762e38b982e1ccb909daa3b9bc4197
       url: "https://pub.dev"
     source: hosted
-    version: "5.4.0"
+    version: "5.3.2"
   easy_image_viewer:
     dependency: "direct main"
     description:
@@ -422,6 +414,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  online_payments:
+    dependency: "direct main"
+    description:
+      path: "../online_payments"
+      relative: true
+    source: path
+    version: "0.0.1"
   path:
     dependency: transitive
     description:
@@ -542,14 +541,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.27.7"
-  sberbank_acquiring:
-    dependency: "direct main"
-    description:
-      name: sberbank_acquiring
-      sha256: d831e7d47bdd7483249ec17f86d671e5f297d062bd66d50296cc67618c6539b8
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.1"
   sbp:
     dependency: "direct main"
     description:
@@ -775,34 +766,34 @@ packages:
     dependency: transitive
     description:
       name: webview_flutter
-      sha256: "392c1d83b70fe2495de3ea2c84531268d5b8de2de3f01086a53334d8b6030a88"
+      sha256: d81b68e88cc353e546afb93fb38958e3717282c5ac6e5d3be4a4aef9fc3c1413
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.4"
+    version: "4.5.0"
   webview_flutter_android:
     dependency: transitive
     description:
       name: webview_flutter_android
-      sha256: "8b3b2450e98876c70bfcead876d9390573b34b9418c19e28168b74f6cb252dbd"
+      sha256: "3e5f4e9d818086b0d01a66fb1ff9cc72ab0cc58c71980e3d3661c5685ea0efb0"
       url: "https://pub.dev"
     source: hosted
-    version: "2.10.4"
+    version: "3.15.0"
   webview_flutter_platform_interface:
     dependency: transitive
     description:
       name: webview_flutter_platform_interface
-      sha256: "812165e4e34ca677bdfbfa58c01e33b27fd03ab5fa75b70832d4b7d4ca1fa8cf"
+      sha256: d937581d6e558908d7ae3dc1989c4f87b786891ab47bb9df7de548a151779d8d
       url: "https://pub.dev"
     source: hosted
-    version: "1.9.5"
+    version: "2.10.0"
   webview_flutter_wkwebview:
     dependency: transitive
     description:
       name: webview_flutter_wkwebview
-      sha256: a5364369c758892aa487cbf59ea41d9edd10f9d9baf06a94e80f1bd1b4c7bbc0
+      sha256: "4d062ad505390ecef1c4bfb6001cd857a51e00912cc9dfb66edb1886a9ebd80c"
       url: "https://pub.dev"
     source: hosted
-    version: "2.9.5"
+    version: "3.10.2"
   win32:
     dependency: transitive
     description:

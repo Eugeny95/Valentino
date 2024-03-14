@@ -1,14 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:data_layer/models/db_models/history_model.dart';
-import 'package:data_layer/models/http_models/address_http_model.dart';
 import 'package:data_layer/models/http_models/order_http_model.dart';
-import 'package:data_layer/models/http_models/position_http_model.dart';
-import 'package:data_layer/network/order_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
+import 'package:online_payments/acquiring.dart';
+import 'package:online_payments/payment_widget.dart';
 import 'package:sbp/data/c2bmembers_data.dart';
 import 'package:sbp/models/c2bmembers_model.dart';
 import 'package:sbp/sbp.dart';
@@ -19,11 +17,7 @@ import 'package:valentino/buisiness/history_bloc/history_bloc.dart';
 import 'package:valentino/ui/basket_page/address_widget.dart';
 import 'package:valentino/ui/basket_page/data/models.dart';
 import 'package:valentino/ui/basket_page/payment_widget.dart';
-import 'package:valentino/ui/basket_page/sbp_modal_widget.dart';
 import 'package:valentino/ui/constants.dart';
-import 'package:valentino/ui/payments/payment_feature.dart';
-
-import 'package:valentino/utils/Validator.dart';
 
 class BasketPage extends StatefulWidget {
   final url =
@@ -507,8 +501,36 @@ class BasketPageState extends State<BasketPage> {
                                             )));
                                             return;
                                           }
-                                          Payment()
-                                              .webviewPayment(context, 10000);
+                                          SberAquiring sberAquiring =
+                                              SberAquiring(
+                                                  userName:
+                                                      't3662276447_180224-api',
+                                                  password: 'Q.7rCcUQ',
+                                                  returnUrl: 'https://test.com',
+                                                  pageView:
+                                                      PageViewVariants.MOBILE,
+                                                  failUrl: 'https://test.com');
+                                          PaymentObject paymentObject =
+                                              await sberAquiring.toPay(
+                                                  amount: (BlocProvider.of<
+                                                                      BasketBloc>(
+                                                                  context)
+                                                              .getTotalCost() *
+                                                          100)
+                                                      .toInt(),
+                                                  orderNumber:
+                                                      Acquiring.getRandom(30));
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    PaymentWidget(
+                                                      paymentObject:
+                                                          paymentObject,
+                                                      sberAquiring:
+                                                          sberAquiring,
+                                                    )),
+                                          );
                                           return;
                                           BlocProvider.of<BasketBloc>(context)
                                               .createOrder(
