@@ -136,7 +136,7 @@ class BasketPageState extends State<BasketPage> {
     }
     HistoryDbModel historyDbModel = HistoryDbModel(
         date_time: DateTime.now(),
-        totalcost: totalCost,
+        totalcost: BlocProvider.of<BasketBloc>(context).getTotalCost(),
         positions: listPositionDbModel);
     BlocProvider.of<HistoryBloc>(context)
         .add(AddHistoryOrder(historyDbModel: historyDbModel));
