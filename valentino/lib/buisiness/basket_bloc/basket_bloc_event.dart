@@ -20,4 +20,9 @@ class RemovePositionEvent extends BasketEvent {
   RemovePositionEvent({required this.dishId});
 }
 
+class SetDeliveryCost extends BasketEvent {
+  double deliveryCost = 0.0;
+  SetDeliveryCost({required this.deliveryCost});
+}
+
 class GetBasketPositions extends BasketEvent {}

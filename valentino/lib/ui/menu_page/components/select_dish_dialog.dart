@@ -36,6 +36,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
     List<Widget> volumesWidget = [];
     DishHttpModel dishHttpModel = widget.dishHttpModel;
     for (int i = 0; i < dishHttpModel.modifiers!.length; i++) {
+      continue; // Пропуск всех модификаторов
       if (dishHttpModel.modifiers![i].name == 'на вынос' ||
           dishHttpModel.modifiers![i].name == '-одновременно' ||
           dishHttpModel.modifiers![i].name == 'коробка' ||

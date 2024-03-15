@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:data_layer/models/http_models/order_http_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,8 +10,17 @@ import 'package:valentino/ui/constants.dart';
 
 // as datetimepic;
 
-class PaymentWidget extends StatefulWidget {
-  PaymentWidget();
+class SelectedPaymentType {
+  PaymentType paymentType;
+  String? comment = '';
+  bool isError = false;
+  SelectedPaymentType({required this.paymentType, this.comment}) {
+    if (comment == null) comment = '';
+  }
+}
+
+class PaymentWidgetBottom extends StatefulWidget {
+  PaymentWidgetBottom();
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -18,7 +28,7 @@ class PaymentWidget extends StatefulWidget {
   }
 }
 
-class PaymentWidgetState extends State<PaymentWidget> {
+class PaymentWidgetState extends State<PaymentWidgetBottom> {
   int toggleIndex = 0;
   int toggleIndex1 = 0;
   @override
@@ -134,7 +144,38 @@ class PaymentWidgetState extends State<PaymentWidget> {
             child: Text('Подтвердить',
                 style: (TextStyle(
                     fontSize: 12, color: Color.fromARGB(235, 57, 57, 57)))),
-            onPressed: () {},
+            onPressed: () {
+              switch (toggleIndex) {
+                case (0):
+                  {
+                    String comment = '';
+                    if (toggleIndex1 == 0) comment = 'Сдача с 500';
+                    if (toggleIndex1 == 1) comment = 'Сдача с 1000';
+                    if (toggleIndex1 == 2) comment = 'Сдача с 5000';
+                    Navigator.pop(
+                        context,
+                        SelectedPaymentType(
+                            paymentType: PaymentType.Cash, comment: comment));
+                    break;
+                  }
+                case (1):
+                  {
+                    Navigator.pop(
+                        context,
+                        SelectedPaymentType(
+                            paymentType: PaymentType.CardUponReceipt));
+                    break;
+                  }
+                case (2):
+                  {
+                    Navigator.pop(
+                        context,
+                        SelectedPaymentType(
+                            paymentType: PaymentType.CardOnline));
+                    break;
+                  }
+              }
+            },
           ),
           SizedBox(height: height * 0.01),
           Container(

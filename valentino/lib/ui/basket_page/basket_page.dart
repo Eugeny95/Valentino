@@ -1,30 +1,23 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:data_layer/models/db_models/history_model.dart';
 import 'package:data_layer/models/http_models/order_http_model.dart';
+import 'package:data_layer/network/order_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:online_payments/acquiring.dart';
 import 'package:online_payments/payment_widget.dart';
-import 'package:sbp/data/c2bmembers_data.dart';
-import 'package:sbp/models/c2bmembers_model.dart';
-import 'package:sbp/sbp.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:valentino/buisiness/auth_bloc/auth_bloc.dart';
 import 'package:valentino/buisiness/basket_bloc/basket_bloc_bloc.dart';
 import 'package:valentino/buisiness/history_bloc/history_bloc.dart';
 import 'package:valentino/ui/basket_page/address_widget.dart';
 import 'package:valentino/ui/basket_page/data/models.dart';
-import 'package:valentino/ui/basket_page/payment_widget.dart';
+import 'package:valentino/ui/basket_page/payment_widget_bottom.dart';
 import 'package:valentino/ui/constants.dart';
 
 class BasketPage extends StatefulWidget {
-  final url =
-      'https://qr.nspk.ru/AS10003P3RH0LJ2A9ROO038L6NT5RU1M?type=01&bank=000000000001&sum=10000&cur=RUB&crc=F3D0';
-
-  // OrderObject? _orderObject;
-  // OrderPage(this._orderObject);
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -54,23 +47,99 @@ class BasketPageState extends State<BasketPage> {
   @override
   void initState() {
     super.initState();
-    // getInstalledBanks();
   }
 
-  List<C2bmemberModel> informations = [];
-
-  /// Получаем установленные банки
-  Future<void> getInstalledBanks() async {
-    try {
-      informations.addAll(await Sbp.getInstalledBanks(
-        C2bmembersModel.fromJson(c2bmembersData),
-        useAndroidLocalIcons: false,
-        useAndroidLocalNames: false,
-      ));
-    } on Exception catch (e) {
-      throw Exception(e);
+  Future<SelectedPaymentType> paymentFeature() async {
+    SelectedPaymentType paymentType = await showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return PaymentWidgetBottom();
+      },
+    );
+    if (paymentType.paymentType == PaymentType.CardOnline) {
+      SberAquiring sberAquiring = SberAquiring(
+          userName: 't3662276447_180224-api',
+          password: 'Q.7rCcUQ',
+          returnUrl: 'https://test.com',
+          pageView: PageViewVariants.MOBILE,
+          failUrl: 'https://test.com');
+      PaymentObject paymentObject = await sberAquiring.toPay(
+          amount: (BlocProvider.of<BasketBloc>(context).getTotalCost() * 100)
+              .toInt(),
+          orderNumber: Acquiring.getRandom(30));
+      PaymentStatus? paymentStatus = await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => PaymentWidget(
+                  paymentObject: paymentObject,
+                  sberAquiring: sberAquiring,
+                )),
+      );
+      if (paymentStatus == null) {
+        paymentType.isError = true;
+        return paymentType;
+      }
+      if (paymentStatus == PaymentStatus.AUTH) {
+        paymentType.isError = false;
+        paymentType.comment = paymentObject.id;
+        return paymentType;
+      }
     }
-    setState(() {});
+
+    return paymentType;
+  }
+
+  Future<void> placeAnOrder() async {
+    OrderServiceType orderServiceType = toggleIndex == 0
+        ? OrderServiceType.DeliveryPickUp
+        : OrderServiceType.DeliveryByCourier;
+
+    SelectedPaymentType selectedPaymentType = await paymentFeature();
+    if (selectedPaymentType.paymentType == PaymentType.CardOnline &&
+        selectedPaymentType.isError) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(
+              'Онлайн оплата завершилась с ошибкой, попробуйте еще раз, либо выберите дргой тип оплаты')));
+      return;
+    }
+
+    CreateOrderStatus orderStatus = await BlocProvider.of<BasketBloc>(context)
+        .createOrder(
+            addressData: addressData,
+            user: BlocProvider.of<AuthBloc>(context).getUser(),
+            orderServiceType: orderServiceType,
+            paymentType: selectedPaymentType.paymentType,
+            comment: comment +
+                '  Комментарий к оплате: ' +
+                (selectedPaymentType.comment ?? ''));
+    if (orderStatus == CreateOrderStatus.failure) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Неизвестная ошибка')));
+      return;
+    }
+    BlocProvider.of<BasketBloc>(context).add(ClearBasketEvent());
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Column(
+      children: [
+        Text('Ваш заказ успешно оформлен'),
+        Text('Он появится в истории заказов'),
+      ],
+    )));
+    List<PositionDbModel> listPositionDbModel = [];
+    for (Position position
+        in BlocProvider.of<BasketBloc>(context).getPositions()) {
+      listPositionDbModel.add(PositionDbModel(
+          name: position.dish!.name,
+          amount: position.count,
+          cost: position.dish!.currentPrice));
+    }
+    HistoryDbModel historyDbModel = HistoryDbModel(
+        date_time: DateTime.now(),
+        totalcost: totalCost,
+        positions: listPositionDbModel);
+    BlocProvider.of<HistoryBloc>(context)
+        .add(AddHistoryOrder(historyDbModel: historyDbModel));
   }
 
   @override
@@ -89,13 +158,11 @@ class BasketPageState extends State<BasketPage> {
       body: BlocBuilder<BasketBloc, BasketState>(
         builder: (context, state) {
           final _formKey = GlobalKey<FormState>();
+
           if (state.positions!.isNotEmpty) {
             return ListView(
               physics: const AlwaysScrollableScrollPhysics(),
               scrollDirection: Axis.vertical,
-              // shrinkWrap: true,
-              // mainAxisAlignment: MainAxisAlignment.start,
-              // crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Center(
                     child: Container(
@@ -105,17 +172,14 @@ class BasketPageState extends State<BasketPage> {
                             color: Color.fromARGB(191, 21, 33, 17),
                             child: Column(
                               children: [
-                                ListTile(
-                                  shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(10),
-                                          topRight: Radius.circular(10),
-                                          bottomRight: Radius.circular(10),
-                                          bottomLeft: Radius.circular(10))),
+                                const ListTile(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10))),
                                   title: Text('Детали заказа'),
                                   tileColor: kPrimaryColor,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 5,
                                 ),
                                 BlocBuilder<BasketBloc, BasketState>(
@@ -126,144 +190,122 @@ class BasketPageState extends State<BasketPage> {
                                         itemCount: state.positions!.length,
                                         itemBuilder:
                                             (BuildContext context, int index) {
-                                          return Form(
-                                            child: Container(
-                                              width: width * 0.95,
-                                              height: height * 0.18,
-                                              child: Column(
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      SizedBox(
-                                                        width: width * 0.02,
-                                                      ),
-                                                      Container(
-                                                        height: height * 0.1,
-                                                        width: width * 0.25,
-                                                        decoration: BoxDecoration(
-                                                            color:
-                                                                Colors.black54,
-                                                            border: Border.all(
-                                                                width: 2,
-                                                                color: const Color
-                                                                    .fromARGB(
-                                                                    211,
-                                                                    45,
-                                                                    45,
-                                                                    45)),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10.0)),
-                                                        child: ClipRRect(
+                                          return Container(
+                                            width: width * 0.95,
+                                            height: height * 0.18,
+                                            child: Column(
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    SizedBox(
+                                                      width: width * 0.02,
+                                                    ),
+                                                    Container(
+                                                      height: height * 0.1,
+                                                      width: width * 0.25,
+                                                      decoration: BoxDecoration(
+                                                          color: Colors.black54,
+                                                          border: Border.all(
+                                                              width: 2,
+                                                              color: const Color
+                                                                  .fromARGB(211,
+                                                                  45, 45, 45)),
                                                           borderRadius:
                                                               BorderRadius
                                                                   .circular(
-                                                                      10.0),
-                                                          child:
-                                                              CachedNetworkImage(
-                                                                  filterQuality:
-                                                                      FilterQuality
-                                                                          .low,
-                                                                  imageUrl: state
+                                                                      10.0)),
+                                                      child: ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10.0),
+                                                        child:
+                                                            CachedNetworkImage(
+                                                                filterQuality:
+                                                                    FilterQuality
+                                                                        .low,
+                                                                imageUrl: state
+                                                                    .positions![
+                                                                        index]
+                                                                    .dish!
+                                                                    .imageLinks
+                                                                    .first,
+                                                                //  (dishHttpModel.imageLinks.isEmpty)?'': dishHttpModel.imageLinks.first,
+                                                                placeholder: (context,
+                                                                        url) =>
+                                                                    CircularProgressIndicator(),
+                                                                errorWidget: (context,
+                                                                        url,
+                                                                        error) =>
+                                                                    Icon(Icons
+                                                                        .error),
+                                                                fit: BoxFit
+                                                                    .cover),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: width * 0.02,
+                                                    ),
+                                                    Container(
+                                                      width: width * 0.65,
+                                                      child: Column(children: [
+                                                        Row(
+                                                          children: [
+                                                            Expanded(
+                                                              flex: 6,
+                                                              child: Text(
+                                                                  state
                                                                       .positions![
                                                                           index]
                                                                       .dish!
-                                                                      .imageLinks
-                                                                      .first,
-                                                                  //  (dishHttpModel.imageLinks.isEmpty)?'': dishHttpModel.imageLinks.first,
-                                                                  placeholder: (context,
-                                                                          url) =>
-                                                                      CircularProgressIndicator(),
-                                                                  errorWidget: (context,
-                                                                          url,
-                                                                          error) =>
-                                                                      Icon(Icons
-                                                                          .error),
-                                                                  fit: BoxFit
-                                                                      .cover),
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        width: width * 0.02,
-                                                      ),
-                                                      Container(
-                                                        width: width * 0.65,
-                                                        child: Column(
-                                                            children: [
-                                                              Row(
-                                                                children: [
-                                                                  Expanded(
-                                                                    flex: 6,
-                                                                    child: Text(
-                                                                        state
-                                                                            .positions![
-                                                                                index]
+                                                                      .name!,
+                                                                  style: const TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      color: Color.fromARGB(
+                                                                          255,
+                                                                          229,
+                                                                          229,
+                                                                          229),
+                                                                      fontSize:
+                                                                          14)),
+                                                            ),
+                                                            Expanded(
+                                                              child: IconButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    BlocProvider.of<BasketBloc>(context).add(RemovePositionEvent(
+                                                                        dishId: state
+                                                                            .positions![index]
                                                                             .dish!
-                                                                            .name!,
-                                                                        style: TextStyle(
-                                                                            fontWeight: FontWeight
-                                                                                .bold,
-                                                                            color: Color.fromARGB(
-                                                                                255,
-                                                                                229,
-                                                                                229,
-                                                                                229),
-                                                                            fontSize:
-                                                                                14)),
-                                                                  ),
-                                                                  Expanded(
-                                                                    child: IconButton(
-                                                                        onPressed: () {
-                                                                          BlocProvider.of<BasketBloc>(context)
-                                                                              .add(RemovePositionEvent(dishId: state.positions![index].dish!.id!));
-                                                                        },
-                                                                        icon: Icon(Icons.close)),
-                                                                    flex: 1,
-                                                                  )
-                                                                ],
-                                                              ),
-                                                              Row(children: [
-                                                                Expanded(
-                                                                  child: Row(
-                                                                      children: [
-                                                                        IconButton(
-                                                                            onPressed:
-                                                                                () {
-                                                                              BlocProvider.of<BasketBloc>(context).add(RemoveDishEvent(dishId: state.positions![index].dish!.id!));
-                                                                            },
-                                                                            icon:
-                                                                                Icon(Icons.remove)),
-                                                                        Text(
-                                                                          state
-                                                                              .positions![index]
-                                                                              .count
-                                                                              .toString(),
-                                                                          style: TextStyle(
-                                                                              color: Color.fromARGB(255, 229, 229, 229),
-                                                                              fontSize: 18),
-                                                                        ),
-                                                                        IconButton(
-                                                                            onPressed:
-                                                                                () {
-                                                                              setState(() {
-                                                                                BlocProvider.of<BasketBloc>(context).add(AddDishEvent(dishHttpModel: state.positions![index].dish));
-                                                                                if (counter < 0) counter = 0;
-                                                                                // onChange(counter);
-                                                                              });
-                                                                            },
-                                                                            icon:
-                                                                                Icon(Icons.add)),
-                                                                      ]),
-                                                                  flex: 2,
-                                                                ),
-                                                                Expanded(
-                                                                  child: Text(
-                                                                    // line.totalCost.toInt().toString(),
-                                                                    '${state.positions![index].allCost!.toInt()} ₽',
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .right,
+                                                                            .id!));
+                                                                  },
+                                                                  icon: Icon(Icons
+                                                                      .close)),
+                                                              flex: 1,
+                                                            )
+                                                          ],
+                                                        ),
+                                                        Row(children: [
+                                                          Expanded(
+                                                            child: Row(
+                                                                children: [
+                                                                  IconButton(
+                                                                      onPressed:
+                                                                          () {
+                                                                        BlocProvider.of<BasketBloc>(context).add(RemoveDishEvent(
+                                                                            dishId:
+                                                                                state.positions![index].dish!.id!));
+                                                                      },
+                                                                      icon: Icon(
+                                                                          Icons
+                                                                              .remove)),
+                                                                  Text(
+                                                                    state
+                                                                        .positions![
+                                                                            index]
+                                                                        .count
+                                                                        .toString(),
                                                                     style: TextStyle(
                                                                         color: Color.fromARGB(
                                                                             255,
@@ -273,20 +315,55 @@ class BasketPageState extends State<BasketPage> {
                                                                         fontSize:
                                                                             18),
                                                                   ),
-                                                                ),
-                                                              ]),
-                                                              SizedBox(
-                                                                height: 10,
-                                                              ),
-                                                            ]),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Divider(
-                                                      color: Color.fromARGB(
-                                                          255, 229, 229, 229)),
-                                                ],
-                                              ),
+                                                                  IconButton(
+                                                                      onPressed:
+                                                                          () {
+                                                                        setState(
+                                                                            () {
+                                                                          BlocProvider.of<BasketBloc>(context)
+                                                                              .add(AddDishEvent(dishHttpModel: state.positions![index].dish));
+                                                                          if (counter <
+                                                                              0)
+                                                                            counter =
+                                                                                0;
+                                                                          // onChange(counter);
+                                                                        });
+                                                                      },
+                                                                      icon: Icon(
+                                                                          Icons
+                                                                              .add)),
+                                                                ]),
+                                                            flex: 2,
+                                                          ),
+                                                          Expanded(
+                                                            child: Text(
+                                                              // line.totalCost.toInt().toString(),
+                                                              '${state.positions![index].allCost!.toInt()} ₽',
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .right,
+                                                              style: TextStyle(
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          229,
+                                                                          229,
+                                                                          229),
+                                                                  fontSize: 18),
+                                                            ),
+                                                          ),
+                                                        ]),
+                                                        SizedBox(
+                                                          height: 10,
+                                                        ),
+                                                      ]),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Divider(
+                                                    color: Color.fromARGB(
+                                                        255, 229, 229, 229)),
+                                              ],
                                             ),
                                           );
                                         });
@@ -304,50 +381,25 @@ class BasketPageState extends State<BasketPage> {
                                   labels: ['Самовывоз', 'Доставка'],
                                   radiusStyle: true,
                                   onToggle: (index) {
+                                    if (index == 0)
+                                      BlocProvider.of<BasketBloc>(context).add(
+                                          SetDeliveryCost(deliveryCost: 0));
+                                    if (index == 1 && state.totalCost! < 1500) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                              content: Text(
+                                                  'Для оформления доставки сумма товара должна быть не менее 1500 рублей')));
+                                      setState(() {
+                                        toggleIndex = 0;
+                                      });
+                                      return;
+                                    }
+
                                     setState(() {
                                       toggleIndex = index!;
                                     });
                                   },
                                 ),
-                                // Row(
-                                //     mainAxisAlignment: MainAxisAlignment.center,
-                                //     children: [
-                                //       Radio(
-                                //           fillColor:
-                                //               MaterialStateColor.resolveWith(
-                                //                   (states) => Color.fromARGB(
-                                //                       255, 229, 229, 229)),
-                                //           focusColor:
-                                //               MaterialStateColor.resolveWith(
-                                //                   (states) => Color.fromARGB(
-                                //                       255, 229, 229, 229)),
-                                //           value: false,
-                                //           groupValue: valueRadio,
-                                //           onChanged: (bool? value) {
-                                //             setState(() {
-                                //               valueRadio = value!;
-                                //               // _orderObject!.onPlace = valueRadio;
-                                //             });
-                                //           }),
-                                //       Text('На вынос'),
-                                //       Radio(
-                                //           fillColor:
-                                //               MaterialStateColor.resolveWith(
-                                //                   (states) => Color.fromARGB(
-                                //                       255, 229, 229, 229)),
-                                //           focusColor:
-                                //               MaterialStateColor.resolveWith(
-                                //                   (states) => Color.fromARGB(
-                                //                       255, 229, 229, 229)),
-                                //           value: true,
-                                //           groupValue: valueRadio,
-                                //           onChanged: (bool? value) {
-                                //             setState(() {
-                                //               valueRadio = value!;
-                                //             });
-                                //           }),
-                                //       Text('Доставка'),
-                                //     ]),
                                 Divider(color: Color.fromARGB(255, 67, 67, 67)),
                                 Align(
                                     alignment: Alignment
@@ -360,16 +412,16 @@ class BasketPageState extends State<BasketPage> {
                                                 onChange: (addressData) {
                                                   this.addressData =
                                                       addressData;
-                                                  totalCost = BlocProvider.of<
-                                                                  BasketBloc>(
-                                                              context)
-                                                          .getTotalCost() +
-                                                      addressData.deliveryCost;
-                                                  setState(() {});
+                                                  BlocProvider.of<BasketBloc>(
+                                                          context)
+                                                      .add(SetDeliveryCost(
+                                                          deliveryCost:
+                                                              addressData
+                                                                  .deliveryCost));
                                                 },
+                                                globalKey: _formKey,
                                               )
                                             : Container())),
-
                                 Padding(
                                     padding:
                                         EdgeInsets.only(top: height * 0.01)),
@@ -429,14 +481,14 @@ class BasketPageState extends State<BasketPage> {
                                                 MainAxisAlignment.center,
                                             children: [
                                               Text(
-                                                ' ${state.totalCost!.toInt() + addressData.deliveryCost.toInt()}',
+                                                ' ${state.totalCost!.toInt()}',
                                                 style: const TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     color: Color.fromARGB(
                                                         255, 229, 229, 229),
                                                     fontSize: 20),
                                               ),
-                                              Text(
+                                              const Text(
                                                 ' ₽',
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold,
@@ -462,172 +514,25 @@ class BasketPageState extends State<BasketPage> {
                                               Size(height * 0.23, width * 0.13),
                                           backgroundColor: kFourthColor,
                                         ),
-                                        // ignore: prefer_const_constructors
                                         child: Text('Оформить заказ',
                                             style: (TextStyle(
                                                 fontSize: 15,
                                                 color: Color.fromARGB(
                                                     235, 227, 227, 227)))),
                                         onPressed: () async {
-                                          OrderServiceType orderServiceType =
-                                              toggleIndex == 0
-                                                  ? OrderServiceType
-                                                      .DeliveryPickUp
-                                                  : OrderServiceType
-                                                      .DeliveryByCourier;
-                                          if (addressData.street.isEmpty &&
-                                              orderServiceType !=
-                                                  OrderServiceType
-                                                      .DeliveryPickUp) {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(SnackBar(
-                                                    content: Text(
-                                                        'Поле адрес не должно быть пустым',
-                                                        style: TextStyle(
-                                                            color:
-                                                                Colors.red))));
-                                            return;
+                                          if (_formKey.currentState != null) {
+                                            if (_formKey.currentState!
+                                                    .validate() ==
+                                                false) return;
                                           }
-                                          if (addressData.house.isEmpty &&
-                                              orderServiceType !=
-                                                  OrderServiceType
-                                                      .DeliveryPickUp) {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(SnackBar(
-                                                    content: Text(
-                                              'Выберите номер дома из списка',
-                                              style:
-                                                  TextStyle(color: Colors.red),
-                                            )));
-                                            return;
-                                          }
-                                          SberAquiring sberAquiring =
-                                              SberAquiring(
-                                                  userName:
-                                                      't3662276447_180224-api',
-                                                  password: 'Q.7rCcUQ',
-                                                  returnUrl: 'https://test.com',
-                                                  pageView:
-                                                      PageViewVariants.MOBILE,
-                                                  failUrl: 'https://test.com');
-                                          PaymentObject paymentObject =
-                                              await sberAquiring.toPay(
-                                                  amount: (BlocProvider.of<
-                                                                      BasketBloc>(
-                                                                  context)
-                                                              .getTotalCost() *
-                                                          100)
-                                                      .toInt(),
-                                                  orderNumber:
-                                                      Acquiring.getRandom(30));
-                                          await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    PaymentWidget(
-                                                      paymentObject:
-                                                          paymentObject,
-                                                      sberAquiring:
-                                                          sberAquiring,
-                                                    )),
-                                          );
-                                          return;
-                                          BlocProvider.of<BasketBloc>(context)
-                                              .createOrder(
-                                                  addressData: addressData,
-                                                  user:
-                                                      BlocProvider.of<AuthBloc>(
-                                                              context)
-                                                          .getUser(),
-                                                  orderServiceType:
-                                                      orderServiceType,
-                                                  comment: comment);
+                                          await placeAnOrder();
 
-                                          if (true) {
-                                            //ECKJDBT!!!!!!
-                                            BlocProvider.of<BasketBloc>(context)
-                                                .add(ClearBasketEvent());
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(SnackBar(
-                                                    content: Column(
-                                              children: [
-                                                Text(
-                                                    'Ваш заказ успешно оформлен'),
-                                                Text(
-                                                    'Он появится в истории заказов'),
-                                              ],
-                                            )));
-                                            List<PositionDbModel>
-                                                listPositionDbModel = [];
-                                            for (Position position
-                                                in BlocProvider.of<BasketBloc>(
-                                                        context)
-                                                    .getPositions()) {
-                                              listPositionDbModel.add(
-                                                  PositionDbModel(
-                                                      name: position.dish!.name,
-                                                      amount: position.count,
-                                                      cost: position
-                                                          .dish!.currentPrice));
-                                            }
-                                            HistoryDbModel historyDbModel =
-                                                HistoryDbModel(
-                                                    date_time: DateTime.now(),
-                                                    totalcost: totalCost,
-                                                    positions:
-                                                        listPositionDbModel);
-                                            BlocProvider.of<HistoryBloc>(
-                                                    context)
-                                                .add(AddHistoryOrder(
-                                                    historyDbModel:
-                                                        historyDbModel));
-                                          }
-
-                                          // showModalBottomSheet(
-                                          //   context: context,
-                                          //   shape: const RoundedRectangleBorder(
-                                          //     borderRadius:
-                                          //         BorderRadius.vertical(
-                                          //       top: Radius.circular(20),
-                                          //     ),
-                                          //   ),
-                                          //   builder: (ctx) =>
-                                          //       SbpModalBottomSheetWidget(
-                                          //           informations, widget.url),
-                                          // );
+                                          //ECKJDBT!!!!!!
                                         },
                                       ),
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 10),
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          12), // <-- Radius
-                                    ),
-                                    elevation: 5,
-                                    minimumSize:
-                                        Size(height * 0.23, width * 0.13),
-                                    backgroundColor: kFourthColor,
-                                  ),
-                                  // ignore: prefer_const_constructors
-                                  child: Text('Оплата',
-                                      style: (TextStyle(
-                                          fontSize: 15,
-                                          color: Color.fromARGB(
-                                              235, 227, 227, 227)))),
-                                  onPressed: () {
-                                    showModalBottomSheet(
-                                      context: context,
-                                      isScrollControlled: true,
-                                      builder: (BuildContext context) {
-                                        return PaymentWidget();
-                                      },
-                                    );
-                                  },
-                                )
                               ],
                             )))),
               ],

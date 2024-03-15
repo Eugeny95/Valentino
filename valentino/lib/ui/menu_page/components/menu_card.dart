@@ -112,15 +112,33 @@ class MenuCard extends StatelessWidget {
                   child: SizedBox.fromSize(
                     size: const Size.fromRadius(70), // Image radius
                     child: CachedNetworkImage(
+                        cacheKey: (dishHttpModel.imageLinks.isEmpty)
+                            ? ''
+                            : dishHttpModel.imageLinks.first,
                         useOldImageOnUrlChange: true,
+                        fadeInDuration: Duration(milliseconds: 500),
+                        fadeOutDuration: Duration(milliseconds: 0),
                         filterQuality: FilterQuality.low,
                         imageUrl:
                             //    'https://art-lunch.ru/content/uploads/2018/07/Greek_salad_01.jpg',
                             (dishHttpModel.imageLinks.isEmpty)
                                 ? ''
                                 : dishHttpModel.imageLinks.first,
-                        placeholder: (context, url) =>
-                            const CircularProgressIndicator(),
+                        placeholder: (context, url) => Container(
+                            width: 50,
+                            height: 50,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Center(
+                                    child: Text(
+                                  'Изображение загружается',
+                                  textAlign: TextAlign.center,
+                                )),
+                                CircularProgressIndicator.adaptive(),
+                              ],
+                            )),
                         errorWidget: (context, url, error) =>
                             const Icon(Icons.error),
                         fit: BoxFit.cover),

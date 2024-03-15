@@ -12,14 +12,18 @@ class OrderRepository {
   Future<CreateOrderStatus> createOrder(
       OrderHttpModel orderHttpModel, String accessToken) async {
     try {
+      print(orderHttpModel.toJson());
       Response responce = await Dio().post(
           'http://91.222.236.176:8880/orders/order/',
           data: orderHttpModel.toJson(),
           options: Options(headers: <String, String>{
             'authorization': 'Bearer ${accessToken}'
           }));
-      if (responce.statusCode == 200) return CreateOrderStatus.success;
+      print(responce.statusCode);
+
+      if (responce.statusCode == 201) return CreateOrderStatus.success;
     } catch (_) {
+      print(_);
       return CreateOrderStatus.failure;
     }
     return CreateOrderStatus.failure;

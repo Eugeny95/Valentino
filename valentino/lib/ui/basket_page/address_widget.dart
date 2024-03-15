@@ -7,8 +7,9 @@ import 'package:yandex_autocomplete/models/result_object.dart';
 import 'package:yandex_autocomplete/network/place_coder.dart';
 
 class AddressWidget extends StatefulWidget {
+  GlobalKey globalKey;
   void Function(AddressData addressData) onChange;
-  AddressWidget({required this.onChange}) {}
+  AddressWidget({required this.onChange, required this.globalKey}) {}
   @override
   _AddressWidgetState createState() => _AddressWidgetState();
 }
@@ -19,6 +20,7 @@ class _AddressWidgetState extends State<AddressWidget> {
   final TextEditingController _longitudeController = TextEditingController();
   String _output = '';
   final _textController = TextEditingController();
+
   List<String> suggestions = [];
 
   AddressData addressData = AddressData(
@@ -93,6 +95,52 @@ class _AddressWidgetState extends State<AddressWidget> {
               ),
               Column(
                 children: [
+                  SizedBox(
+                    width: 0,
+                    height: 0,
+                    child: Form(
+                      key: widget.globalKey,
+                      child: TextFormField(validator: (value) {
+                        if (addressData.street == '') {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text('Поле адрес не должно быть пустым',
+                                  style: const TextStyle(color: Colors.red))));
+                          return '';
+                        }
+                        if (addressData.house == '') {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                                  'Пожалуйста, выберите номер дома из списка',
+                                  style: const TextStyle(color: Colors.red))));
+                          return '';
+                        }
+                        locationFromAddress('Воронеж ' +
+                                addressData.street +
+                                ',' +
+                                addressData.house)
+                            .then((locations) {
+                          print(locations);
+                          if (locations.isEmpty)
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text(
+                                    'Укажите корректный адрес доставки',
+                                    style:
+                                        const TextStyle(color: Colors.red))));
+                        });
+
+                        if (_output == 'Точка находится вне зоны доставки') {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                                  'Укажите обслуживаемую точку доставки',
+                                  style: const TextStyle(color: Colors.red))));
+                          return '';
+                        }
+                        //'Выберите номер дома из списка';
+                        // TODO Реализовать метод
+                        return null;
+                      }),
+                    ),
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
@@ -102,10 +150,7 @@ class _AddressWidgetState extends State<AddressWidget> {
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
                                   vertical: 0, horizontal: 0),
-                              // border: OutlineInputBorder(gapPadding: 1),
-
                               helperText: 'Улица, дом*',
-
                               helperStyle: TextStyle(
                                   color: Color.fromARGB(209, 255, 255, 255),
                                   fontSize: 10),
@@ -113,6 +158,17 @@ class _AddressWidgetState extends State<AddressWidget> {
                             child: Autocomplete<String>(
                               optionsBuilder:
                                   (TextEditingValue textEditingValue) async {
+                                print('TEXT ${textEditingValue.text}');
+
+                                try {
+                                  String house =
+                                      textEditingValue.text.split(',')[1];
+                                  if (house != addressData.house)
+                                    addressData.house = '';
+                                } catch (_) {
+                                  addressData.house = '';
+                                }
+
                                 await getData(textEditingValue.text);
                                 if (textEditingValue.text == '') {
                                   return const Iterable<String>.empty();
@@ -126,10 +182,14 @@ class _AddressWidgetState extends State<AddressWidget> {
                                       .toLowerCase()
                                       .contains(textEditingValue.text);
                                 }));
-                                return suggestions.where((String option) {
+                                var listSuggestions =
+                                    suggestions.where((String option) {
                                   return option.toLowerCase().contains(
                                       textEditingValue.text.toLowerCase());
                                 });
+                                if (listSuggestions.isEmpty)
+                                  addressData.house = '';
+                                return listSuggestions;
                               },
                               onSelected: (String selection) async {
                                 addressData.street = selection;
@@ -207,7 +267,15 @@ class _AddressWidgetState extends State<AddressWidget> {
                               ))),
                       SizedBox(
                         width: width * 0.15,
-                        child: TextField(
+                        child: TextFormField(
+                            // validator: (value) {
+                            //   if (addressData.street == '')
+                            //     return ''; //'Введите адрес!';
+                            //   if (addressData.house == '')
+                            //     return ''; //'Выберите номер дома из списка';
+                            //   // TODO Реализовать метод
+                            //   return null;
+                            // },
                             keyboardType: TextInputType.phone,
                             onChanged: (value) {
                               addressData.entrance = int.parse(value);

@@ -21,9 +21,6 @@ class _HistoryPreviewState extends State<HistoryPreview> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    // if (orderObject!.isAccepted) status = 'Заказ принят';
-    // if (!orderObject!.isAccepted) status = 'Ожидает подтверждения';
-    // if (orderObject!.isReady) status = 'Заказ готов';
     List<Widget> lines = List.generate(
         widget.historyDbModel.positions!.length,
         (index) => PositionString(
@@ -63,12 +60,13 @@ class _HistoryPreviewState extends State<HistoryPreview> {
                         width: width * 0.02,
                       ),
                       Expanded(
+                        flex: 5,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
                               children: [
-                                Icon(
+                                const Icon(
                                   Icons.check_circle_outline,
                                   color: Color.fromARGB(255, 17, 99, 21),
                                   size: 26,
@@ -102,7 +100,6 @@ class _HistoryPreviewState extends State<HistoryPreview> {
                             ),
                           ],
                         ),
-                        flex: 5,
                       ),
                       Expanded(
                         child: Container(
@@ -151,7 +148,7 @@ class _HistoryPreviewState extends State<HistoryPreview> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text('Итого:',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Color.fromARGB(255, 245, 245, 245),
                                   fontSize: 16)),

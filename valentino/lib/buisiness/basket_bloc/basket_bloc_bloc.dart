@@ -13,6 +13,7 @@ part 'basket_bloc_state.dart';
 class BasketBloc extends Bloc<BasketEvent, BasketState> {
   List<Position> positions = [];
   double totalCost = 0;
+  double deliveryCost = 0;
   BasketBloc() : super(BasketState(basketStatus: BasketStatus.initial)) {
     on<AddDishEvent>((event, emit) {
       bool noAddflag = false;
@@ -41,7 +42,7 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
       emit(BasketState(
           basketStatus: BasketStatus.done,
           positions: positions,
-          totalCost: totalCost));
+          totalCost: totalCost + deliveryCost));
     });
 
     on<ClearBasketEvent>((event, emit) {
@@ -50,7 +51,7 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
       emit(BasketState(
           basketStatus: BasketStatus.done,
           positions: positions,
-          totalCost: totalCost));
+          totalCost: totalCost + deliveryCost));
     });
 
     on<RemoveDishEvent>((event, emit) {
@@ -69,7 +70,15 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
       emit(BasketState(
           basketStatus: BasketStatus.done,
           positions: positions,
-          totalCost: totalCost));
+          totalCost: totalCost + deliveryCost));
+    });
+
+    on<SetDeliveryCost>((event, emit) {
+      deliveryCost = event.deliveryCost;
+      emit(BasketState(
+          basketStatus: BasketStatus.done,
+          positions: positions,
+          totalCost: totalCost + deliveryCost));
     });
 
     on<RemovePositionEvent>((event, emit) {
@@ -86,11 +95,11 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
       emit(BasketState(
           basketStatus: BasketStatus.done,
           positions: positions,
-          totalCost: totalCost));
+          totalCost: totalCost + deliveryCost));
       emit(BasketState(
           basketStatus: BasketStatus.done,
           positions: positions,
-          totalCost: totalCost));
+          totalCost: totalCost + deliveryCost));
     });
 
     on<GetBasketPositions>((event, emit) {
@@ -102,22 +111,23 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
       emit(BasketState(
           basketStatus: BasketStatus.done,
           positions: positions,
-          totalCost: totalCost));
+          totalCost: totalCost + deliveryCost));
     });
+  }
+
+  double getTotalCost() {
+    return totalCost + deliveryCost;
   }
 
   List<Position> getPositions() {
     return positions;
   }
 
-  double getTotalCost() {
-    return totalCost;
-  }
-
   Future<CreateOrderStatus> createOrder(
       {required AddressData addressData,
       required UserData user,
       required OrderServiceType orderServiceType,
+      required PaymentType paymentType,
       required String comment}) async {
     List<PositionHttpModel> itemsHttp = [];
     for (int i = 0; i < positions.length; i++) {
@@ -140,11 +150,12 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
         items: itemsHttp,
         adress: addressHttpModel,
         comment: comment,
-        summa: getTotalCost() + addressData.deliveryCost,
-        type_payment: PaymentType.Cash);
+        summa: totalCost + addressData.deliveryCost,
+        type_payment: paymentType);
 
     CreateOrderStatus orderStatus =
         await OrderRepository().createOrder(orderHttpModel, user.accessToken);
+
     return orderStatus;
   }
 }

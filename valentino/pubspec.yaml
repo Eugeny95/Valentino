@@ -43,7 +43,6 @@ dependencies:
   cached_network_image: ^3.3.0
   flutter_launcher_icons: any
   intl: ^0.19.0
-  sbp: ^0.0.8
   flutter_datetime_picker_plus: ^2.1.0
   auth_feature:
     path: ../auth_feature
@@ -111,10 +110,10 @@ flutter:
    - assets/map.png
    - assets/SplashBack.png
    - assets/ValBon.png
-   - packages/sbp/assets/sbp.png
-   - packages/sbp/assets/icons/tinkoff.png
-   - packages/sbp/assets/icons/sber.png
-   - packages/sbp/assets/icons/pcb.png
+  #  - packages/sbp/assets/sbp.png
+  #  - packages/sbp/assets/icons/tinkoff.png
+  #  - packages/sbp/assets/icons/sber.png
+  #  - packages/sbp/assets/icons/pcb.png
   
   #   - images/a_dot_ham.jpeg
 flutter_launcher_icons:

@@ -541,14 +541,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.27.7"
-  sbp:
-    dependency: "direct main"
-    description:
-      name: sbp
-      sha256: b8193c564aff16e39364447346f4be9a77d9a06b4fe564261476e6639ce6e5d0
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.8"
   scroll_to_index:
     dependency: "direct main"
     description:
