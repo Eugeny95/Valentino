@@ -311,12 +311,13 @@ class RegisterDialogState extends State<RegisterDialog> {
                             if (result.isNotEmpty &&
                                 result[0].rawAddress.isNotEmpty) {}
                           } on SocketException catch (_) {
+                            print('socket exception $_');
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
                                   return AlertDialog(
                                     title: Text('Внимание'),
-                                    content: Text('Нед доступа к Интернету'),
+                                    content: Text('Нет доступа к Интернету'),
                                   );
                                 });
                           }
