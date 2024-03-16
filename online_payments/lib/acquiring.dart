@@ -62,7 +62,8 @@ class SberAquiring extends Acquiring {
 
   Future<PaymentStatus> checkPaymentStatus({required String orderId}) async {
     String request =
-        'https://3dsec.sberbank.ru/payment/rest/getOrderStatusExtended.do?userName=$userName&password=$password&orderId=$orderId';
+        'https://securepayments.sberbank.ru/payment/rest/getOrderStatusExtended.do?userName=$userName&password=$password&orderId=$orderId';
+    print('requwest $request');
     Dio dio = Dio();
     (dio!.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
         (HttpClient client) {
@@ -73,7 +74,7 @@ class SberAquiring extends Acquiring {
     Response response = await dio.get(request);
     int orderStatusCode = -1;
     orderStatusCode = jsonDecode(response.data)['orderStatus'];
-    print(orderStatusCode);
+    print(response.data);
     switch (orderStatusCode) {
       case (0):
         return PaymentStatus.REGISTER_WITHOUT_PAYMENT;
@@ -96,7 +97,12 @@ class SberAquiring extends Acquiring {
   Future<PaymentObject> toPay(
       {required int amount, required String orderNumber}) async {
     String request =
-        'https://3dsec.sberbank.ru/payment/rest/register.do?userName=$userName&password=$password&amount=$amount&returnUrl=$returnUrl&failUrl=$failUrl&pageView=MOBILE&orderNumber=$orderNumber';
+        'https://securepayments.sberbank.ru/payment/rest/register.do?userName=$userName&password=$password&amount=$amount&returnUrl=$returnUrl&failUrl=$failUrl&pageView=MOBILE&orderNumber=$orderNumber';
+
+    // request =
+    //     'https://3dsec.sberbank.ru/payment/rest/register.do?token=k1ffk2ca5rv69iunimtga6vstj&amount=$amount&returnUrl=$returnUrl&failUrl=$failUrl&pageView=MOBILE&orderNumber=$orderNumber';
+
+    print('requwest $request');
     Dio dio = Dio();
     (dio!.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
         (HttpClient client) {

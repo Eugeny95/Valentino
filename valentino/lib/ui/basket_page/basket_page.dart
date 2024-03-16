@@ -59,8 +59,8 @@ class BasketPageState extends State<BasketPage> {
     );
     if (paymentType.paymentType == PaymentType.CardOnline) {
       SberAquiring sberAquiring = SberAquiring(
-          userName: 't3662276447_180224-api',
-          password: 'Q.7rCcUQ',
+          userName: 'p3662276447-api',
+          password: '9174253qQ@',
           returnUrl: 'https://test.com',
           pageView: PageViewVariants.MOBILE,
           failUrl: 'https://test.com');

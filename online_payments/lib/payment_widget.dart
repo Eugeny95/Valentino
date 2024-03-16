@@ -30,7 +30,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
       Navigator.pop(context, paymentStatus);
     if (paymentStatus != PaymentStatus.REGISTER_WITHOUT_PAYMENT ||
         paymentStatus != PaymentStatus.AUTH) {
-      Navigator.pop(context, paymentStatus);
+      // Navigator.pop(context, paymentStatus);
     }
 
     return paymentStatus;
