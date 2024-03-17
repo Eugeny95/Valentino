@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:auth_feature/data/auth_data.dart';
 import 'package:flutter/cupertino.dart';
@@ -159,6 +160,7 @@ class RegisterDialogState extends State<RegisterDialog> {
                     TextFormField(
                       cursorColor: Color.fromARGB(209, 255, 255, 255),
                       controller: dateCtl,
+                      // inputFormatters: <TextInputFormatter>[_dateFormatter],
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10)),
@@ -173,7 +175,9 @@ class RegisterDialogState extends State<RegisterDialog> {
                           labelStyle: TextStyle(
                             color: Color.fromARGB(209, 255, 255, 255),
                           )),
-                      onChanged: (String value) {},
+                      onChanged: (String value) {
+                        // date_birth = value;
+                      },
                       onTap: () async {
                         DateTime date = DateTime(1900);
                         FocusScope.of(context).requestFocus(new FocusNode());
@@ -395,3 +399,69 @@ class RegisterDialogState extends State<RegisterDialog> {
     super.dispose();
   }
 }
+
+class DateTextFormatter extends TextInputFormatter {
+  static const _maxChars = 8;
+
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    String separator = '.';
+    var text = _format(
+      newValue.text,
+      oldValue.text,
+      separator,
+    );
+
+    return newValue.copyWith(
+      text: text,
+      selection: updateCursorPosition(
+        oldValue,
+        text,
+      ),
+    );
+  }
+
+  String _format(
+    String value,
+    String oldValue,
+    String separator,
+  ) {
+    var isErasing = value.length < oldValue.length;
+    var isComplete = value.length > _maxChars + 2;
+
+    if (!isErasing && isComplete) {
+      return oldValue;
+    }
+
+    value = value.replaceAll(separator, '');
+    final result = <String>[];
+
+    for (int i = 0; i < min(value.length, _maxChars); i++) {
+      result.add(value[i]);
+      if ((i == 1 || i == 3) && i != value.length - 1) {
+        result.add(separator);
+      }
+    }
+
+    return result.join();
+  }
+
+  TextSelection updateCursorPosition(
+    TextEditingValue oldValue,
+    String text,
+  ) {
+    var endOffset = max(
+      oldValue.text.length - oldValue.selection.end,
+      0,
+    );
+
+    var selectionEnd = text.length - endOffset;
+
+    return TextSelection.fromPosition(TextPosition(offset: selectionEnd));
+  }
+}
+
+final _dateFormatter = DateTextFormatter();

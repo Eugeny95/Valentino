@@ -10,6 +10,7 @@ import 'package:valentino/ui/menu_page/menu_screen.dart';
 import 'package:valentino/ui/profile_page/profile_page.dart';
 import 'package:valentino/ui/store_page/store_page.dart';
 import 'package:valentino/ui/theme.dart';
+
 import 'package:badges/badges.dart' as badges;
 
 import 'ui/basket_page/basket_page.dart';

@@ -10,8 +10,6 @@ PODS:
     - FlutterMacOS
   - rive_common (0.0.1):
     - Flutter
-  - sbp (0.0.1):
-    - Flutter
   - sqflite (0.0.3):
     - Flutter
     - FMDB (>= 2.7.5)
@@ -25,7 +23,6 @@ DEPENDENCIES:
   - geocoding_ios (from `.symlinks/plugins/geocoding_ios/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - rive_common (from `.symlinks/plugins/rive_common/ios`)
-  - sbp (from `.symlinks/plugins/sbp/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/ios`)
@@ -43,8 +40,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
   rive_common:
     :path: ".symlinks/plugins/rive_common/ios"
-  sbp:
-    :path: ".symlinks/plugins/sbp/ios"
   sqflite:
     :path: ".symlinks/plugins/sqflite/ios"
   url_launcher_ios:
@@ -58,10 +53,9 @@ SPEC CHECKSUMS:
   geocoding_ios: a389ea40f6f548de6e63006a2e31bf66ff80769a
   path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
   rive_common: 3a4c254c6e4db7e4b9e05daeb3d1f47ae4f7bf76
-  sbp: d322e17eb2e9869a9327bf12b1761ec13f8bf0b3
   sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
   url_launcher_ios: bf5ce03e0e2088bad9cc378ea97fa0ed5b49673b
-  webview_flutter_wkwebview: b7e70ef1ddded7e69c796c7390ee74180182971f
+  webview_flutter_wkwebview: 4f3e50f7273d31e5500066ed267e3ae4309c5ae4
 
 PODFILE CHECKSUM: 70d9d25280d0dd177a5f637cdb0f0b0b12c6a189
 
