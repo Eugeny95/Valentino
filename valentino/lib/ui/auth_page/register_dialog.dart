@@ -369,7 +369,7 @@ class RegisterDialogState extends State<RegisterDialog> {
                               }
                           }
                         },
-                        child: Text('Зарегестрироваться',
+                        child: Text('Зарегистрироваться',
                             style: TextStyle(
                                 color: Color.fromARGB(217, 255, 255, 255)))),
                     Padding(padding: EdgeInsets.only(top: height * 0.01)),
