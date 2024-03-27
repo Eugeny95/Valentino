@@ -113,9 +113,10 @@ class RegisterDialogState extends State<RegisterDialog> {
                       inputFormatters: <TextInputFormatter>[
                         FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))
                       ],
-                      validator: (value) => Validator.isPhoneValid(value),
+                      validator: (value) =>
+                          Validator.isPhoneValid('8' + value!),
                       onChanged: (String value) {
-                        phone = value;
+                        phone = '8' + value;
                       },
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -128,6 +129,7 @@ class RegisterDialogState extends State<RegisterDialog> {
                           prefixIcon: Icon(Icons.phone_iphone,
                               color: Color.fromARGB(209, 255, 255, 255)),
                           labelText: 'Телефон',
+                          prefixText: '+7',
                           labelStyle: TextStyle(
                               color: Color.fromARGB(209, 255, 255, 255))),
                     ),

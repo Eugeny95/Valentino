@@ -30,7 +30,7 @@ class Validator {
 
   static isPhoneValid(String? value) {
     if (value!.length < 11 || value!.length > 11)
-      return 'Введите корректный номер (89..)';
+      return 'Введите корректный номер (9..)';
 
     if (value.substring(0, 2) != '89') return 'Некорректный формат';
     // TODO Реализовать метод

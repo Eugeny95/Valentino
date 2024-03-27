@@ -75,9 +75,10 @@ class SigninOrSignupScreenState extends State<SigninOrSignupScreen> {
                               FilteringTextInputFormatter.allow(
                                   RegExp(r'[0-9.,]'))
                             ],
-                            validator: (value) => Validator.isPhoneValid(value),
+                            validator: (value) =>
+                                Validator.isPhoneValid('8' + value!),
                             onChanged: (String value) {
-                              login = value;
+                              login = '8' + value;
                             },
                             decoration: InputDecoration(
                                 fillColor: Color.fromARGB(139, 255, 255, 255),
@@ -98,6 +99,7 @@ class SigninOrSignupScreenState extends State<SigninOrSignupScreen> {
                                         color: Color.fromRGBO(
                                             255, 255, 255, 0.545),
                                         width: 1.0)),
+                                prefixText: '+7',
                                 prefixIcon: Icon(Icons.phone_iphone,
                                     color: Color.fromARGB(139, 255, 255, 255)),
                                 labelText: 'Телефон',

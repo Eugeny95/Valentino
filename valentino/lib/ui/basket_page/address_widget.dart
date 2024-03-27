@@ -50,6 +50,7 @@ class _AddressWidgetState extends State<AddressWidget> {
       String address = '';
       String city = '';
       String street = '';
+      String house = '';
 
       if (geoPlace.results![i].title != null) {
         // if (geoPlace.results![i].subtitle != null) {
@@ -59,22 +60,33 @@ class _AddressWidgetState extends State<AddressWidget> {
         // } else {
         //   address = geoPlace.results![i].title!.text.toString();
         // }
-        city = geoPlace.results![i].address!.component!
-            .firstWhere((element) => element.kind!.first == 'LOCALITY')
-            .name!;
-
         try {
           city = geoPlace.results![i].address!.component!
-              .firstWhere((element) => element.name == 'Воронеж')
-              .name!;
-        } catch (_) {}
+                  .firstWhere((element) => element.kind!.first == 'LOCALITY')
+                  .name! +
+              ', ';
+        } catch (_) {
+          city = '';
+        }
 
         try {
           street = geoPlace.results![i].address!.component!
-              .firstWhere((element) => element.kind!.first == 'STREET')
+                  .firstWhere((element) => element.kind!.first == 'STREET')
+                  .name! +
+              ', ';
+        } catch (_) {
+          street = '';
+        }
+
+        try {
+          house = geoPlace.results![i].address!.component!
+              .firstWhere((element) => element.kind!.first == 'HOUSE')
               .name!;
-        } catch (_) {}
-        address = city + ', ' + street;
+        } catch (_) {
+          house = '';
+        }
+
+        address = city + street + house;
       }
       // if (geoPlace.results![i].subtitle != null) {
       //   address =

@@ -83,9 +83,10 @@ class TableDialogState extends State<TableDialog> {
                       inputFormatters: <TextInputFormatter>[
                         FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))
                       ],
-                      validator: (value) => Validator.isPhoneValid(value),
+                      validator: (value) =>
+                          Validator.isPhoneValid('8' + value!),
                       onChanged: (String value) {
-                        phone = value;
+                        phone = '8' + value;
                       },
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -98,6 +99,7 @@ class TableDialogState extends State<TableDialog> {
                           prefixIcon: const Icon(Icons.phone_iphone,
                               color: Color.fromARGB(211, 255, 255, 255)),
                           labelText: 'Телефон',
+                          prefixText: '+7',
                           labelStyle: const TextStyle(
                               color: Color.fromARGB(211, 255, 255, 255))),
                     ),
@@ -141,6 +143,7 @@ class TableDialogState extends State<TableDialog> {
                           }
 
                           if (!_formKey.currentState!.validate()) return;
+                          print(phone);
                           Response response = await await Dio().post(
                               'http://91.222.236.176:8880/orders_info/reserve_table/',
                               data: {"name": firstname, "phone": phone});
