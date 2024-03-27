@@ -48,9 +48,33 @@ class _AddressWidgetState extends State<AddressWidget> {
     //  if (geoPlace.results == null) geoPlace.results = [];
     for (int i = 0; i < geoPlace.results!.length; i++) {
       String address = '';
+      String city = '';
+      String street = '';
 
       if (geoPlace.results![i].title != null) {
-        address = geoPlace.results![i].title!.text.toString();
+        // if (geoPlace.results![i].subtitle != null) {
+        //   address = geoPlace.results![i].subtitle!.text.toString() +
+        //       ', ' +
+        //       geoPlace.results![i].title!.text.toString();
+        // } else {
+        //   address = geoPlace.results![i].title!.text.toString();
+        // }
+        city = geoPlace.results![i].address!.component!
+            .firstWhere((element) => element.kind!.first == 'LOCALITY')
+            .name!;
+
+        try {
+          city = geoPlace.results![i].address!.component!
+              .firstWhere((element) => element.name == 'Воронеж')
+              .name!;
+        } catch (_) {}
+
+        try {
+          street = geoPlace.results![i].address!.component!
+              .firstWhere((element) => element.kind!.first == 'STREET')
+              .name!;
+        } catch (_) {}
+        address = city + ', ' + street;
       }
       // if (geoPlace.results![i].subtitle != null) {
       //   address =
@@ -182,11 +206,11 @@ class _AddressWidgetState extends State<AddressWidget> {
                                       .toLowerCase()
                                       .contains(textEditingValue.text);
                                 }));
-                                var listSuggestions =
-                                    suggestions.where((String option) {
-                                  return option.toLowerCase().contains(
-                                      textEditingValue.text.toLowerCase());
-                                });
+                                var listSuggestions = suggestions;
+                                //     suggestions.where((String option) {
+                                //   return option.toLowerCase().contains(
+                                //       textEditingValue.text.toLowerCase());
+                                // });
                                 if (listSuggestions.isEmpty)
                                   addressData.house = '';
                                 return listSuggestions;

@@ -13,10 +13,14 @@ PlaceModel _$PlaceModelFromJson(Map<String, dynamic> json) => PlaceModel(
       subtitle: json['subtitle'] == null
           ? null
           : Subtitle.fromJson(json['subtitle'] as Map<String, dynamic>),
+      address: json['address'] == null
+          ? null
+          : AddressModel.fromJson(json['address'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$PlaceModelToJson(PlaceModel instance) =>
     <String, dynamic>{
       'title': instance.title,
       'subtitle': instance.subtitle,
+      'address': instance.address,
     };
