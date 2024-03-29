@@ -1,88 +1,11 @@
 {
-    // Используйте IntelliSense, чтобы узнать о возможных атрибутах.
-    // Наведите указатель мыши, чтобы просмотреть описания существующих атрибутов.
-    // Для получения дополнительной информации посетите: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
     "configurations": [
         {
-            "name": "auth_feature",
-            "cwd": "auth_feature",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "auth_feature (profile mode)",
-            "cwd": "auth_feature",
-            "request": "launch",
+            "name": "Flutter (lib/main.dart)",
             "type": "dart",
-            "flutterMode": "profile"
-        },
-        {
-            "name": "auth_feature (release mode)",
-            "cwd": "auth_feature",
             "request": "launch",
-            "type": "dart",
-            "flutterMode": "release"
-        },
-        {
-            "name": "data_layer",
-            "cwd": "data_layer",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "data_layer (profile mode)",
-            "cwd": "data_layer",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "profile"
-        },
-        {
-            "name": "data_layer (release mode)",
-            "cwd": "data_layer",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "release"
-        },
-        {
-            "name": "valentino",
             "cwd": "valentino",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "valentino (profile mode)",
-            "cwd": "valentino",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "profile"
-        },
-        {
-            "name": "valentino (release mode)",
-            "cwd": "valentino",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "release"
-        },
-        {
-            "name": "yandex_autocomplete",
-            "cwd": "yandex_autocomplete",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "yandex_autocomplete (profile mode)",
-            "cwd": "yandex_autocomplete",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "profile"
-        },
-        {
-            "name": "yandex_autocomplete (release mode)",
-            "cwd": "yandex_autocomplete",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "release"
+            "program": "lib/main.dart"
         }
     ]
 }

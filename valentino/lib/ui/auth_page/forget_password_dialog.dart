@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,7 +19,7 @@ class ForgetPasswordDialog extends StatefulWidget {
 }
 
 class ForgetPasswordDialogState extends State<ForgetPasswordDialog> {
-  String phone = '';
+  String email = '';
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,7 @@ class ForgetPasswordDialogState extends State<ForgetPasswordDialog> {
           height: height * 0.35,
           child: Column(children: [
             Text(
-              'Укажите номер телефона, и мы вышлем ссылку восстановления пароля на e-mail, указанный при регистрации',
+              'Укажите номер e-mail, указанный при регистрации и мы вышлем ссылку восстановления пароля ',
               style: TextStyle(
                   color: Color.fromARGB(248, 255, 255, 255), fontSize: 12),
             ),
@@ -52,29 +53,27 @@ class ForgetPasswordDialogState extends State<ForgetPasswordDialog> {
                   children: [
                     Padding(padding: EdgeInsets.only(top: height * 0.02)),
                     TextFormField(
-                      style: TextStyle(color: Colors.white),
-                      cursorColor: Color.fromARGB(248, 255, 255, 255),
-                      keyboardType: TextInputType.number,
+                      cursorColor: Color.fromARGB(209, 255, 255, 255),
+                      //controller: TextEditingController()..text = dateTime,
+
+                      //initialValue: dateTime,
+                      validator: (value) => Validator.isEmailValid(value),
                       onChanged: (String value) {
-                        phone = value;
+                        email = value;
                       },
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))
-                      ],
-                      validator: (value) => Validator.isPhoneValid(value),
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10)),
                           focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                               borderSide: BorderSide(
-                                  color: Color.fromARGB(248, 255, 255, 255),
+                                  color: Color.fromARGB(209, 255, 255, 255),
                                   width: 2.0)),
-                          prefixIcon: Icon(Icons.phone_iphone,
-                              color: Color.fromARGB(248, 255, 255, 255)),
-                          labelText: 'Телефон',
+                          prefixIcon: Icon(Icons.mail,
+                              color: Color.fromARGB(209, 255, 255, 255)),
+                          labelText: 'Email',
                           labelStyle: TextStyle(
-                              color: Color.fromARGB(248, 255, 255, 255))),
+                              color: Color.fromARGB(209, 255, 255, 255))),
                     ),
                     Padding(padding: EdgeInsets.only(top: height * 0.03)),
                     ElevatedButton(
@@ -88,10 +87,29 @@ class ForgetPasswordDialogState extends State<ForgetPasswordDialog> {
                           minimumSize: Size(height * 0.75, width * 0.12),
                         ),
                         onPressed: () async {
-                          // if (!_formKey.currentState!.validate()) return;
-                          // BlocProvider.of<RegisterBlocBloc>(context)
-                          //     .add(ForgetPasswordEvent(phone: phone));
-                          // Navigator.pop(context);
+                          if (!_formKey.currentState!.validate()) return;
+                          try {
+                            final result =
+                                await InternetAddress.lookup('google.com');
+                            if (result.isNotEmpty &&
+                                result[0].rawAddress.isNotEmpty) {}
+                          } on SocketException catch (_) {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text('Внимание'),
+                                    content: Text('Нед доступа к Интернету'),
+                                  );
+                                });
+                          }
+
+                          if (!_formKey.currentState!.validate()) return;
+                          print(email);
+                          Response response = await await Dio().post(
+                              'http://91.222.236.176:8880/orders_info/reserve_table/',
+                              data: {"email": email});
+                          Navigator.pop(context);
                         },
                         child: Text(
                           'Восстановить пароль',

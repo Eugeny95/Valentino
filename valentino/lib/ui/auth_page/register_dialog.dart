@@ -183,12 +183,34 @@ class RegisterDialogState extends State<RegisterDialog> {
                       onTap: () async {
                         DateTime date = DateTime(1900);
                         FocusScope.of(context).requestFocus(new FocusNode());
-                        date_birth = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(1950),
-                              lastDate: DateTime(2030),
-                            ) ??
+                        date_birth = await showCupertinoModalPopup(
+                                context: context,
+                                builder: (BuildContext builder) {
+                                  return Container(
+                                      height: MediaQuery.of(context)
+                                              .copyWith()
+                                              .size
+                                              .height *
+                                          0.35,
+                                      color: const Color.fromARGB(255, 0, 0, 0),
+                                      child: CupertinoDatePicker(
+                                        mode: CupertinoDatePickerMode.date,
+                                        initialDateTime: DateTime(1969, 1, 1),
+                                        onDateTimeChanged:
+                                            (DateTime newDateTime) {
+                                          // Do something
+                                        },
+                                      ));
+                                })
+
+                            // showDatePicker(
+                            //       context: context,
+                            //       initialDate: DateTime.now(),
+                            //       firstDate: DateTime(1950),
+                            //       lastDate: DateTime(2030),
+                            //     )
+
+                            ??
                             date;
 
                         dateCtl.text =

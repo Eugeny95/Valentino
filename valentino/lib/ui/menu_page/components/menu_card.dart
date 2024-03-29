@@ -30,7 +30,7 @@ class MenuCategoryItem extends StatelessWidget {
           child: Text(
             title,
             style: const TextStyle(
-              fontSize: 20,
+              fontSize: 18,
               // fontFamily: 'Moniqa',
               color: Colors.white60,
               fontWeight: FontWeight.w500,
