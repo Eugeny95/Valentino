@@ -9,7 +9,7 @@ class PlaceCoder {
     //     'https://suggest-maps.yandex.ru/v1/suggest?apikey=a09063ab-76ad-4056-9e17-2b61737cb87f&types=locality,street,house&print_address=1&text=Воронежское городское посление, $text';
 
     Response response = await Dio().get(req);
-    print(response.data);
+
     return GeoPlace.fromJson(response.data);
   }
 }

@@ -30,6 +30,7 @@ class _AddressWidgetState extends State<AddressWidget> {
       floor: 0,
       entrance: 0,
       doorphone: '',
+      city: '',
       deliveryCost: 0.0);
 
   @override
@@ -150,7 +151,7 @@ class _AddressWidgetState extends State<AddressWidget> {
                                   style: const TextStyle(color: Colors.red))));
                           return '';
                         }
-                        locationFromAddress('Воронеж ' +
+                        locationFromAddress(addressData.city +
                                 addressData.street +
                                 ',' +
                                 addressData.house)
@@ -198,7 +199,7 @@ class _AddressWidgetState extends State<AddressWidget> {
 
                                 try {
                                   String house =
-                                      textEditingValue.text.split(',')[1];
+                                      textEditingValue.text.split(',')[2];
                                   if (house != addressData.house)
                                     addressData.house = '';
                                 } catch (_) {
@@ -230,18 +231,32 @@ class _AddressWidgetState extends State<AddressWidget> {
                               onSelected: (String selection) async {
                                 addressData.street = selection;
                                 widget.onChange(addressData);
-                                addressData.street = selection.split(',').first;
+
                                 try {
-                                  addressData.house = selection.split(',')[1];
-                                  locationFromAddress('Воронеж ' +
+                                  addressData.city = selection.split(',').first;
+                                  addressData.street = selection.split(',')[1];
+                                  addressData.house = selection.split(',')[2];
+                                  print('address:' +
+                                      addressData.city +
+                                      ', ' +
+                                      addressData.street +
+                                      ', ' +
+                                      addressData.house);
+                                  locationFromAddress(addressData.city +
+                                          ',' +
                                           addressData.street +
                                           ',' +
                                           addressData.house)
                                       .then((locations) async {
                                     var output = 'Нет результата';
+
                                     if (locations.isNotEmpty) {
-                                      print(locations[0].latitude);
                                       output = locations[0].toString();
+                                      var data = {
+                                        "x": locations[0].latitude,
+                                        "y": locations[0].longitude
+                                      };
+                                      print('address: ${data}');
                                       Response response = await Dio().post(
                                           'http://91.222.236.176:8880/orders_info/get_area_delivery/',
                                           data: {

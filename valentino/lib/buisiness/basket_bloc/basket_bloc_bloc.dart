@@ -75,6 +75,11 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
 
     on<SetDeliveryCost>((event, emit) {
       deliveryCost = event.deliveryCost;
+      totalCost = 0;
+      for (Position position in positions) {
+        totalCost = totalCost + position!.calculateCost();
+      }
+
       emit(BasketState(
           basketStatus: BasketStatus.done,
           positions: positions,

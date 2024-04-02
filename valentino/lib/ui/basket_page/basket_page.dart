@@ -42,7 +42,8 @@ class BasketPageState extends State<BasketPage> {
       flat: 0,
       entrance: 0,
       floor: 0,
-      doorphone: '');
+      doorphone: '',
+      city: '');
 
   @override
   void initState() {

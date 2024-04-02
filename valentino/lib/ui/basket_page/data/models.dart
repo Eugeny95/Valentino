@@ -6,6 +6,7 @@ class AddressData {
   int entrance = 0;
   int floor = 0;
   String doorphone = '';
+  String city;
   double deliveryCost = 0.0;
   AddressData(
       {required this.street,
@@ -14,5 +15,6 @@ class AddressData {
       required this.entrance,
       required this.floor,
       required this.doorphone,
-      required this.deliveryCost});
+      required this.deliveryCost,
+      required this.city});
 }
