@@ -181,7 +181,7 @@ class RegisterDialogState extends State<RegisterDialog> {
                         // date_birth = value;
                       },
                       onTap: () async {
-                        DateTime date = DateTime(1900);
+                        DateTime date = DateTime.now();
                         FocusScope.of(context).requestFocus(new FocusNode());
                         date_birth = await showCupertinoModalPopup(
                                 context: context,
@@ -215,9 +215,8 @@ class RegisterDialogState extends State<RegisterDialog> {
                                               initialDateTime: DateTime.now(),
                                               minimumYear: 1940,
                                               maximumYear: 2030,
-                                              onDateTimeChanged:
-                                                  (DateTime newDateTime) {
-                                                date = newDateTime;
+                                              onDateTimeChanged: (val) {
+                                                date = val;
                                               },
                                             ),
                                           ),

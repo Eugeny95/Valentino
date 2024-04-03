@@ -106,14 +106,34 @@ class ForgetPasswordDialogState extends State<ForgetPasswordDialog> {
 
                           if (!_formKey.currentState!.validate()) return;
                           print(email);
-                          Response response = await await Dio().post(
-                              'http://91.222.236.176:8880/auth/refresh_password/',
-                              data: {"email": email});
 
-                          Navigator.pop(context);
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text(
-                                  'Ссылка для сброса пароля отпарвлена на  Вашу почту!')));
+                          try {
+                            Response response = await Dio().post(
+                                'http://91.222.236.176:8880/auth/refresh_password/',
+                                data: {"email": email});
+                            Navigator.pop(context);
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text(
+                                    'Ссылка для сброса пароля отпарвлена на  Вашу почту!')));
+                          } on DioError catch (e) {
+                            print('pisun');
+                            // if (e.response?.statusCode == 409) {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text(
+                                    'Пользователя с таким e-mail не существует')));
+                          }
+                          // } on DioError catch (_, e) {
+                          // if (_.response!.statusCode == 409) {
+                          // print('409');
+                          // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          //     content: Text(
+                          //         'Пользователя с таким e-mail не существует')));
+                          // }
+                          // }
+                          // Navigator.pop(context);
+                          // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          //     content: Text(
+                          //         'Ссылка для сброса пароля отпарвлена на  Вашу почту!')));
                         },
                         child: Text(
                           'Восстановить пароль',
