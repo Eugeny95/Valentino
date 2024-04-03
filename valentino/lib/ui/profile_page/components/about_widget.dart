@@ -48,76 +48,90 @@ class AboutWidget extends StatelessWidget {
                   // bottomLeft: Radius.circular(15))
                 )),
                 // tileColor: Color.fromARGB(100, 71, 105, 51),
-                title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Ресторан итальянской кухни',
-                              style: TextStyle(
-                                  fontFamily: 'Moniqa',
-                                  color: Colors.white,
-                                  fontSize: 35,
-                                  fontWeight: FontWeight.normal),
-                            ),
-                            InkWell(
-                              onTap: () {},
-                              child: Row(children: [
-                                Icon(
-                                  Icons.place,
-                                  size: 15,
-                                ),
-                                GestureDetector(
-                                    child: Text(
-                                      ' Воронеж, площадь Ленина, 6',
-                                      style: TextStyle(fontSize: 14),
+                title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Ресторан итальянской кухни',
+                      style: TextStyle(
+                          fontFamily: 'Moniqa',
+                          color: Colors.white,
+                          fontSize: 40,
+                          fontWeight: FontWeight.normal),
+                    ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                InkWell(
+                                  onTap: () {},
+                                  child: Row(children: [
+                                    Icon(
+                                      Icons.place,
+                                      size: 15,
                                     ),
-                                    onTap: () async {
-                                      final url =
-                                          "https://yandex.ru/maps/org/valentino/124027389896/?ll=39.198355%2C51.660954&z=15";
-                                      if (await canLaunch(url)) {
-                                        await launch(
-                                          url,
-                                        );
-                                      }
-                                    }),
-                              ]),
-                            ),
-                            Padding(
-                                padding: EdgeInsets.only(top: height * 0.005)),
-                            InkWell(
-                                onTap: () {},
-                                child: Row(children: [
-                                  Icon(
-                                    Icons.phone_iphone,
-                                    size: 15,
-                                  ),
-                                  GestureDetector(
-                                      child: Text(
-                                        " +7 (473) 233-12-33",
-                                        style: (TextStyle(
-                                            fontWeight: FontWeight.w800,
-                                            fontSize: 13)),
+                                    GestureDetector(
+                                        child: Text(
+                                          ' Воронеж, площадь Ленина, 6',
+                                          style: TextStyle(fontSize: 14),
+                                        ),
+                                        onTap: () async {
+                                          final url =
+                                              "https://yandex.ru/maps/org/valentino/124027389896/?ll=39.198355%2C51.660954&z=15";
+                                          if (await canLaunch(url)) {
+                                            await launch(
+                                              url,
+                                            );
+                                          }
+                                        }),
+                                  ]),
+                                ),
+                                Padding(
+                                    padding:
+                                        EdgeInsets.only(top: height * 0.005)),
+                                InkWell(
+                                    onTap: () {},
+                                    child: Row(children: [
+                                      Icon(
+                                        Icons.phone_iphone,
+                                        size: 15,
                                       ),
-                                      onTap: () async {
-                                        final url = "tel://+7(473)2331233";
-                                        if (await canLaunch(url)) {
-                                          await launch(
-                                            url,
-                                          );
-                                        }
-                                      }),
-                                ])),
-                          ]),
-                      Center(
-                          child: Icon(
-                        Icons.restaurant_menu_outlined,
-                        size: height * 0.055,
-                      )),
-                    ])),
+                                      GestureDetector(
+                                          child: Text(
+                                            " +7 (473) 233-12-33",
+                                            style: (TextStyle(
+                                                fontWeight: FontWeight.w800,
+                                                fontSize: 13)),
+                                          ),
+                                          onTap: () async {
+                                            final url = "tel://+7(473)2331233";
+                                            if (await canLaunch(url)) {
+                                              await launch(
+                                                url,
+                                              );
+                                            }
+                                          }),
+                                    ])),
+                                Text(
+                                  'Время работы доставки: 11:00 - 22:30',
+                                  style: TextStyle(
+                                      // fontFamily: 'Moniqa',
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.normal),
+                                ),
+                              ]),
+                          Center(
+                              child: Icon(
+                            Icons.restaurant_menu_outlined,
+                            size: height * 0.055,
+                          )),
+                        ]),
+                  ],
+                )),
           ]),
         ));
   }

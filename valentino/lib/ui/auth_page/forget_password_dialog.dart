@@ -39,10 +39,10 @@ class ForgetPasswordDialogState extends State<ForgetPasswordDialog> {
       actionsAlignment: MainAxisAlignment.center,
       content: Container(
           width: width,
-          height: height * 0.35,
+          height: height * 0.3,
           child: Column(children: [
             Text(
-              'Укажите номер e-mail, указанный при регистрации и мы вышлем ссылку восстановления пароля ',
+              'Укажите e-mail, указанный при регистрации и мы вышлем ссылку восстановления пароля ',
               style: TextStyle(
                   color: Color.fromARGB(248, 255, 255, 255), fontSize: 12),
             ),
@@ -107,9 +107,13 @@ class ForgetPasswordDialogState extends State<ForgetPasswordDialog> {
                           if (!_formKey.currentState!.validate()) return;
                           print(email);
                           Response response = await await Dio().post(
-                              'http://91.222.236.176:8880/orders_info/reserve_table/',
+                              'http://91.222.236.176:8880/auth/refresh_password/',
                               data: {"email": email});
+
                           Navigator.pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                                  'Ссылка для сброса пароля отпарвлена на  Вашу почту!')));
                         },
                         child: Text(
                           'Восстановить пароль',

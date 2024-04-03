@@ -146,14 +146,17 @@ class MenuCard extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: height / 17,
-                width: width * 0.43,
+                height: height * 0.005,
+              ),
+              SizedBox(
+                height: height / 19,
+                width: width * 0.41,
                 child: Text(
                   dishHttpModel.name ?? '',
                   textDirection: TextDirection.ltr,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                    fontSize: 14,
+                    fontSize: 13,
                     fontWeight: FontWeight.normal,
                     height: 0.97,
                   ),
@@ -219,7 +222,7 @@ class MenuCard extends StatelessWidget {
                     textDirection: TextDirection.ltr,
                     style: const TextStyle(
                       fontWeight: FontWeight.w600,
-                      fontSize: 14,
+                      fontSize: 13,
                       color: Color.fromARGB(204, 59, 59, 59),
                     ),
                   ),

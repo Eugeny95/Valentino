@@ -123,7 +123,7 @@ class _MenuPageState extends State<MenuPage> {
                 ])),
             SliverAppBar(
               backgroundColor: kContentColorLightTheme,
-              toolbarHeight: height * 0.01,
+              toolbarHeight: 12,
               pinned: true,
               snap: false,
               floating: false,
@@ -157,8 +157,6 @@ class _MenuPageState extends State<MenuPage> {
                                             : kContentColorLightTheme,
                                         minimumSize:
                                             Size(height * 0.12, width * 0.05),
-                                        maximumSize:
-                                            Size(height * 0.5, width * 0.05),
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(
                                               12), // <-- Radius

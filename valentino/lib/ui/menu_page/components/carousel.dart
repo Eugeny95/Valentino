@@ -66,7 +66,7 @@ class Cerousel extends StatelessWidget {
               style: TextStyle(
                   fontFamily: 'SHAL',
                   color: Colors.red,
-                  fontSize: 55,
+                  fontSize: 65,
                   fontWeight: FontWeight.normal),
             ),
           ]),

@@ -66,7 +66,7 @@ class RegisterDialogState extends State<RegisterDialog> {
                     TextFormField(
                       cursorColor: Color.fromARGB(217, 255, 255, 255),
                       textCapitalization: TextCapitalization.words,
-                      // validator: (value) => Validator.isEmptyValid(value!),
+                      validator: (value) => Validator.isEmptyValid(value!),
                       onChanged: (String value) {
                         firstname = value;
                       },
@@ -88,7 +88,7 @@ class RegisterDialogState extends State<RegisterDialog> {
                     TextFormField(
                       cursorColor: Color.fromARGB(217, 255, 255, 255),
                       textCapitalization: TextCapitalization.words,
-                      // validator: (value) => Validator.isEmptyValid(value!),
+                      validator: (value) => Validator.isEmptyValid(value!),
                       onChanged: (String value) {
                         lastname = value;
                       },
@@ -191,15 +191,40 @@ class RegisterDialogState extends State<RegisterDialog> {
                                               .copyWith()
                                               .size
                                               .height *
-                                          0.35,
+                                          0.4,
                                       color: const Color.fromARGB(255, 0, 0, 0),
-                                      child: CupertinoDatePicker(
-                                        mode: CupertinoDatePickerMode.date,
-                                        initialDateTime: DateTime(1969, 1, 1),
-                                        onDateTimeChanged:
-                                            (DateTime newDateTime) {
-                                          // Do something
-                                        },
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          TextButton(
+                                            child: Text('Применить',
+                                                style: TextStyle(
+                                                    color: Color.fromARGB(
+                                                        219, 255, 255, 255),
+                                                    fontSize: 14)),
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                          ),
+                                          Container(
+                                            height: height * 0.3,
+                                            child: CupertinoDatePicker(
+                                              mode:
+                                                  CupertinoDatePickerMode.date,
+                                              initialDateTime: DateTime.now(),
+                                              minimumYear: 1940,
+                                              maximumYear: 2030,
+                                              onDateTimeChanged:
+                                                  (DateTime newDateTime) {
+                                                date = newDateTime;
+                                              },
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: height * 0.03,
+                                          )
+                                        ],
                                       ));
                                 })
 

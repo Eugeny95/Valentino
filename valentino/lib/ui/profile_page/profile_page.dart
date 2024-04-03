@@ -53,7 +53,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   height: 0.2,
                   fontWeight: FontWeight.normal),
             ),
-            Padding(padding: EdgeInsets.only(top: height * 0.04)),
+            Padding(padding: EdgeInsets.only(top: height * 0.032)),
             Align(
                 alignment: Alignment.center, //or choose another Alignment
                 child: Container(

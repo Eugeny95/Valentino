@@ -276,20 +276,16 @@ class SigninOrSignupScreenState extends State<SigninOrSignupScreen> {
                             },
                           ),
                           SizedBox(height: kDefaultPadding * 1.5),
-                          // TextButton(
-                          //     onPressed: () async {
-                          //       await showDialog(
-                          //         context: context,
-                          //         builder: (BuildContext context) {
-                          //           return ForgetPasswordDialog();
-                          //         },
-                          //       );
-                          //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          //           content: Text(
-                          //               'Ссылка для сброса пароля отпарвлена на  Вашу почту!')));
-                          //     },
-                          //     child: Text('Забыли пароль?')),
-                          //Spacer(flex: 1),
+                          TextButton(
+                              onPressed: () async {
+                                await showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return ForgetPasswordDialog();
+                                  },
+                                );
+                              },
+                              child: Text('Забыли пароль?')),
                         ])),
                       ],
                     )),
