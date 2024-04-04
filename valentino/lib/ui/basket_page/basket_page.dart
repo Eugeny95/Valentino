@@ -65,6 +65,7 @@ class BasketPageState extends State<BasketPage> {
           returnUrl: 'https://test.com',
           pageView: PageViewVariants.MOBILE,
           failUrl: 'https://test.com');
+      // Оплата
       PaymentObject paymentObject = await sberAquiring.toPay(
           amount: (BlocProvider.of<BasketBloc>(context).getTotalCost() * 100)
               .toInt(),
