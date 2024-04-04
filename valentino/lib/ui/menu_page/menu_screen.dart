@@ -92,34 +92,34 @@ class _MenuPageState extends State<MenuPage> {
                         borderRadius: BorderRadius.only()),
                     child: const Cerousel(),
                   ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          top: height * 0.055, right: width * 0.01),
-                      child: FloatingActionButton.small(
-                        backgroundColor: kPrimaryColor,
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return TableDialog();
-                            },
-                          );
-                        },
-                        child: Icon(
-                          Icons.table_bar_outlined,
-                          size: 22,
-                          color: Color.fromARGB(189, 255, 255, 255),
-                        ),
-                        shape: RoundedRectangleBorder(
-                            side: BorderSide(
-                                width: 1,
-                                color: Color.fromARGB(49, 255, 255, 255)),
-                            borderRadius: BorderRadius.circular(100)),
-                      ),
-                    ),
-                  ),
+                  // Align(
+                  //   alignment: Alignment.topRight,
+                  //   child: Padding(
+                  //     padding: EdgeInsets.only(
+                  //         top: height * 0.055, right: width * 0.01),
+                  //     child: FloatingActionButton.small(
+                  //       backgroundColor: kPrimaryColor,
+                  //       onPressed: () {
+                  //         showDialog(
+                  //           context: context,
+                  //           builder: (BuildContext context) {
+                  //             return TableDialog();
+                  //           },
+                  //         );
+                  //       },
+                  //       child: Icon(
+                  //         Icons.table_bar_outlined,
+                  //         size: 22,
+                  //         color: Color.fromARGB(189, 255, 255, 255),
+                  //       ),
+                  //       shape: RoundedRectangleBorder(
+                  //           side: BorderSide(
+                  //               width: 1,
+                  //               color: Color.fromARGB(49, 255, 255, 255)),
+                  //           borderRadius: BorderRadius.circular(100)),
+                  //     ),
+                  //   ),
+                  // ),
                 ])),
             SliverAppBar(
               backgroundColor: kContentColorLightTheme,
@@ -156,7 +156,7 @@ class _MenuPageState extends State<MenuPage> {
                                             ? kFourthColor
                                             : kContentColorLightTheme,
                                         minimumSize:
-                                            Size(height * 0.12, width * 0.05),
+                                            Size(height * 0.12, width * 0.25),
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(
                                               12), // <-- Radius

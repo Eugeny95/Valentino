@@ -56,7 +56,7 @@ class AboutWidget extends StatelessWidget {
                       style: TextStyle(
                           fontFamily: 'Moniqa',
                           color: Colors.white,
-                          fontSize: 40,
+                          fontSize: height * 0.04,
                           fontWeight: FontWeight.normal),
                     ),
                     Row(
@@ -115,14 +115,79 @@ class AboutWidget extends StatelessWidget {
                                             }
                                           }),
                                     ])),
-                                Text(
-                                  'Время работы доставки: 11:00 - 22:30',
-                                  style: TextStyle(
-                                      // fontFamily: 'Moniqa',
-                                      color: Colors.white,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.normal),
-                                ),
+                                Padding(
+                                    padding:
+                                        EdgeInsets.only(top: height * 0.002)),
+                                PopupMenuButton(
+                                  child: Container(
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          'Время работы',
+                                          style: TextStyle(
+                                            fontSize: 13,
+                                            color: Colors.white,
+                                            decoration: TextDecoration.none,
+                                          ),
+                                        ),
+                                        Icon(
+                                          Icons.arrow_drop_down_outlined,
+                                          size: 15,
+                                          color: Colors.white,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  itemBuilder: (context) => [
+                                    PopupMenuItem(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Время работы ресторана:',
+                                            style: TextStyle(fontSize: 14),
+                                          ),
+                                          SizedBox(height: height * 0.01),
+                                          Text(
+                                            'Понедельник - Пятница',
+                                            style: TextStyle(fontSize: 12),
+                                          ),
+                                          Text(
+                                            '12:00 - 00:00',
+                                            style: TextStyle(fontSize: 12),
+                                          ),
+                                          SizedBox(height: height * 0.01),
+                                          Text(
+                                            'Суббота - Воскресенье',
+                                            style: TextStyle(fontSize: 12),
+                                          ),
+                                          Text(
+                                            '11:00 - 00:00',
+                                            style: TextStyle(fontSize: 12),
+                                          ),
+                                          SizedBox(height: height * 0.03),
+                                          Text(
+                                            'Время работы доставки:',
+                                            style: TextStyle(fontSize: 14),
+                                          ),
+                                          SizedBox(height: height * 0.01),
+                                          Text(
+                                            'Понедельник - Воскресенье',
+                                            style: TextStyle(fontSize: 12),
+                                          ),
+                                          Text(
+                                            '11:00 - 22:30',
+                                            style: TextStyle(fontSize: 12),
+                                          ),
+                                          SizedBox(height: height * 0.01),
+                                        ],
+                                      ),
+                                      value: 1,
+                                      onTap: () {},
+                                    ),
+                                  ],
+                                )
                               ]),
                           Center(
                               child: Icon(

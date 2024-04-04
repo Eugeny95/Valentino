@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:valentino/ui/constants.dart';
+import 'package:valentino/ui/menu_page/components/table_dialog.dart';
 
 final List<String> imgList = [
   'http://91.222.236.176:8880/image/image/home_1.jpg',
@@ -59,17 +61,37 @@ class Cerousel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-          child: Column(children: [
-            Text(
-              'Valentino',
-              style: TextStyle(
-                  fontFamily: 'SHAL',
-                  color: Colors.red,
-                  fontSize: 65,
-                  fontWeight: FontWeight.normal),
+        actions: [
+          FloatingActionButton.small(
+            backgroundColor: kPrimaryColor,
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return TableDialog();
+                },
+              );
+            },
+            child: Icon(
+              Icons.table_bar_outlined,
+              size: 22,
+              color: Color.fromARGB(189, 255, 255, 255),
             ),
-          ]),
+            shape: RoundedRectangleBorder(
+                side: BorderSide(
+                    width: 1, color: Color.fromARGB(49, 255, 255, 255)),
+                borderRadius: BorderRadius.circular(100)),
+          ),
+        ],
+        title: const Center(
+          child: Text(
+            '    Valentino',
+            style: TextStyle(
+                fontFamily: 'SHAL',
+                color: Colors.red,
+                fontSize: 65,
+                fontWeight: FontWeight.normal),
+          ),
         ),
         backgroundColor: Colors.transparent,
       ),

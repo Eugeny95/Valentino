@@ -149,7 +149,7 @@ class MenuCard extends StatelessWidget {
                 height: height * 0.005,
               ),
               SizedBox(
-                height: height / 19,
+                height: height / 17,
                 width: width * 0.41,
                 child: Text(
                   dishHttpModel.name ?? '',
@@ -161,9 +161,6 @@ class MenuCard extends StatelessWidget {
                     height: 0.97,
                   ),
                 ),
-              ),
-              SizedBox(
-                height: height * 0.005,
               ),
               SizedBox(
                 height: height * 0.02,
