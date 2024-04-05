@@ -63,6 +63,7 @@ class BasketPageState extends State<BasketPage> {
           userName: 'p3662276447-api',
           password: '9174253qQ@',
           returnUrl: 'https://test.com',
+          token: 'q0dudue2frtnr8v1tpd5rv0udj',
           pageView: PageViewVariants.MOBILE,
           failUrl: 'https://test.com');
       PaymentObject paymentObject = await sberAquiring.toPay(
