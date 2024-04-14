@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:valentino/buisiness/auth_bloc/auth_bloc.dart';
 import 'package:valentino/ui/auth_page/signin_or_signup_screen.dart';
 import 'package:valentino/ui/constants.dart';
+import 'package:valentino/ui/profile_page/components/remove_account_dialog.dart';
 
 class ClientDataPage extends StatefulWidget {
   @override
@@ -261,7 +262,21 @@ class _ClientDataPageState extends State<ClientDataPage> {
                       },
                       child: Text('Выйти из профиля',
                           style: TextStyle(
-                              color: Color.fromARGB(229, 227, 52, 52)))),
+                              color: Color.fromARGB(255, 227, 52, 52)))),
+                  SizedBox(
+                    height: height * 0.02,
+                  ),
+                  TextButton(
+                      onPressed: () async {
+                        await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return RemovaAccountDialog();
+                          },
+                        );
+                      },
+                      child: Text('Удалить аккаунт',
+                          style: TextStyle(color: Colors.white))),
                 ]),
               ),
             ]),
