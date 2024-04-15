@@ -60,7 +60,7 @@ class RemovaAccountDialogState extends State<RemovaAccountDialog> {
                       minimumSize: Size(height * 0.16, width * 0.11),
                     ),
                     onPressed: () async {
-                      Navigator.pop(context);
+                      Navigator.pop(context, false);
                     },
                     child: Text(
                       'Отмена',
@@ -76,45 +76,7 @@ class RemovaAccountDialogState extends State<RemovaAccountDialog> {
                       minimumSize: Size(height * 0.16, width * 0.11),
                     ),
                     onPressed: () async {
-                      try {
-                        final result =
-                            await InternetAddress.lookup('google.com');
-                        if (result.isNotEmpty &&
-                            result[0].rawAddress.isNotEmpty) {}
-                      } on SocketException catch (_) {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text('Внимание'),
-                                content: Text('Нед доступа к Интернету'),
-                              );
-                            });
-                      }
-                      // Response responce = await Dio().post(
-                      //   'http://91.222.236.176:8880/auth/delete/',
-
-                      //   // options: Options(headers: <String, String>{
-                      //   //   'authorization': 'Bearer ${accessToken}'
-                      //   // })
-                      // );
-                      try {
-                        Response response = await await Dio()
-                            .delete('http://91.222.236.176:8880/auth/delete/',
-                                options: Options(headers: <String, String>{
-                                  // 'authorization': 'Bearer ${accessToken}'
-                                }));
-
-                        Navigator.pop(context);
-
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text('Ваш аккаунт успешно удален')));
-                      } on DioError catch (e) {
-                        // print('pisun');
-                        // if (e.response?.statusCode == 409) {
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(SnackBar(content: Text('Ошибка')));
-                      }
+                      Navigator.pop(context, true);
                     },
                     child: Text(
                       'Удалить',

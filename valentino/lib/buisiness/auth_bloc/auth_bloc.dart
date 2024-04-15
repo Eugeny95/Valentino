@@ -81,7 +81,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<RegisterEvent>((event, emit) async {
       print('refresh');
       print('firstname is ${authService.user.first_name}');
-      print('дата рождения is ${authService.user.date_birth}');
+
       emit(AuthState(status: authStatus, user: authService.user));
     });
 

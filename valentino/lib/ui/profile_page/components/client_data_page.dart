@@ -1,4 +1,5 @@
 import 'package:auth_feature/data/auth_data.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -268,12 +269,24 @@ class _ClientDataPageState extends State<ClientDataPage> {
                   ),
                   TextButton(
                       onPressed: () async {
-                        await showDialog(
+                        String accessToken = state.user!.accessToken;
+                        bool? isDeleteDialog = await showDialog(
                           context: context,
                           builder: (BuildContext context) {
                             return RemovaAccountDialog();
                           },
                         );
+                        if (isDeleteDialog == null) return;
+                        if (isDeleteDialog) {
+                          Response response = await Dio().delete(
+                              'http://91.222.236.176:8880/auth/delete/',
+                              options: Options(headers: <String, String>{
+                                'authorization': 'Bearer ${accessToken}'
+                              }));
+                          BlocProvider.of<AuthBloc>(context).add(LogOutEvent());
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text('Ваш аккаунт успешно удален')));
+                        }
                       },
                       child: Text('Удалить аккаунт',
                           style: TextStyle(color: Colors.white))),
