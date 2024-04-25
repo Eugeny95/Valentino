@@ -63,11 +63,11 @@ class BasketPageState extends State<BasketPage> {
           userName: 'p3662276447-api',
           password: '9174253qQ@',
           returnUrl:
-              'http://91.222.236.176:8880/static/payment/payment_done.html',
+              'http://147.45.109.158:8880/static/payment/payment_done.html',
           token: 'q0dudue2frtnr8v1tpd5rv0udj',
           pageView: PageViewVariants.MOBILE,
           failUrl:
-              'http://91.222.236.176:8880/static/payment/payment_cancel.html');
+              'http://147.45.109.158:8880/static/payment/payment_cancel.html');
       // Оплата
       PaymentObject paymentObject = await sberAquiring.toPay(
           amount: (BlocProvider.of<BasketBloc>(context).getTotalCost() * 100)

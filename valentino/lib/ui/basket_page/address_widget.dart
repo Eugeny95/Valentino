@@ -258,7 +258,7 @@ class _AddressWidgetState extends State<AddressWidget> {
                                       };
                                       print('address: ${data}');
                                       Response response = await Dio().post(
-                                          'http://91.222.236.176:8880/orders_info/get_area_delivery/',
+                                          'http://147.45.109.158:8880/orders_info/get_area_delivery/',
                                           data: {
                                             "x": locations[0].latitude,
                                             "y": locations[0].longitude

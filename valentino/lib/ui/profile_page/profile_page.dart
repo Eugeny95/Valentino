@@ -33,7 +33,6 @@ class _ProfilePageState extends State<ProfilePage> {
             scrollDirection: Axis.vertical,
             children: [
               Column(children: [
-                Padding(padding: EdgeInsets.only(top: height * 0.04)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [

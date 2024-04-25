@@ -145,7 +145,7 @@ class TableDialogState extends State<TableDialog> {
                           if (!_formKey.currentState!.validate()) return;
                           print(phone);
                           Response response = await await Dio().post(
-                              'http://91.222.236.176:8880/orders_info/reserve_table/',
+                              'http://147.45.109.158:8880/orders_info/reserve_table/',
                               data: {"name": firstname, "phone": phone});
                           Navigator.pop(context);
                         },

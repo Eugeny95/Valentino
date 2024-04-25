@@ -109,7 +109,7 @@ class ForgetPasswordDialogState extends State<ForgetPasswordDialog> {
 
                           try {
                             Response response = await Dio().post(
-                                'http://91.222.236.176:8880/auth/refresh_password/',
+                                'http://147.45.109.158:8880/auth/refresh_password/',
                                 data: {"email": email});
                             Navigator.pop(context);
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(

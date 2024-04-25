@@ -6,11 +6,11 @@ import 'package:valentino/ui/constants.dart';
 import 'package:valentino/ui/menu_page/components/table_dialog.dart';
 
 final List<String> imgList = [
-  'http://91.222.236.176:8880/image/image/home_1.jpg',
-  'http://91.222.236.176:8880/image/image/home_2.jpg',
-  'http://91.222.236.176:8880/image/image/home_3.jpg',
-  'http://91.222.236.176:8880/image/image/home_4.jpg',
-  'http://91.222.236.176:8880/image/image/home_5.jpg'
+  'http://147.45.109.158:8880/image/image/home_1.jpg',
+  'http://147.45.109.158:8880/image/image/home_2.jpg',
+  'http://147.45.109.158:8880/image/image/home_3.jpg',
+  'http://147.45.109.158:8880/image/image/home_4.jpg',
+  'http://147.45.109.158:8880/image/image/home_5.jpg'
 ];
 
 final List<Widget> imageSliders = imgList

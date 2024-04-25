@@ -279,7 +279,7 @@ class _ClientDataPageState extends State<ClientDataPage> {
                         if (isDeleteDialog == null) return;
                         if (isDeleteDialog) {
                           Response response = await Dio().delete(
-                              'http://91.222.236.176:8880/auth/delete/',
+                              'http://147.45.109.158:8880/auth/delete/',
                               options: Options(headers: <String, String>{
                                 'authorization': 'Bearer ${accessToken}'
                               }));
