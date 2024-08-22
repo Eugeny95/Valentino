@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "247940272958",
+    "project_id": "valentino-effcf",
+    "storage_bucket": "valentino-effcf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:247940272958:android:a4af73341e674a98cd926f",
+        "android_client_info": {
+          "package_name": "com.yappa.valentino"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6ib478sNt5Y-AytL4GPIlJ-Atg3bdgzs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
