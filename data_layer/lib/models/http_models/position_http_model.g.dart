@@ -8,7 +8,7 @@ part of 'position_http_model.dart';
 
 PositionHttpModel _$PositionHttpModelFromJson(Map<String, dynamic> json) =>
     PositionHttpModel(
-      amount: json['amount'] as int?,
+      amount: (json['amount'] as num?)?.toInt(),
       modifiers: (json['modifiers'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),

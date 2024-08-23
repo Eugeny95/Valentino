@@ -147,7 +147,7 @@ class _DeliveryMapPageState extends State<DeliveryMapPage> {
                 Container(
                   width: width * 0.7,
                   child: Text(
-                    '- Зона №5 Коминтерновский район 300 руб.',
+                    '- Зона №5 Коминтерновский район 350 руб.',
                     style:
                         TextStyle(fontWeight: FontWeight.normal, fontSize: 12),
                   ),

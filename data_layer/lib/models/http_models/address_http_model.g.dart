@@ -9,9 +9,9 @@ part of 'address_http_model.dart';
 AddressHttpModel _$AddressHttpModelFromJson(Map<String, dynamic> json) =>
     AddressHttpModel(
       doorphone: json['doorphone'] as String?,
-      entrance: json['entrance'] as int?,
-      flat: json['flat'] as int?,
-      floor: json['floor'] as int?,
+      entrance: (json['entrance'] as num?)?.toInt(),
+      flat: (json['flat'] as num?)?.toInt(),
+      floor: (json['floor'] as num?)?.toInt(),
       house: json['house'] as String?,
       street: json['street'] as String?,
     );
