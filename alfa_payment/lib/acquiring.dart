@@ -7,6 +7,7 @@ import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
+import 'dart:developer' as developer;
 
 class Acquiring {
   String userName;
@@ -48,13 +49,13 @@ class PaymentObject {
   });
 }
 
-class SberAquiring extends Acquiring {
+class AlfaAquiring extends Acquiring {
   String returnUrl;
   String failUrl;
   String? token;
   PageViewVariants pageView;
 
-  SberAquiring(
+  AlfaAquiring(
       {required super.userName,
       required super.password,
       required this.returnUrl,
@@ -66,12 +67,12 @@ class SberAquiring extends Acquiring {
     String request = '';
     if (token != null) {
       request =
-          'https://securepayments.sberbank.ru/payment/rest/getOrderStatusExtended.do?token=$token&orderId=$orderId';
+          'https://pay.alfabank.ru/payment/rest/getOrderStatusExtended.do?token=$token&orderId=$orderId';
     } else {
       request =
-          'https://securepayments.sberbank.ru/payment/rest/getOrderStatusExtended.do?userName=$userName&password=$password&orderId=$orderId';
+          'https://pay.alfabank.ru/payment/rest/getOrderStatusExtended.do?userName=$userName&password=$password&orderId=$orderId';
     }
-    print('requwest $request');
+
     Dio dio = Dio();
     (dio!.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
         (HttpClient client) {
@@ -79,9 +80,11 @@ class SberAquiring extends Acquiring {
           (X509Certificate cert, String host, int port) => true;
       return client;
     };
-    Response response = await dio.get(request);
+    Response response = await dio.post(request);
     int orderStatusCode = -1;
+    developer.log('order status ${response.data}');
     orderStatusCode = jsonDecode(response.data)['orderStatus'];
+    developer.log('order status code ${orderStatusCode}');
     print(response.data);
     switch (orderStatusCode) {
       case (0):
@@ -108,10 +111,10 @@ class SberAquiring extends Acquiring {
 
     if (token != null) {
       request =
-          'https://securepayments.sberbank.ru/payment/rest/register.do?token=$token&amount=$amount&returnUrl=$returnUrl&failUrl=$failUrl&pageView=MOBILE&orderNumber=$orderNumber';
+          'https://pay.alfabank.ru/payment/rest/register.do?token=$token&amount=$amount&returnUrl=$returnUrl&failUrl=$failUrl&pageView=MOBILE&orderNumber=$orderNumber';
     } else {
       request =
-          'https://securepayments.sberbank.ru/payment/rest/register.do?userName=$userName&password=$password&amount=$amount&returnUrl=$returnUrl&failUrl=$failUrl&pageView=MOBILE&orderNumber=$orderNumber';
+          'https://pay.alfabank.ru/payment/rest/register.do?userName=$userName&password=$password&amount=$amount&returnUrl=$returnUrl&failUrl=$failUrl&pageView=MOBILE&orderNumber=$orderNumber';
     }
 
     print('requwest $request');
@@ -122,7 +125,7 @@ class SberAquiring extends Acquiring {
           (X509Certificate cert, String host, int port) => true;
       return client;
     };
-    Response response = await dio.get(request);
+    Response response = await dio.post(request);
     print(response.data);
     PaymentObject paymentObject = PaymentObject(
         id: jsonDecode(response.data)['orderId'],

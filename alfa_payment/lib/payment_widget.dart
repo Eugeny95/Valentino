@@ -1,16 +1,16 @@
 import 'dart:async';
 
+import 'package:alfa_payment/acquiring.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:online_payments/acquiring.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class PaymentWidget extends StatefulWidget {
   PaymentObject paymentObject;
-  SberAquiring sberAquiring;
+  AlfaAquiring alfaAquiring;
 
   PaymentWidget(
-      {super.key, required this.paymentObject, required this.sberAquiring});
+      {super.key, required this.paymentObject, required this.alfaAquiring});
 
   @override
   State<PaymentWidget> createState() => _PaymentWidgetState();
@@ -21,7 +21,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
   late Timer _timer;
 
   Future<PaymentStatus> getPaymentStatus() async {
-    PaymentStatus paymentStatus = await widget.sberAquiring
+    PaymentStatus paymentStatus = await widget.alfaAquiring
         .checkPaymentStatus(orderId: widget.paymentObject.id);
     print(paymentStatus);
     if (paymentStatus == PaymentStatus.REGISTER_WITHOUT_PAYMENT)
