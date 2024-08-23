@@ -439,7 +439,7 @@ class BasketPageState extends State<BasketPage> {
                                   height: height * 0.06,
                                   child: TextField(
                                     cursorColor:
-                                        Color.fromARGB(209, 41, 41, 41),
+                                        Color.fromARGB(209, 230, 230, 230),
                                     controller: dateCtl,
                                     // inputFormatters: <TextInputFormatter>[_dateFormatter],
                                     decoration: InputDecoration(
@@ -447,21 +447,21 @@ class BasketPageState extends State<BasketPage> {
                                           FloatingLabelBehavior.never,
                                       enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
-                                            color:
-                                                Color.fromARGB(95, 46, 46, 46)),
+                                            color: Color.fromARGB(
+                                                95, 233, 233, 233)),
                                       ),
                                       prefixIcon: const Icon(Icons.timelapse,
                                           size: 18,
-                                          color:
-                                              Color.fromARGB(210, 234, 44, 44)),
+                                          color: Color.fromARGB(
+                                              210, 234, 234, 234)),
                                       labelText: 'Как можно скорее',
                                       labelStyle: TextStyle(
-                                          color:
-                                              Color.fromARGB(217, 49, 49, 49),
+                                          color: Color.fromARGB(
+                                              217, 232, 232, 232),
                                           fontSize: 14),
                                       helperText: '      Выберите время',
                                       helperStyle: TextStyle(
-                                          color: Colors.black, fontSize: 12),
+                                          color: Colors.white, fontSize: 12),
                                       hintStyle: TextStyle(
                                           fontSize: 20.0,
                                           color: Colors.redAccent),
