@@ -14,19 +14,20 @@ class OrderHttpModel {
   String? phone;
   List<PositionHttpModel>? items;
   AddressHttpModel? adress;
-  PaymentType? type_payment;
-  double? summa;
   DateTime? completeBefore;
   String? comment;
-  OrderHttpModel(
-      {required this.type_order,
-      required this.phone,
-      required this.items,
-      required this.adress,
-      required this.comment,
-      required this.summa,
-      required this.type_payment,
-      required this.completeBefore});
+  double? summa;
+  PaymentType? type_payment;
+  OrderHttpModel({
+    required this.type_order,
+    required this.phone,
+    required this.items,
+    required this.adress,
+    required this.completeBefore,
+    required this.comment,
+    required this.summa,
+    required this.type_payment,
+  });
 
   factory OrderHttpModel.fromJson(Map<String, dynamic> json) =>
       _$OrderHttpModelFromJson(json);

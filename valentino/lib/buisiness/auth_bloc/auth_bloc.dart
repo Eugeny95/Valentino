@@ -20,10 +20,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       required String cloudMessageToken,
       required String deviceType}) async {
     authStatus = await authService.logIn(
-        cloudMessageToken: cloudMessageToken,
-        deviceType: deviceType,
         username: username,
         password: password,
+        cloudMessageToken: cloudMessageToken,
+        deviceType: deviceType,
         authUrl: 'http://147.45.109.158:8880/auth/login/');
     return authStatus;
   }
