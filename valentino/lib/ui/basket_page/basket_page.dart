@@ -584,11 +584,11 @@ class BasketPageState extends State<BasketPage> {
                                                                               227)))),
                                                                   onPressed:
                                                                       () async {
-                                                                    // completeBefore = DateTime
-                                                                    //         .now()
-                                                                    //     .add(Duration(
-                                                                    //         minutes:
-                                                                    //             20));
+                                                                    date = DateTime
+                                                                            .now()
+                                                                        .add(Duration(
+                                                                            minutes:
+                                                                                20));
                                                                     Navigator.pop(
                                                                         context);
                                                                   },
