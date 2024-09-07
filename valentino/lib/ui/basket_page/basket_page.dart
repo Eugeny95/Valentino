@@ -14,6 +14,8 @@ import 'package:valentino/buisiness/auth_bloc/auth_bloc.dart';
 import 'package:valentino/buisiness/basket_bloc/basket_bloc_bloc.dart';
 import 'package:valentino/buisiness/history_bloc/history_bloc.dart';
 import 'package:valentino/ui/basket_page/address_widget.dart';
+import 'package:valentino/ui/basket_page/components/datetime2_page.dart';
+import 'package:valentino/ui/basket_page/components/datetime_page.dart';
 import 'package:valentino/ui/basket_page/data/models.dart';
 import 'package:valentino/ui/basket_page/payment_widget_bottom.dart';
 import 'package:valentino/ui/constants.dart';
@@ -470,143 +472,149 @@ class BasketPageState extends State<BasketPage> {
                                       //  completeBefore = value;
                                     },
                                     onTap: () async {
+                                      await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                DateTime2Page()),
+                                      );
                                       DateTime date = DateTime.now();
-                                      FocusScope.of(context)
-                                          .requestFocus(new FocusNode());
-                                      completeBefore =
-                                          await showCupertinoModalPopup(
-                                                  context: context,
-                                                  builder:
-                                                      (BuildContext builder) {
-                                                    return Container(
-                                                        height: MediaQuery.of(
-                                                                    context)
-                                                                .copyWith()
-                                                                .size
-                                                                .height *
-                                                            0.4,
-                                                        color: const Color
-                                                            .fromARGB(
-                                                            255, 0, 0, 0),
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .end,
-                                                          children: [
-                                                            TextButton(
-                                                              child: Text(
-                                                                  'Применить',
-                                                                  style: TextStyle(
-                                                                      color: Color.fromARGB(
-                                                                          219,
-                                                                          255,
-                                                                          255,
-                                                                          255),
-                                                                      fontSize:
-                                                                          14)),
-                                                              onPressed: () {
-                                                                Navigator.pop(
-                                                                    context);
-                                                              },
-                                                            ),
-                                                            Container(
-                                                              height:
-                                                                  height * 0.25,
-                                                              child:
-                                                                  CupertinoDatePicker(
-                                                                use24hFormat:
-                                                                    true,
-                                                                mode: CupertinoDatePickerMode
-                                                                    .dateAndTime,
-                                                                initialDateTime:
-                                                                    // DateTime
-                                                                    //     .now(),
-                                                                    DateTime.now().add(
-                                                                        Duration(
-                                                                            hours:
-                                                                                1)),
-                                                                minimumDate: DateTime
-                                                                        .now()
-                                                                    .add(Duration(
-                                                                        minutes:
-                                                                            20)),
-                                                                maximumDate: DateTime(
-                                                                    DateTime.now()
-                                                                        .year,
-                                                                    DateTime.now()
-                                                                            .month +
-                                                                        2,
-                                                                    DateTime.now()
-                                                                        .day),
-                                                                onDateTimeChanged:
-                                                                    (val) {
-                                                                  date = val;
-                                                                },
-                                                              ),
-                                                            ),
-                                                            SizedBox(
-                                                              height:
-                                                                  height * 0.01,
-                                                            ),
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                ElevatedButton(
-                                                                  style: ElevatedButton
-                                                                      .styleFrom(
-                                                                    shape:
-                                                                        RoundedRectangleBorder(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              12), // <-- Radius
-                                                                    ),
-                                                                    elevation:
-                                                                        5,
-                                                                    minimumSize: Size(
-                                                                        height *
-                                                                            0.43,
-                                                                        width *
-                                                                            0.13),
-                                                                    backgroundColor:
-                                                                        kFourthColor,
-                                                                  ),
-                                                                  child: Text(
-                                                                      'Ближайшее время',
-                                                                      style: (TextStyle(
-                                                                          fontSize:
-                                                                              15,
-                                                                          color: Color.fromARGB(
-                                                                              235,
-                                                                              227,
-                                                                              227,
-                                                                              227)))),
-                                                                  onPressed:
-                                                                      () async {
-                                                                    date = DateTime
-                                                                            .now()
-                                                                        .add(Duration(
-                                                                            minutes:
-                                                                                20));
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                  },
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            SizedBox(
-                                                              height:
-                                                                  height * 0.01,
-                                                            ),
-                                                          ],
-                                                        ));
-                                                  }) ??
-                                              date;
+                                      // FocusScope.of(context)
+                                      //     .requestFocus(new FocusNode());
+                                      // completeBefore =
+                                      //     await showCupertinoModalPopup(
+                                      //             context: context,
+                                      //             builder:
+                                      //                 (BuildContext builder) {
+                                      //               return Container(
+                                      //                   height: MediaQuery.of(
+                                      //                               context)
+                                      //                           .copyWith()
+                                      //                           .size
+                                      //                           .height *
+                                      //                       0.4,
+                                      //                   color: const Color
+                                      //                       .fromARGB(
+                                      //                       255, 0, 0, 0),
+                                      //                   child: Column(
+                                      //                     crossAxisAlignment:
+                                      //                         CrossAxisAlignment
+                                      //                             .end,
+                                      //                     children: [
+                                      //                       TextButton(
+                                      //                         child: Text(
+                                      //                             'Применить',
+                                      //                             style: TextStyle(
+                                      //                                 color: Color.fromARGB(
+                                      //                                     219,
+                                      //                                     255,
+                                      //                                     255,
+                                      //                                     255),
+                                      //                                 fontSize:
+                                      //                                     14)),
+                                      //                         onPressed: () {
+                                      //                           Navigator.pop(
+                                      //                               context);
+                                      //                         },
+                                      //                       ),
+                                      //                       Container(
+                                      //                         height:
+                                      //                             height * 0.25,
+                                      //                         child:
+                                      //                             CupertinoDatePicker(
+                                      //                           use24hFormat:
+                                      //                               true,
+                                      //                           mode: CupertinoDatePickerMode
+                                      //                               .dateAndTime,
+                                      //                           initialDateTime:
+                                      //                               // DateTime
+                                      //                               //     .now(),
+                                      //                               DateTime.now().add(
+                                      //                                   Duration(
+                                      //                                       hours:
+                                      //                                           1)),
+                                      //                           minimumDate: DateTime
+                                      //                                   .now()
+                                      //                               .add(Duration(
+                                      //                                   minutes:
+                                      //                                       20)),
+                                      //                           maximumDate: DateTime(
+                                      //                               DateTime.now()
+                                      //                                   .year,
+                                      //                               DateTime.now()
+                                      //                                       .month +
+                                      //                                   2,
+                                      //                               DateTime.now()
+                                      //                                   .day),
+                                      //                           onDateTimeChanged:
+                                      //                               (val) {
+                                      //                             date = val;
+                                      //                           },
+                                      //                         ),
+                                      //                       ),
+                                      //                       SizedBox(
+                                      //                         height:
+                                      //                             height * 0.01,
+                                      //                       ),
+                                      //                       Row(
+                                      //                         mainAxisAlignment:
+                                      //                             MainAxisAlignment
+                                      //                                 .center,
+                                      //                         children: [
+                                      //                           ElevatedButton(
+                                      //                             style: ElevatedButton
+                                      //                                 .styleFrom(
+                                      //                               shape:
+                                      //                                   RoundedRectangleBorder(
+                                      //                                 borderRadius:
+                                      //                                     BorderRadius.circular(
+                                      //                                         12), // <-- Radius
+                                      //                               ),
+                                      //                               elevation:
+                                      //                                   5,
+                                      //                               minimumSize: Size(
+                                      //                                   height *
+                                      //                                       0.43,
+                                      //                                   width *
+                                      //                                       0.13),
+                                      //                               backgroundColor:
+                                      //                                   kFourthColor,
+                                      //                             ),
+                                      //                             child: Text(
+                                      //                                 'Ближайшее время',
+                                      //                                 style: (TextStyle(
+                                      //                                     fontSize:
+                                      //                                         15,
+                                      //                                     color: Color.fromARGB(
+                                      //                                         235,
+                                      //                                         227,
+                                      //                                         227,
+                                      //                                         227)))),
+                                      //                             onPressed:
+                                      //                                 () async {
+                                      //                               date = DateTime
+                                      //                                       .now()
+                                      //                                   .add(Duration(
+                                      //                                       minutes:
+                                      //                                           20));
+                                      //                               Navigator.pop(
+                                      //                                   context);
+                                      //                             },
+                                      //                           ),
+                                      //                         ],
+                                      //                       ),
+                                      //                       SizedBox(
+                                      //                         height:
+                                      //                             height * 0.01,
+                                      //                       ),
+                                      //                     ],
+                                      //                   ));
+                                      //             }) ??
+                                      //         date;
 
-                                      dateCtl.text =
-                                          DateFormat('dd.MM.yyyy HH:mm')
-                                              .format(completeBefore);
+                                      // dateCtl.text =
+                                      //     DateFormat('dd.MM.yyyy HH:mm')
+                                      //         .format(completeBefore);
                                     },
                                   ),
                                 ),
