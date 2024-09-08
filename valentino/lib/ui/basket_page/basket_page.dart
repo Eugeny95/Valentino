@@ -494,6 +494,8 @@ class BasketPageState extends State<BasketPage> {
                                               .toString());
                                           dateCtl.text = formatDateTime(
                                               date['selectedDateTime']);
+                                          completeBefore =
+                                              date['selectedDateTime'];
                                         });
                                       }
                                       // FocusScope.of(context)
