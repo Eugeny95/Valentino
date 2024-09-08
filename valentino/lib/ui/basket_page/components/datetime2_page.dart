@@ -136,8 +136,8 @@ class _DateTime2PageState extends State<DateTime2Page> {
   int _selectedHours = 1;
   String startTime = '12:00';
   String endTime = '22:30';
-  Duration timeInterval = Duration(minutes: 30);
-  DateTime? selectedDateTime;
+  Duration timeInterval = Duration(hours: 1);
+  DateTime? selectedDateTime = DateTime.now().add(Duration(hours: 1));
 
   DateTime _selectedDate = DateTime.now();
   @override
@@ -152,7 +152,7 @@ class _DateTime2PageState extends State<DateTime2Page> {
 
     return Scaffold(
       appBar: AppBar(
-          iconTheme: IconThemeData(color: Color.fromARGB(0, 253, 253, 253)),
+          iconTheme: IconThemeData(color: Color.fromARGB(255, 232, 232, 232)),
           backgroundColor: kPrimaryColor,
           title: Text('Выбор времени доставки',
               style: TextStyle(
@@ -223,7 +223,7 @@ class _DateTime2PageState extends State<DateTime2Page> {
                         padding: EdgeInsets.all(10),
                         child: Text(
                           DateFormat('dd.MM.yyyy    HH:mm')
-                              .format(DateTime.now().add(Duration(minutes: 30)))
+                              .format(DateTime.now().add(Duration(hours: 1)))
                               .toString(),
                           style: TextStyle(
                             fontSize: height * 0.05,
@@ -274,6 +274,7 @@ class _DateTime2PageState extends State<DateTime2Page> {
                             print("Button value " + value.toString());
                             print("Integer value " + index.toString());
                           },
+                          fontSize: height * 0.015,
                           horizontal: true,
                           enableShape: true,
                           buttonSpace: 5,

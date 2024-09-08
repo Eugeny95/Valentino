@@ -167,8 +167,7 @@ class BasketPageState extends State<BasketPage> {
 
     return Scaffold(
       appBar: AppBar(
-          iconTheme:
-              IconThemeData(color: const Color.fromARGB(180, 253, 253, 253)),
+          iconTheme: IconThemeData(color: Color.fromARGB(255, 253, 253, 253)),
           backgroundColor: kPrimaryColor,
           title: Text('Оформление заказа',
               style:
@@ -447,6 +446,9 @@ class BasketPageState extends State<BasketPage> {
                                   width: width * 0.9,
                                   height: height * 0.06,
                                   child: TextField(
+                                    showCursor: false,
+                                    readOnly: true,
+
                                     cursorColor:
                                         Color.fromARGB(209, 230, 230, 230),
                                     controller: dateCtl,
