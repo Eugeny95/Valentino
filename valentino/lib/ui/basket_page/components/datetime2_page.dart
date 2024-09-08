@@ -35,6 +35,14 @@ class _DateTime2PageState extends State<DateTime2Page> {
         button1Color =
             const Color.fromARGB(255, 140, 140, 140); // Цвет для первой кнопки
         button2Color = kPrimaryColor; // Цвет для второй кнопки
+        _selectedDate = DateTime.now();
+        List<String> _tempTimeList = generateTimeList(
+            startTime: startTime,
+            endTime: endTime,
+            currentDateTime: DateTime.now(),
+            selectedDate: _selectedDate);
+        selectedDateTime = updateTimeInDateTime(
+            _selectedDate, _tempTimeList.first.split('-').last);
       }
     });
   }
@@ -314,10 +322,6 @@ class _DateTime2PageState extends State<DateTime2Page> {
                 style: (TextStyle(
                     fontSize: 13, color: Color.fromARGB(235, 227, 227, 227)))),
             onPressed: () async {
-              if (selectedDateTime == null) {
-                Navigator.pop(context, null);
-              }
-              print({'selectedDateTime': selectedDateTime});
               Navigator.pop(context, {'selectedDateTime': selectedDateTime});
             },
           ),

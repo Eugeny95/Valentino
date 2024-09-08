@@ -36,6 +36,11 @@ String mytime = '30 минут';
 String phone = '';
 
 class BasketPageState extends State<BasketPage> {
+  String formatDateTime(DateTime dateTime) {
+    // Форматируем дату и время без секунд
+    return '${dateTime.year}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')} ${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}';
+  }
+
   TextEditingController dateCtl = TextEditingController();
   int counter = 1;
   int toggleIndex = 0;
@@ -487,9 +492,8 @@ class BasketPageState extends State<BasketPage> {
                                         setState(() {
                                           log(date['selectedDateTime']
                                               .toString());
-                                          dateCtl.text =
-                                              date['selectedDateTime']
-                                                  .toString();
+                                          dateCtl.text = formatDateTime(
+                                              date['selectedDateTime']);
                                         });
                                       }
                                       // FocusScope.of(context)
