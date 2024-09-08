@@ -1,17 +1,7 @@
-import 'package:auth_feature/data/auth_data.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:intl/intl.dart';
 import 'package:radio_grouped_buttons/custom_buttons/custom_radio_buttons_group.dart';
-
-import 'package:toggle_switch/toggle_switch.dart';
-import 'package:valentino/buisiness/auth_bloc/auth_bloc.dart';
-import 'package:valentino/buisiness/basket_bloc/basket_bloc_bloc.dart';
-import 'package:valentino/ui/auth_page/signin_or_signup_screen.dart';
 import 'package:valentino/ui/constants.dart';
 
 class DateTime2Page extends StatefulWidget {
@@ -75,34 +65,82 @@ class _DateTime2PageState extends State<DateTime2Page> {
     });
   }
 
+  String formatDateTimeTo24Hour(DateTime dateTime) {
+    return '${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}';
+  }
+
+  DateTime updateTimeInDateTime(DateTime originalDateTime, String timeString) {
+    // Разделяем строку на часы и минуты
+    final parts = timeString.split(':');
+    if (parts.length != 2) {
+      throw FormatException('Неверный формат времени. Ожидается "HH:mm".');
+    }
+
+    final hours = int.parse(parts[0]);
+    final minutes = int.parse(parts[1]);
+
+    // Проверяем корректность часов и минут
+    if (hours < 0 || hours > 23 || minutes < 0 || minutes > 59) {
+      throw RangeError('Часы должны быть от 0 до 23, а минуты от 0 до 59.');
+    }
+
+    // Создаем новый объект DateTime с измененным временем
+    return DateTime(
+      originalDateTime.year,
+      originalDateTime.month,
+      originalDateTime.day,
+      hours,
+      minutes,
+    );
+  }
+
+  int compareDates(DateTime date1, DateTime date2) {
+    // Сравниваем только даты (без учета времени)
+    DateTime dateOnly1 = DateTime(date1.year, date1.month, date1.day);
+    DateTime dateOnly2 = DateTime(date2.year, date2.month, date2.day);
+
+    return dateOnly1.compareTo(dateOnly2);
+  }
+
+  List<String> generateTimeList(
+      {required String startTime,
+      required String endTime,
+      required DateTime currentDateTime,
+      required DateTime selectedDate}) {
+    List<String> times = [];
+    DateTime timeForGeneration = updateTimeInDateTime(selectedDate, startTime);
+
+    while (timeForGeneration
+            .compareTo(updateTimeInDateTime(selectedDate, endTime)) ==
+        -1) {
+      String time1 = formatDateTimeTo24Hour(timeForGeneration);
+      timeForGeneration = timeForGeneration.add(Duration(minutes: 30));
+      String time2 = formatDateTimeTo24Hour(timeForGeneration);
+      if (updateTimeInDateTime(selectedDate, time1).compareTo(DateTime.now()) ==
+          1) {
+        times.add(time1 + '-' + time2);
+      }
+    }
+    return times;
+  }
+
   int _selectedMins = 10;
   int _selectedHours = 1;
-  DateTime _selectedValue = DateTime.now();
+  String startTime = '12:00';
+  String endTime = '22:30';
+  Duration timeInterval = Duration(minutes: 30);
+  DateTime? selectedDateTime;
+
+  DateTime _selectedDate = DateTime.now();
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    List<String> buttonList = [
-      "12:00-12:30",
-      "12:30-13:00",
-      "13:00-13:30",
-      "13:30-14:00",
-      "14:00-14:30",
-      "14:30-15:00",
-      "15:00-15:30",
-      "15:30-16:00",
-      "16:00-17:30",
-      "17:30-18:00",
-      "18:00-18:30",
-      "18:30-19:00",
-      "19:00-19:30",
-      "19:30-20:00",
-      "20:00-20:30",
-      "20:30-21:00",
-      "21:00-21:30",
-      "21:30-22:00",
-      "22:00-22:30",
-    ]; // Названия кнопок
+    List<String> buttonList = generateTimeList(
+        startTime: startTime,
+        endTime: endTime,
+        currentDateTime: DateTime.now(),
+        selectedDate: _selectedDate);
 
     return Scaffold(
       appBar: AppBar(
@@ -211,7 +249,7 @@ class _DateTime2PageState extends State<DateTime2Page> {
                           onDateChange: (day) {
                             // New date selected
                             setState(() {
-                              _selectedValue = day;
+                              _selectedDate = day;
                             });
                           },
                         ),
@@ -223,6 +261,8 @@ class _DateTime2PageState extends State<DateTime2Page> {
                           buttonLables: buttonList,
                           buttonValues: buttonList,
                           radioButtonValue: (value, index) {
+                            selectedDateTime = updateTimeInDateTime(
+                                _selectedDate, value.split('-').last);
                             print("Button value " + value.toString());
                             print("Integer value " + index.toString());
                           },
@@ -274,8 +314,11 @@ class _DateTime2PageState extends State<DateTime2Page> {
                 style: (TextStyle(
                     fontSize: 13, color: Color.fromARGB(235, 227, 227, 227)))),
             onPressed: () async {
-              // date = DateTime.now().add(Duration(minutes: 20));
-              Navigator.pop(context);
+              if (selectedDateTime == null) {
+                Navigator.pop(context, null);
+              }
+              print({'selectedDateTime': selectedDateTime});
+              Navigator.pop(context, {'selectedDateTime': selectedDateTime});
             },
           ),
         ],

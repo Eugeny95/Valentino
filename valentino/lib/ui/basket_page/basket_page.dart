@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:alfa_payment/acquiring.dart';
 import 'package:alfa_payment/payment_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -472,13 +474,24 @@ class BasketPageState extends State<BasketPage> {
                                       //  completeBefore = value;
                                     },
                                     onTap: () async {
-                                      await Navigator.push(
+                                      Map<String, dynamic>? date =
+                                          await Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 DateTime2Page()),
                                       );
-                                      DateTime date = DateTime.now();
+                                      log(date.toString());
+
+                                      if (date != null) {
+                                        setState(() {
+                                          log(date['selectedDateTime']
+                                              .toString());
+                                          dateCtl.text =
+                                              date['selectedDateTime']
+                                                  .toString();
+                                        });
+                                      }
                                       // FocusScope.of(context)
                                       //     .requestFocus(new FocusNode());
                                       // completeBefore =
