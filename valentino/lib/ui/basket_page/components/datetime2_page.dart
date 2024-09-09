@@ -25,7 +25,6 @@ class _DateTime2PageState extends State<DateTime2Page> {
   void _onButtonPressed(int buttonIndex) {
     setState(() {
       selectedButton = buttonIndex; // Устанавливаем индекс выбранной кнопки
-
       // Меняем цвета кнопок в зависимости от нажатой
       if (buttonIndex == 1) {
         button1Color = kPrimaryColor; // Цвет для первой кнопки

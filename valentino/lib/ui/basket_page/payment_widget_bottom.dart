@@ -116,7 +116,7 @@ class PaymentWidgetState extends State<PaymentWidgetBottom> {
                                   fontSize: 12,
                                   inherit: false)
                             ],
-                            labels: ['500', '1000', '5000'],
+                            labels: ['1000', '3000', '5000'],
                             radiusStyle: true,
                             onToggle: (index) {
                               setState(() {
