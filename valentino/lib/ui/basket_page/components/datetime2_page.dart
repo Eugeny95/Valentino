@@ -55,7 +55,7 @@ class _DateTime2PageState extends State<DateTime2Page> {
   void _checkTime() {
     DateTime now = DateTime.now();
     // Проверяем, если текущее время больше 23:00 или меньше 12:00
-    if (now.hour > 23 || now.hour < 12) {
+    if (now.hour > 22 || now.hour < 12) {
       setState(() {
         isButtonEnabled = false; // Деактивируем кнопку
       });
