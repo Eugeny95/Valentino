@@ -149,8 +149,8 @@ class PaymentWidgetState extends State<PaymentWidgetBottom> {
                 case (0):
                   {
                     String comment = '';
-                    if (toggleIndex1 == 0) comment = 'Сдача с 500';
-                    if (toggleIndex1 == 1) comment = 'Сдача с 1000';
+                    if (toggleIndex1 == 0) comment = 'Сдача с 1000';
+                    if (toggleIndex1 == 1) comment = 'Сдача с 3000';
                     if (toggleIndex1 == 2) comment = 'Сдача с 5000';
                     Navigator.pop(
                         context,
