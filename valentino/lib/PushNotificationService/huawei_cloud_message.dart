@@ -25,7 +25,9 @@ Future<String> getHuaweiDeviceToken() async {
 
       flag = false;
     },
-    onError: (error) {},
+    onError: (error) {
+      return '';
+    },
   );
   Push.getToken('getToken');
   while (flag) {

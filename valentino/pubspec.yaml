@@ -76,6 +76,7 @@ dependencies:
   date_picker_timeline: any
  
   radio_grouped_buttons: ^1.0.1
+  app_version_update: ^5.0.3
   
   
  

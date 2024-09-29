@@ -1,3 +1,4 @@
+import 'package:app_version_update/app_version_update.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,6 +26,7 @@ void main() async {
   //notifications
   await CloudMessage.startCloudMessageService();
   await CloudMessage.getDeviceToken();
+
   String? token = await CloudMessage.getDeviceToken();
   print('This is Token: ' '${token}');
   //notifications
@@ -112,6 +114,58 @@ class _MainScreenState extends State<MainScreen> {
     ProfilePage(),
   ];
   int _selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _verifyVersion();
+  }
+
+  void _verifyVersion() async {
+    await AppVersionUpdate.checkForUpdates(
+            appleId: '6495065080',
+            playStoreId: 'com.yappa.valentino',
+            country: 'ru')
+        .then((result) async {
+      if (result.canUpdate!) {
+        // await AppVersionUpdate.showBottomSheetUpdate(context: context, appVersionResult: appVersionResult)
+        // await AppVersionUpdate.showPageUpdate(context: context, appVersionResult: appVersionResult)
+        // or use your own widget with information received from AppVersionResult
+
+        //##############################################################################################
+        await AppVersionUpdate.showAlertUpdate(
+          appVersionResult: result,
+          context: context,
+          backgroundColor: Colors.grey[200],
+          title: 'Версия вашего приложения устарела',
+          titleTextStyle: const TextStyle(
+              color: Colors.black, fontWeight: FontWeight.w600, fontSize: 22.0),
+          content: 'Пожалуйста обновите приложение, для корректной работы',
+          contentTextStyle: const TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.w400,
+          ),
+          updateButtonText: ' Обновить ',
+          cancelButtonText: ' Отмена ',
+        );
+
+        //## AppVersionUpdate.showBottomSheetUpdate ##
+        // await AppVersionUpdate.showBottomSheetUpdate(
+        //   context: context,
+        //   mandatory: true,
+        //   appVersionResult: result,
+        // );
+
+        //## AppVersionUpdate.showPageUpdate ##
+
+        // await AppVersionUpdate.showPageUpdate(
+        //   context: context,
+        //   appVersionResult: result,
+        // );
+      }
+    });
+    // TODO: implement initState
+  }
 
   BottomNavigationBar buildBottomNavigationBar() {
     return BottomNavigationBar(
