@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:valentino/buisiness/history_bloc/history_bloc.dart';
 import 'package:valentino/ui/constants.dart';
-import 'package:valentino/ui/store_page/components/history_preview.dart';
+import 'package:valentino/ui/profile_page/components/store_page/components/history_preview.dart';
 
 class StorePage extends StatefulWidget {
   @override

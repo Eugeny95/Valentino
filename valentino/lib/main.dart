@@ -1,19 +1,25 @@
 import 'package:app_version_update/app_version_update.dart';
+import 'package:auth_feature/auth_feature.dart';
+import 'package:auth_feature/data/auth_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:valentino/PushNotificationService/cloud_message_controller.dart';
+import 'package:valentino/buisiness/all_sale_bloc/all_sales_bloc.dart';
 import 'package:valentino/buisiness/auth_bloc/auth_bloc.dart';
+import 'package:valentino/buisiness/available_sale_bloc/available_sales_bloc.dart';
 import 'package:valentino/buisiness/basket_bloc/basket_bloc_bloc.dart';
 import 'package:valentino/buisiness/history_bloc/history_bloc.dart';
+import 'package:valentino/buisiness/information_message_bloc/infomation_message_bloc.dart';
 import 'package:valentino/buisiness/menu_page_bloc/menu_bloc/menu_bloc.dart';
 import 'package:valentino/buisiness/menu_page_bloc/select_category_bloc/bloc/select_category_bloc.dart';
 import 'package:valentino/generated/l10n.dart';
+import 'package:valentino/ui/all_sales_page/all_sales_screen.dart';
 import 'package:valentino/ui/menu_page/menu_screen.dart';
 import 'package:valentino/ui/profile_page/profile_page.dart';
-import 'package:valentino/ui/store_page/store_page.dart';
+import 'package:valentino/ui/profile_page/components/store_page/store_page.dart';
 import 'package:valentino/ui/theme.dart';
 
 import 'package:badges/badges.dart' as badges;
@@ -77,6 +83,12 @@ class MyApp extends StatelessWidget {
             return menuBloc;
           }),
           BlocProvider(create: (context) {
+            InformationMessageBloc informationMessageBloc =
+                InformationMessageBloc();
+            informationMessageBloc.add(GetInformationMessageEvent());
+            return informationMessageBloc;
+          }),
+          BlocProvider(create: (context) {
             BasketBloc basketBloc = BasketBloc();
 
             return basketBloc;
@@ -92,6 +104,16 @@ class MyApp extends StatelessWidget {
                 authBloc.add(GetUserEvent());
                 return authBloc;
               }),
+          BlocProvider(create: (context) {
+            AllSalesBloc allSalesBloc = AllSalesBloc();
+
+            return allSalesBloc;
+          }),
+          BlocProvider(create: (context) {
+            AvailableSalesBloc availableSalesBloc = AvailableSalesBloc();
+
+            return availableSalesBloc;
+          }),
         ],
         child: MainScreen(),
       ),
@@ -110,7 +132,7 @@ class _MainScreenState extends State<MainScreen> {
   List<Widget> screens = [
     MenuPage(),
     BasketPage(),
-    StorePage(),
+    AllSalesPage(),
     ProfilePage(),
   ];
   int _selectedIndex = 0;
@@ -182,12 +204,18 @@ class _MainScreenState extends State<MainScreen> {
 
           if (_selectedIndex == 1) {
             BlocProvider.of<BasketBloc>(context).add(GetBasketPositions());
+            UserData user = BlocProvider.of<AuthBloc>(context).getUser();
+            BlocProvider.of<AvailableSalesBloc>(context)
+                .add(GetAvailableSalesEvent(accessToken: user.accessToken));
           }
           if (_selectedIndex == 2) {
-            BlocProvider.of<HistoryBloc>(context).add(GetHistoryOrders());
+            UserData user = BlocProvider.of<AuthBloc>(context).getUser();
+            BlocProvider.of<AllSalesBloc>(context)
+                .add(GetAllSalesEvent(accessToken: user.accessToken));
           }
           if (_selectedIndex == 3) {
             BlocProvider.of<AuthBloc>(context).add(GetUserEvent());
+            BlocProvider.of<HistoryBloc>(context).add(GetHistoryOrders());
           }
         });
       },
@@ -210,7 +238,8 @@ class _MainScreenState extends State<MainScreen> {
               },
             ),
             label: "Корзина"),
-        BottomNavigationBarItem(icon: Icon(Icons.history), label: "История"),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.percent_rounded), label: "Акции"),
         BottomNavigationBarItem(icon: Icon(Icons.person), label: "Профиль"),
       ],
     );

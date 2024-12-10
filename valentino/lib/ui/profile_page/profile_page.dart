@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:valentino/buisiness/auth_bloc/auth_bloc.dart';
+import 'package:valentino/buisiness/history_bloc/history_bloc.dart';
 import 'package:valentino/ui/profile_page/components/about_app_page.dart';
 import 'package:valentino/ui/profile_page/components/about_restaurant_page.dart';
 import 'package:valentino/ui/profile_page/components/about_widget.dart';
@@ -11,6 +12,7 @@ import 'package:valentino/ui/profile_page/components/client_data_page.dart';
 import 'package:valentino/ui/profile_page/components/delivery_map_page.dart';
 import 'package:valentino/ui/profile_page/components/privacy_policy_page.dart';
 import 'package:valentino/ui/profile_page/components/social_network_widget.dart';
+import 'package:valentino/ui/profile_page/components/store_page/store_page.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -97,6 +99,45 @@ class _ProfilePageState extends State<ProfilePage> {
                         Text('Данные пользователя',
                             style: TextStyle(
                                 color: Color.fromARGB(255, 255, 255, 255))),
+                      ],
+                    )),
+                Padding(padding: EdgeInsets.only(top: height * 0.005)),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          side: BorderSide(
+                              color: Colors.white, width: 0.2) // <-- Radius
+                          ),
+                      elevation: 5,
+                      minimumSize: Size(height * 0.43, width * 0.12),
+                    ),
+                    onPressed: () {
+                      HistoryBloc historyBloc =
+                          BlocProvider.of<HistoryBloc>(context);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                BlocProvider<HistoryBloc>.value(
+                                    value: historyBloc, //
+                                    child: StorePage()),
+                          ));
+                    },
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.history,
+                          size: 22,
+                          color: Colors.white,
+                        ),
+                        SizedBox(
+                          width: width * 0.03,
+                        ),
+                        Text('История заказов',
+                            style: TextStyle(
+                              color: Colors.white,
+                            )),
                       ],
                     )),
                 Padding(padding: EdgeInsets.only(top: height * 0.015)),
@@ -200,40 +241,6 @@ class _ProfilePageState extends State<ProfilePage> {
                       ],
                     )),
                 Padding(padding: EdgeInsets.only(top: height * 0.015)),
-                ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          side: BorderSide(
-                              color: Colors.white, width: 0.2) // <-- Radius
-                          ),
-                      elevation: 5,
-                      minimumSize: Size(height * 0.43, width * 0.12),
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => PrivacyPolicyPage()),
-                      );
-                    },
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.privacy_tip_outlined,
-                          size: 22,
-                          color: Colors.white,
-                        ),
-                        SizedBox(
-                          width: width * 0.03,
-                        ),
-                        Text('Политика конфиденциальности',
-                            style: TextStyle(
-                              color: Colors.white,
-                            )),
-                      ],
-                    )),
-                Padding(padding: EdgeInsets.only(top: height * 0.005)),
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(

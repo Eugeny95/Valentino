@@ -2,11 +2,13 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:data_layer/models/http_models/dish_http_model.dart';
+import 'package:data_layer/models/http_models/order_http_model.dart';
 import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:valentino/buisiness/auth_bloc/auth_bloc.dart';
 import 'package:valentino/buisiness/basket_bloc/basket_bloc_bloc.dart';
+import 'package:valentino/ui/basket_page/data/models.dart';
 import 'package:valentino/ui/constants.dart';
 import 'package:valentino/ui/menu_page/components/helper_dialog.dart';
 
@@ -30,6 +32,20 @@ class SelectDishDialogState extends State<SelectDishDialog> {
   // SelectDishDialogState(this.dish) {
   //   dish.fieldSelection.selectedField = dish.fieldSelection.fields.first;
   // }
+  AddressData addressData = AddressData(
+      deliveryCost: 0,
+      street: '',
+      house: '',
+      flat: 0,
+      entrance: 0,
+      floor: 0,
+      doorphone: '',
+      city: '');
+  OrderServiceType orderServiceType = OrderServiceType.DeliveryPickUp;
+  PaymentType paymentType = PaymentType.CardOnline;
+  int saleId = -1;
+  String? promo = '';
+
   @override
   Widget build(BuildContext context) {
     List<Widget> propertiesWidget = [];
@@ -439,8 +455,14 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                         minimumSize: Size(height * 0.35, width * 0.12),
                       ),
                       onPressed: () {
-                        BlocProvider.of<BasketBloc>(context)
-                            .add(AddDishEvent(dishHttpModel: dishHttpModel));
+                        BlocProvider.of<BasketBloc>(context).add(AddDishEvent(
+                            dishHttpModel: dishHttpModel,
+                            addressData: addressData,
+                            user: BlocProvider.of<AuthBloc>(context).getUser(),
+                            orderServiceType: orderServiceType,
+                            paymentType: paymentType,
+                            saleId: saleId,
+                            promo: promo));
                         Navigator.pop(context);
                       },
                       child: const Text(

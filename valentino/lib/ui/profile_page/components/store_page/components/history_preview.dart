@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:valentino/ui/constants.dart';
-import 'package:valentino/ui/store_page/components/position_string.dart';
+import 'package:valentino/ui/profile_page/components/store_page/components/position_string.dart';
 
 class HistoryPreview extends StatefulWidget {
   HistoryDbModel historyDbModel;

@@ -1,15 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:data_layer/models/http_models/dish_http_model.dart';
+import 'package:data_layer/models/http_models/information_message_http_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:valentino/buisiness/auth_bloc/auth_bloc.dart';
 import 'package:valentino/buisiness/basket_bloc/basket_bloc_bloc.dart';
+import 'package:valentino/buisiness/information_message_bloc/infomation_message_bloc.dart';
 import 'package:valentino/ui/constants.dart';
 
 import 'package:valentino/ui/menu_page/components/select_dish_dialog.dart';
 
 class MenuCategoryItem extends StatelessWidget {
-  const MenuCategoryItem({
+  MenuCategoryItem({
     Key? key,
     required this.title,
     required this.items,
@@ -20,11 +22,43 @@ class MenuCategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // print('%1' + response.toString());
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
+        Column(
+          children: [
+            BlocBuilder<InformationMessageBloc, InformationMessageState>(
+              builder: (context, state) {
+                return (state.informationMessageStatus ==
+                        InformationMessageStatus.done)
+                    ? Container(
+                        width: width * 1,
+                        padding: EdgeInsets.all(height * 0.015),
+                        color: Color.fromARGB(255, 220, 42, 29),
+                        child: Center(
+                          child: Text(
+                            state.informationMessageHttpModel!
+                                .information_message!,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: height * 0.015,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      )
+                    : Container();
+              },
+            ),
+            SizedBox(
+              height: height * 0.01,
+            )
+          ],
+        ),
         Padding(
           padding: const EdgeInsets.only(top: 0, left: 15),
           child: Text(

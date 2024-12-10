@@ -1,5 +1,7 @@
+import 'package:data_layer/models/http_models/information_message_http_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:valentino/buisiness/information_message_bloc/infomation_message_bloc.dart';
 import 'package:valentino/buisiness/menu_page_bloc/menu_bloc/menu_bloc.dart';
 import 'package:valentino/buisiness/menu_page_bloc/select_category_bloc/bloc/select_category_bloc.dart';
 import 'package:valentino/ui/constants.dart';
@@ -123,7 +125,7 @@ class _MenuPageState extends State<MenuPage> {
                 ])),
             SliverAppBar(
               backgroundColor: kContentColorLightTheme,
-              toolbarHeight: 12,
+              toolbarHeight: height * 0.015,
               pinned: true,
               snap: false,
               floating: false,
