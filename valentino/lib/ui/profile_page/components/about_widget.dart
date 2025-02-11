@@ -150,20 +150,11 @@ class AboutWidget extends StatelessWidget {
                                           ),
                                           SizedBox(height: height * 0.01),
                                           Text(
-                                            'Понедельник - Пятница',
+                                            'Понедельник - Воскресенье',
                                             style: TextStyle(fontSize: 12),
                                           ),
                                           Text(
                                             '12:00 - 00:00',
-                                            style: TextStyle(fontSize: 12),
-                                          ),
-                                          SizedBox(height: height * 0.01),
-                                          Text(
-                                            'Суббота - Воскресенье',
-                                            style: TextStyle(fontSize: 12),
-                                          ),
-                                          Text(
-                                            '11:00 - 00:00',
                                             style: TextStyle(fontSize: 12),
                                           ),
                                           SizedBox(height: height * 0.03),

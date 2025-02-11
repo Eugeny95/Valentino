@@ -8,6 +8,7 @@ class ClearBasketEvent extends BasketEvent {}
 class AddDishEvent extends BasketEvent {
   DishHttpModel? dishHttpModel;
   AddressData? addressData;
+  PointData? pointData;
   UserData? user;
   OrderServiceType? orderServiceType;
   PaymentType? paymentType;
@@ -17,6 +18,7 @@ class AddDishEvent extends BasketEvent {
   AddDishEvent(
       {required this.dishHttpModel,
       required this.addressData,
+      required this.pointData,
       required this.user,
       required this.orderServiceType,
       required this.paymentType,
@@ -27,6 +29,7 @@ class AddDishEvent extends BasketEvent {
 class RemoveDishEvent extends BasketEvent {
   String dishId;
   AddressData? addressData;
+  PointData? pointData;
   UserData? user;
   OrderServiceType? orderServiceType;
   PaymentType? paymentType;
@@ -37,6 +40,7 @@ class RemoveDishEvent extends BasketEvent {
   RemoveDishEvent(
       {required this.dishId,
       required this.addressData,
+      required this.pointData,
       required this.user,
       required this.orderServiceType,
       required this.paymentType,
@@ -47,6 +51,7 @@ class RemoveDishEvent extends BasketEvent {
 class RemovePositionEvent extends BasketEvent {
   String dishId;
   AddressData? addressData;
+  PointData? pointData;
   UserData? user;
   OrderServiceType? orderServiceType;
   PaymentType? paymentType;
@@ -56,6 +61,7 @@ class RemovePositionEvent extends BasketEvent {
   RemovePositionEvent(
       {required this.dishId,
       required this.addressData,
+      required this.pointData,
       required this.user,
       required this.orderServiceType,
       required this.paymentType,
@@ -66,6 +72,7 @@ class RemovePositionEvent extends BasketEvent {
 class SetDeliveryCost extends BasketEvent {
   double deliveryCost = 0.0;
   AddressData? addressData;
+  PointData? pointData;
   UserData? user;
   OrderServiceType? orderServiceType;
   PaymentType? paymentType;
@@ -74,6 +81,7 @@ class SetDeliveryCost extends BasketEvent {
   SetDeliveryCost(
       {required this.deliveryCost,
       required this.addressData,
+      required this.pointData,
       required this.user,
       required this.orderServiceType,
       required this.paymentType,
@@ -85,6 +93,7 @@ class GetBasketPositions extends BasketEvent {}
 
 class SlectSaleEvent extends BasketEvent {
   AddressData? addressData;
+  PointData? pointData;
   UserData? user;
   OrderServiceType? orderServiceType;
   PaymentType? paymentType;
@@ -92,6 +101,7 @@ class SlectSaleEvent extends BasketEvent {
   String? promo;
   SlectSaleEvent(
       {required this.addressData,
+      required this.pointData,
       required this.user,
       required this.orderServiceType,
       required this.paymentType,
@@ -102,6 +112,7 @@ class SlectSaleEvent extends BasketEvent {
 
 class SelectDeliveryTypeEvent extends BasketEvent {
   AddressData? addressData;
+  PointData? pointData;
   UserData? user;
   OrderServiceType? orderServiceType;
   PaymentType? paymentType;
@@ -110,6 +121,7 @@ class SelectDeliveryTypeEvent extends BasketEvent {
 
   SelectDeliveryTypeEvent(
       {required this.addressData,
+      required this.pointData,
       required this.user,
       required this.orderServiceType,
       required this.paymentType,
@@ -119,6 +131,7 @@ class SelectDeliveryTypeEvent extends BasketEvent {
 
 class PromoEvent extends BasketEvent {
   AddressData? addressData;
+  PointData? pointData;
   UserData? user;
   OrderServiceType? orderServiceType;
   PaymentType? paymentType;
@@ -127,6 +140,7 @@ class PromoEvent extends BasketEvent {
 
   PromoEvent(
       {required this.addressData,
+      required this.pointData,
       required this.user,
       required this.orderServiceType,
       required this.paymentType,
@@ -136,6 +150,7 @@ class PromoEvent extends BasketEvent {
 
 class SelectPaymentEvent extends BasketEvent {
   AddressData? addressData;
+  PointData? pointData;
   UserData? user;
   OrderServiceType? orderServiceType;
   PaymentType? paymentType;
@@ -144,6 +159,7 @@ class SelectPaymentEvent extends BasketEvent {
 
   SelectPaymentEvent(
       {required this.addressData,
+      required this.pointData,
       required this.user,
       required this.orderServiceType,
       required this.paymentType,

@@ -3,6 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:data_layer/models/http_models/address_http_model.dart';
 import 'package:data_layer/models/http_models/dish_http_model.dart';
 import 'package:data_layer/models/http_models/order_http_model.dart';
+import 'package:data_layer/models/http_models/point_http_model.dart';
 import 'package:data_layer/models/http_models/position_http_model.dart';
 import 'package:data_layer/models/http_models/pre_order_http_model.dart';
 
@@ -21,6 +22,7 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
   BasketBloc() : super(BasketState(basketStatus: BasketStatus.initial)) {
     Future<double> getServerCost(
         {required AddressData addressData,
+        required PointData pointData,
         required UserData user,
         required OrderServiceType orderServiceType,
         required PaymentType paymentType,
@@ -40,12 +42,17 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
           floor: addressData.floor,
           house: addressData.house,
           street: addressData.street);
+      PointHttpModel pointHttpModel = PointHttpModel(
+        x: pointData.x,
+        y: pointData.y,
+      );
 
       PreOrderHttpModel preOrderHttpModel = PreOrderHttpModel(
           type_order: orderServiceType,
           phone: user.username,
           items: itemsHttp,
           adress: addressHttpModel,
+          point: pointHttpModel,
           sale: saleId,
           promo: promo,
           summa: totalCost + addressData.deliveryCost,
@@ -83,6 +90,7 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
       }
       double summaFromserver = await getServerCost(
           addressData: event.addressData!,
+          pointData: event.pointData!,
           user: event.user!,
           orderServiceType: event.orderServiceType!,
           paymentType: event.paymentType!,
@@ -119,6 +127,7 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
       }
       double summaFromserver = await getServerCost(
           addressData: event.addressData!,
+          pointData: event.pointData!,
           user: event.user!,
           orderServiceType: event.orderServiceType!,
           paymentType: event.paymentType!,
@@ -139,6 +148,7 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
       }
       double summaFromserver = await getServerCost(
           addressData: event.addressData!,
+          pointData: event.pointData!,
           user: event.user!,
           orderServiceType: event.orderServiceType!,
           paymentType: event.paymentType!,
@@ -165,6 +175,7 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
       }
       double summaFromserver = await getServerCost(
           addressData: event.addressData!,
+          pointData: event.pointData!,
           user: event.user!,
           orderServiceType: event.orderServiceType!,
           paymentType: event.paymentType!,
@@ -196,6 +207,7 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
     on<SelectDeliveryTypeEvent>((event, emit) async {
       double summaFromserver = await getServerCost(
           addressData: event.addressData!,
+          pointData: event.pointData!,
           user: event.user!,
           orderServiceType: event.orderServiceType!,
           paymentType: event.paymentType!,
@@ -213,6 +225,7 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
     on<SlectSaleEvent>((event, emit) async {
       double summaFromserver = await getServerCost(
           addressData: event.addressData!,
+          pointData: event.pointData!,
           user: event.user!,
           orderServiceType: event.orderServiceType!,
           paymentType: event.paymentType!,
@@ -229,6 +242,7 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
     on<PromoEvent>((event, emit) async {
       double summaFromserver = await getServerCost(
           addressData: event.addressData!,
+          pointData: event.pointData!,
           user: event.user!,
           orderServiceType: event.orderServiceType!,
           paymentType: event.paymentType!,
@@ -259,6 +273,8 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
   Future<CreateOrderStatus> createOrder(
       {required AddressData addressData,
       required UserData user,
+      required double summaRub,
+      required int saleId,
       required OrderServiceType orderServiceType,
       required PaymentType paymentType,
       required DateTime completeBefore,
@@ -285,7 +301,8 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
         adress: addressHttpModel,
         completeBefore: completeBefore,
         comment: comment,
-        summa: totalCost + addressData.deliveryCost,
+        summa: summaRub,
+        sale: saleId,
         type_payment: paymentType);
 
     CreateOrderStatus orderStatus =

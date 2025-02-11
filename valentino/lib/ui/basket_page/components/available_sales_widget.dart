@@ -13,16 +13,20 @@ class AvailabeSalesWidget extends StatefulWidget {
   Function(int id) onSelectSale;
   int? toggleForSale2;
   AddressData? addressData2;
+  PointData? pointData2;
   Function(int) onToggleChanged;
   Function(AddressData) onAdressChanged;
+  Function(PointData) onPointChanged;
 
   AvailabeSalesWidget(
       {super.key,
       required this.onSelectSale,
       required this.toggleForSale2,
       required this.addressData2,
+      required this.pointData2,
       required this.onToggleChanged,
-      required this.onAdressChanged});
+      required this.onAdressChanged,
+      required this.onPointChanged});
 
   @override
   State<StatefulWidget> createState() {
@@ -34,12 +38,14 @@ class _AvailabeSalesWidgetState extends State<AvailabeSalesWidget> {
   List<GlobalKey> globalKeys = [];
   late int toggleForSale2;
   late AddressData addressData2;
+  late PointData pointData2;
 
   @override
   void initState() {
     super.initState();
     toggleForSale2 = widget.toggleForSale2 ?? 0;
     addressData2 = widget.addressData2 ?? addressData2;
+    pointData2 = widget.pointData2 ?? pointData2;
   }
 
   void _changeToggleForSale(int value) {
@@ -57,6 +63,13 @@ class _AvailabeSalesWidgetState extends State<AvailabeSalesWidget> {
     });
   }
 
+  void _changePointData(PointData pointData) {
+    widget.onPointChanged(pointData); // Вызываем метод из родительского виджета
+    setState(() {
+      pointData2 = pointData; // Изменяем значение локальной переменной
+    });
+  }
+
   @override
   void didUpdateWidget(AvailabeSalesWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -70,6 +83,12 @@ class _AvailabeSalesWidgetState extends State<AvailabeSalesWidget> {
       setState(() {
         addressData2 = widget.addressData2 ??
             addressData2; // Обновляем локальную переменную
+      });
+    }
+    if (oldWidget.pointData2 != widget.pointData2) {
+      setState(() {
+        pointData2 =
+            widget.pointData2 ?? pointData2; // Обновляем локальную переменную
       });
     }
   }
@@ -109,6 +128,7 @@ class _AvailabeSalesWidgetState extends State<AvailabeSalesWidget> {
         BlocProvider.of<BasketBloc>(context).add(SlectSaleEvent(
             dishHttpModel: dishHttpModel,
             addressData: addressData2,
+            pointData: pointData2,
             promo: promo,
             user: BlocProvider.of<AuthBloc>(context).getUser(),
             orderServiceType:
@@ -120,6 +140,7 @@ class _AvailabeSalesWidgetState extends State<AvailabeSalesWidget> {
             // BlocProvider.of<BasketBloc>(context).getOrderServiceType(),
             paymentType: paymentType,
             saleId: saleId));
+        print(pointData2.x);
       },
       // key: globalKey,
       available_sales: List.generate(

@@ -41,6 +41,10 @@ class SelectDishDialogState extends State<SelectDishDialog> {
       floor: 0,
       doorphone: '',
       city: '');
+  PointData pointData = PointData(
+    x: 0,
+    y: 0,
+  );
   OrderServiceType orderServiceType = OrderServiceType.DeliveryPickUp;
   PaymentType paymentType = PaymentType.CardOnline;
   int saleId = -1;
@@ -458,6 +462,7 @@ class SelectDishDialogState extends State<SelectDishDialog> {
                         BlocProvider.of<BasketBloc>(context).add(AddDishEvent(
                             dishHttpModel: dishHttpModel,
                             addressData: addressData,
+                            pointData: pointData,
                             user: BlocProvider.of<AuthBloc>(context).getUser(),
                             orderServiceType: orderServiceType,
                             paymentType: paymentType,

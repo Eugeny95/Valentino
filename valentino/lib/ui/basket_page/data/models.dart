@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:ffi';
+
 class AddressData {
   String street = '';
   String house = '';
@@ -17,4 +19,14 @@ class AddressData {
       required this.doorphone,
       required this.deliveryCost,
       required this.city});
+}
+
+class PointData {
+  double x = 0;
+  double y = 0;
+
+  PointData({
+    required this.x,
+    required this.y,
+  });
 }

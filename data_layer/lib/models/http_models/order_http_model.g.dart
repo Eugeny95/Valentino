@@ -24,6 +24,7 @@ OrderHttpModel _$OrderHttpModelFromJson(Map<String, dynamic> json) =>
       summa: (json['summa'] as num?)?.toDouble(),
       type_payment:
           $enumDecodeNullable(_$PaymentTypeEnumMap, json['type_payment']),
+      sale: (json['sale'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$OrderHttpModelToJson(OrderHttpModel instance) =>
@@ -35,6 +36,7 @@ Map<String, dynamic> _$OrderHttpModelToJson(OrderHttpModel instance) =>
       'completeBefore': instance.completeBefore?.toIso8601String(),
       'comment': instance.comment,
       'summa': instance.summa,
+      'sale': instance.sale,
       'type_payment': _$PaymentTypeEnumMap[instance.type_payment],
     };
 

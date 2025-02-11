@@ -52,7 +52,7 @@ class BasketPageState extends State<BasketPage> {
   DateTime completeBefore = DateTime.now().add(Duration(minutes: 16));
   String comment = '';
   double totalCost = 0;
-  int summaFromserver = 0;
+  double summaFromserver = 0.0;
   OrderServiceType orderServiceType = OrderServiceType.DeliveryPickUp;
   PaymentType paymentType = PaymentType.CardOnline;
   int saleId = -1;
@@ -66,6 +66,10 @@ class BasketPageState extends State<BasketPage> {
       floor: 0,
       doorphone: '',
       city: '');
+  PointData pointData = PointData(
+    x: 0,
+    y: 0,
+  );
 
   @override
   void initState() {
@@ -80,7 +84,19 @@ class BasketPageState extends State<BasketPage> {
 
   void updateAdressData(AddressData value) {
     setState(() {
-      addressData = value; // Обновляем значение toggleForSale
+      addressData = value; // Обновляем значение adressData
+    });
+  }
+
+  void updatePointData(PointData value) {
+    setState(() {
+      pointData = value; // Обновляем значение adressData
+    });
+  }
+
+  void updateSummaFromServer(value) {
+    setState(() {
+      summaFromserver = value; // Обновляем значение summaFromserver
     });
   }
 
@@ -92,6 +108,7 @@ class BasketPageState extends State<BasketPage> {
         return PaymentWidgetBottom();
       },
     );
+    print('ssssfs${summaFromserver}');
     if (paymentType.paymentType == PaymentType.CardOnline) {
       AlfaAquiring alfaAquiring = AlfaAquiring(
           userName: 'valentino_vrn-api',
@@ -103,10 +120,20 @@ class BasketPageState extends State<BasketPage> {
           failUrl:
               'http://147.45.109.158:8880/static/payment/payment_cancel.html');
       // Оплата
+      print('SUMMA11111:$summaFromserver');
+      double summa = BlocProvider.of<BasketBloc>(context).getTotalCost() * 100;
+      if (summaFromserver != 0) {
+        if (summa <= summaFromserver * 100) {
+          summa = summa;
+        } else {
+          summa = summaFromserver * 100;
+        }
+      } else {
+        summa = BlocProvider.of<BasketBloc>(context).getTotalCost() * 100;
+      }
+
       PaymentObject paymentObject = await alfaAquiring.toPay(
-          amount: (BlocProvider.of<BasketBloc>(context).getTotalCost() * 100)
-              .toInt(),
-          orderNumber: Acquiring.getRandom(30));
+          amount: summa.toInt(), orderNumber: Acquiring.getRandom(30));
       PaymentStatus? paymentStatus = await Navigator.push(
         context,
         MaterialPageRoute(
@@ -143,15 +170,30 @@ class BasketPageState extends State<BasketPage> {
       return;
     }
 
+    double summa = BlocProvider.of<BasketBloc>(context).getTotalCost() * 100;
+
+    if (summaFromserver != 0) {
+      if (summa <= summaFromserver * 100) {
+        summa = summa;
+      } else {
+        summa = summaFromserver * 100;
+      }
+    } else {
+      summa = BlocProvider.of<BasketBloc>(context).getTotalCost() * 100;
+    }
+    print("SUMMA_V_ZAKAZE: $summa");
+
     CreateOrderStatus orderStatus = await BlocProvider.of<BasketBloc>(context)
         .createOrder(
             addressData: addressData,
+            saleId: saleId,
             user: BlocProvider.of<AuthBloc>(context).getUser(),
             orderServiceType: orderServiceType,
             paymentType: selectedPaymentType.paymentType,
             completeBefore: completeBefore,
+            summaRub: summa / 100,
             comment: comment +
-                '  Комментарий к оплате: ' +
+                '  \n Комментарий к оплате: ' +
                 (selectedPaymentType.comment ?? ''));
     if (orderStatus == CreateOrderStatus.failure) {
       ScaffoldMessenger.of(context)
@@ -324,6 +366,8 @@ class BasketPageState extends State<BasketPage> {
                                                                               .id!,
                                                                           addressData:
                                                                               addressData,
+                                                                          pointData:
+                                                                              pointData,
                                                                           user: BlocProvider.of<AuthBloc>(context)
                                                                               .getUser(),
                                                                           orderServiceType:
@@ -353,8 +397,9 @@ class BasketPageState extends State<BasketPage> {
                                                                             dishId:
                                                                                 state.positions![index].dish!.id!,
                                                                             addressData: addressData,
+                                                                            pointData: pointData,
                                                                             user: BlocProvider.of<AuthBloc>(context).getUser(),
-                                                                            orderServiceType: orderServiceType,
+                                                                            orderServiceType: (toggleIndex == 1) ? OrderServiceType.DeliveryByCourier : OrderServiceType.DeliveryPickUp,
                                                                             paymentType: paymentType,
                                                                             saleId: saleId,
                                                                             promo: promo));
@@ -382,14 +427,26 @@ class BasketPageState extends State<BasketPage> {
                                                                           () {
                                                                         setState(
                                                                             () {
-                                                                          BlocProvider.of<BasketBloc>(context).add(AddDishEvent(
-                                                                              dishHttpModel: state.positions![index].dish,
-                                                                              addressData: addressData,
-                                                                              user: BlocProvider.of<AuthBloc>(context).getUser(),
-                                                                              orderServiceType: orderServiceType,
-                                                                              paymentType: paymentType,
-                                                                              saleId: saleId,
-                                                                              promo: promo));
+                                                                          BlocProvider.of<BasketBloc>(context)
+                                                                              .add(AddDishEvent(
+                                                                            dishHttpModel:
+                                                                                state.positions![index].dish,
+                                                                            addressData:
+                                                                                addressData,
+                                                                            pointData:
+                                                                                pointData,
+                                                                            user:
+                                                                                BlocProvider.of<AuthBloc>(context).getUser(),
+                                                                            orderServiceType: (toggleIndex == 1)
+                                                                                ? OrderServiceType.DeliveryByCourier
+                                                                                : OrderServiceType.DeliveryPickUp,
+                                                                            paymentType:
+                                                                                paymentType,
+                                                                            saleId:
+                                                                                saleId,
+                                                                            promo:
+                                                                                promo,
+                                                                          ));
                                                                           if (counter <
                                                                               0)
                                                                             counter =
@@ -454,6 +511,7 @@ class BasketPageState extends State<BasketPage> {
                                           SetDeliveryCost(
                                               deliveryCost: 0,
                                               addressData: addressData,
+                                              pointData: pointData,
                                               user: BlocProvider.of<AuthBloc>(
                                                       context)
                                                   .getUser(),
@@ -484,6 +542,7 @@ class BasketPageState extends State<BasketPage> {
                                       BlocProvider.of<BasketBloc>(context).add(
                                           SelectDeliveryTypeEvent(
                                               addressData: addressData,
+                                              pointData: pointData,
                                               user: BlocProvider.of<AuthBloc>(
                                                       context)
                                                   .getUser(),
@@ -530,6 +589,7 @@ class BasketPageState extends State<BasketPage> {
                                                                   .deliveryCost,
                                                           addressData:
                                                               addressData,
+                                                          pointData: pointData,
                                                           user: BlocProvider.of<
                                                                       AuthBloc>(
                                                                   context)
@@ -542,6 +602,12 @@ class BasketPageState extends State<BasketPage> {
                                                           promo: promo));
                                                   print(
                                                       'ADRESSDATA${addressData.street}');
+                                                },
+                                                onChangePoint: (pointData) {
+                                                  this.pointData = pointData;
+
+                                                  print(
+                                                      'ADRESSDATA_POINT${pointData.x}');
                                                 },
                                                 globalKey: _formKey,
                                               )
@@ -716,6 +782,7 @@ class BasketPageState extends State<BasketPage> {
                                             BlocProvider.of<BasketBloc>(context)
                                                 .add(PromoEvent(
                                                     addressData: addressData,
+                                                    pointData: pointData,
                                                     user: BlocProvider.of<
                                                             AuthBloc>(context)
                                                         .getUser(),
@@ -741,16 +808,20 @@ class BasketPageState extends State<BasketPage> {
                                     ],
                                   ),
                                 ),
+                                // (saleId != 1) // Проверка есть ли активные акции
+                                //     ?
                                 AvailabeSalesWidget(
                                     onSelectSale: (int id) {
                                       saleId = id;
                                     },
                                     addressData2: addressData,
+                                    pointData2: pointData,
                                     toggleForSale2: toggleForSale,
                                     onToggleChanged: updateToggleForSale,
                                     onAdressChanged:
-                                        updateAdressData // Передаем метод для обновления
-                                    ),
+                                        updateAdressData, // Передаем метод для обновления
+                                    onPointChanged: updatePointData),
+                                // : Container(),
                                 // Text('Toggle is ${toggleForSale}'),
                                 Padding(
                                     padding:
@@ -877,6 +948,15 @@ class BasketPageState extends State<BasketPage> {
                                                   .validate() ==
                                               false) return;
                                         }
+                                        print('ssssfs${state.summaFromserver}');
+                                        if (state.summaFromserver != null) {
+                                          updateSummaFromServer(
+                                              state.summaFromserver);
+                                        } else {
+                                          print(
+                                              "state.summaFromserver is null");
+                                        }
+
                                         await placeAnOrder();
                                       },
                                     ),

@@ -64,7 +64,7 @@ android {
 	release {
     	keyAlias keystoreProperties['keyAlias']
         keyPassword keystoreProperties['keyPassword']
-        storeFile file("key.jks") 
+        storeFile file("/Users/eugenijantipenskij/Documents/Flutter1/keystore/key_valentino.jks") 
         storePassword keystoreProperties['storePassword']
     }
 }

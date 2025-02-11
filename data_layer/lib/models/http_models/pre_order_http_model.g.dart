@@ -17,6 +17,9 @@ PreOrderHttpModel _$PreOrderHttpModelFromJson(Map<String, dynamic> json) =>
       adress: json['adress'] == null
           ? null
           : AddressHttpModel.fromJson(json['adress'] as Map<String, dynamic>),
+      point: json['point'] == null
+          ? null
+          : PointHttpModel.fromJson(json['point'] as Map<String, dynamic>),
       summa: (json['summa'] as num?)?.toDouble(),
       type_payment:
           $enumDecodeNullable(_$PaymentTypeEnumMap, json['type_payment']),
@@ -30,6 +33,7 @@ Map<String, dynamic> _$PreOrderHttpModelToJson(PreOrderHttpModel instance) =>
       'phone': instance.phone,
       'items': instance.items,
       'adress': instance.adress,
+      'point': instance.point,
       'summa': instance.summa,
       'type_payment': _$PaymentTypeEnumMap[instance.type_payment],
       'sale': instance.sale,

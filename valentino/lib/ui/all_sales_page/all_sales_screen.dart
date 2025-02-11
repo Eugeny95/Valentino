@@ -68,7 +68,16 @@ class _AllSalesPageState extends State<AllSalesPage> {
                               children: [
                                 SizedBox(height: height * 0.4),
                                 const Center(
-                                    child: CircularProgressIndicator()),
+                                    child: Column(
+                                  children: [
+                                    CircularProgressIndicator(),
+                                    SizedBox(height: 20),
+                                    Text(
+                                      'Чтобы увидеть доступные акции, пожалуйста автозируйтесь',
+                                      textAlign: TextAlign.center,
+                                    )
+                                  ],
+                                )),
                               ],
                             );
                     },

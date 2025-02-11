@@ -33,13 +33,14 @@ class OrderRepository {
   Future<double> calculateSumInServer(
       PreOrderHttpModel preOrderHttpModel, String accessToken) async {
     try {
+      print('DO_OTPRAVKI_NA_SERVER${preOrderHttpModel.point!.toJson()}');
       Response responce = await Dio().post(
           'http://147.45.109.158:8880/orders_info/discounted_price/',
           data: preOrderHttpModel.toJson(),
           options: Options(headers: <String, String>{
             'authorization': 'Bearer ${accessToken}'
           }));
-      print(preOrderHttpModel.adress!.toJson());
+      print('OTPRAVKA_NA_SERVER${preOrderHttpModel.adress!.toJson()}');
       print('totalcostFromServer = ${responce.data['summa']}');
       return responce.data['summa'].toDouble();
     } catch (_) {

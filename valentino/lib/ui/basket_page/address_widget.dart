@@ -9,7 +9,11 @@ import 'package:yandex_autocomplete/network/place_coder.dart';
 class AddressWidget extends StatefulWidget {
   GlobalKey globalKey;
   void Function(AddressData addressData) onChange;
-  AddressWidget({required this.onChange, required this.globalKey}) {}
+  void Function(PointData pointData) onChangePoint;
+  AddressWidget(
+      {required this.onChange,
+      required this.onChangePoint,
+      required this.globalKey}) {}
   @override
   _AddressWidgetState createState() => _AddressWidgetState();
 }
@@ -32,6 +36,10 @@ class _AddressWidgetState extends State<AddressWidget> {
       doorphone: '',
       city: '',
       deliveryCost: 0.0);
+  PointData pointData = PointData(
+    x: 0,
+    y: 0,
+  );
 
   @override
   void initState() {
@@ -99,6 +107,7 @@ class _AddressWidgetState extends State<AddressWidget> {
   }
 
   GeoPlace geoPlace = GeoPlace()..results = [];
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -256,7 +265,12 @@ class _AddressWidgetState extends State<AddressWidget> {
                                         "x": locations[0].latitude,
                                         "y": locations[0].longitude
                                       };
-                                      print('address: ${data}');
+
+                                      pointData.x = data.values.first;
+                                      pointData.y = data.values.last;
+
+                                      widget.onChangePoint(pointData);
+
                                       Response response = await Dio().post(
                                           'http://147.45.109.158:8880/orders_info/get_area_delivery/',
                                           data: {

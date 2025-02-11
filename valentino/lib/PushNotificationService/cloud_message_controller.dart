@@ -76,7 +76,7 @@ class CloudMessage {
         deviceType == DeviceType.iPhone) {
       return await getFirebaseDeviceToken();
     }
-    return await getHuaweiDeviceToken();
+    // return await getHuaweiDeviceToken();
   }
 
   static Future<void> startCloudMessageService() async {
@@ -97,7 +97,7 @@ class CloudMessage {
         deviceType == DeviceType.iPhone) {
       await startFirebaseCloudMessageService();
     } else {
-      await startHuaweiCloudMessageService();
+      // await startHuaweiCloudMessageService();
     }
   }
 }
