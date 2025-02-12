@@ -22,6 +22,8 @@ class _AllSalesPageState extends State<AllSalesPage> {
   }
 
   Widget generateItems(AllSalesState state) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     // return ListView.builder(
     //     shrinkWrap: true,
     //     itemCount: state.allSalesHttpModel!.all_actions!.length,
@@ -35,14 +37,31 @@ class _AllSalesPageState extends State<AllSalesPage> {
     //           children: [Text('В настоящее время акции не проводятся')],
     //         );
     //       }
-    return AllSalesItem(
-      // key: globalKey,
-      sales: List.generate(
-          state.allSalesHttpModel!.all_actions!.length,
-          (index) => SaleCard(
-                saleHttpModel: state.allSalesHttpModel!.all_actions![index],
-              )),
-    );
+    return (state.allSalesHttpModel!.all_actions!.isEmpty == false)
+        ? AllSalesItem(
+            // key: globalKey,
+            sales: List.generate(
+                state.allSalesHttpModel!.all_actions!.length,
+                (index) => SaleCard(
+                      saleHttpModel:
+                          state.allSalesHttpModel!.all_actions![index],
+                    )),
+          )
+        : Column(
+            children: [
+              SizedBox(height: height * 0.2),
+              Container(child: Image.asset('assets/ValBon.png')),
+              SizedBox(height: height * 0.05),
+              Center(
+                  child: Container(
+                      width: width * 0.6,
+                      child: Text(
+                        'В настоящее время активные акции отсутствуют',
+                        style: TextStyle(fontSize: 15),
+                        textAlign: TextAlign.center,
+                      ))),
+            ],
+          );
     // });
   }
 
@@ -66,17 +85,15 @@ class _AllSalesPageState extends State<AllSalesPage> {
                           ? generateItems(state)
                           : Column(
                               children: [
-                                SizedBox(height: height * 0.4),
+                                SizedBox(height: height * 0.2),
+                                Container(
+                                    child: Image.asset('assets/ValBon.png')),
+                                SizedBox(height: height * 0.05),
                                 const Center(
-                                    child: Column(
-                                  children: [
-                                    CircularProgressIndicator(),
-                                    SizedBox(height: 20),
-                                    Text(
-                                      'Чтобы увидеть доступные акции, пожалуйста автозируйтесь',
-                                      textAlign: TextAlign.center,
-                                    )
-                                  ],
+                                    child: Text(
+                                  'Чтобы увидеть доступные акции, пожалуйста автозируйтесь',
+                                  style: TextStyle(fontSize: 15),
+                                  textAlign: TextAlign.center,
                                 )),
                               ],
                             );

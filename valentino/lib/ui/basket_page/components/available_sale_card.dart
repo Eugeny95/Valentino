@@ -22,23 +22,27 @@ class AvailableSalesItem extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    return Center(
-      child: CustomRadioButton(
-        buttonLables: available_sales,
-        buttonValues: available_sales,
-        radioButtonValue: (value, index) {
-          onSelectSale(index);
-        },
-        buttonBorderColor: Color.fromARGB(255, 197, 18, 18),
-        fontSize: height * 0.014,
-        horizontal: true,
-        enableShape: true,
-        buttonSpace: 3,
-        buttonColor: Colors.white,
-        selectedColor: kPrimaryColor,
-        buttonWidth: width * 0.45,
-        buttonHeight: height * 0.05,
-      ),
-    );
+    print('AS$available_sales');
+
+    return (available_sales.isEmpty == false) // Проверка есть ли активные акции
+        ? Center(
+            child: CustomRadioButton(
+              buttonLables: available_sales,
+              buttonValues: available_sales,
+              radioButtonValue: (value, index) {
+                onSelectSale(index);
+              },
+              buttonBorderColor: Color.fromARGB(255, 197, 18, 18),
+              fontSize: height * 0.014,
+              horizontal: true,
+              enableShape: true,
+              buttonSpace: 3,
+              buttonColor: Colors.white,
+              selectedColor: kPrimaryColor,
+              buttonWidth: width * 0.45,
+              buttonHeight: height * 0.05,
+            ),
+          )
+        : Container();
   }
 }

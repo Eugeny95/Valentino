@@ -808,8 +808,7 @@ class BasketPageState extends State<BasketPage> {
                                     ],
                                   ),
                                 ),
-                                // (saleId != 1) // Проверка есть ли активные акции
-                                //     ?
+                                
                                 AvailabeSalesWidget(
                                     onSelectSale: (int id) {
                                       saleId = id;
@@ -821,7 +820,7 @@ class BasketPageState extends State<BasketPage> {
                                     onAdressChanged:
                                         updateAdressData, // Передаем метод для обновления
                                     onPointChanged: updatePointData),
-                                // : Container(),
+                             
                                 // Text('Toggle is ${toggleForSale}'),
                                 Padding(
                                     padding:
