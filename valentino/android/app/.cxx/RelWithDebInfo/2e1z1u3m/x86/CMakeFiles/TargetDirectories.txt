@@ -1,0 +1,2 @@
+/Users/evgenijgorn/Desktop/Valentino/valentino/android/app/.cxx/RelWithDebInfo/2e1z1u3m/x86/CMakeFiles/edit_cache.dir
+/Users/evgenijgorn/Desktop/Valentino/valentino/android/app/.cxx/RelWithDebInfo/2e1z1u3m/x86/CMakeFiles/rebuild_cache.dir

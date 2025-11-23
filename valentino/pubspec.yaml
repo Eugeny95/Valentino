@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 2.2.4+126
+version: 2.2.6+127
 
 environment:
   sdk: '>=3.0.3 <4.0.0'
@@ -44,7 +44,7 @@ dependencies:
   carousel_slider: ^5.0.0
   cached_network_image: ^3.3.0
   flutter_launcher_icons: any
-  intl: any
+  intl: ^0.19.0
   flutter_datetime_picker_plus: ^2.1.0
   auth_feature:
     path: ../auth_feature
@@ -59,24 +59,24 @@ dependencies:
   flutter_bloc: any
   easy_image_viewer: ^1.4.0
   visibility_detector: ^0.4.0+2
-  geocoding: ^2.1.1
+  geocoding: ^3.0.0
   toggle_switch: ^2.1.0
   dio: any
   yaml_localizations: ^1.5.0
   flutter_native_splash: ^2.4.0
-  share_plus: ^9.0.0
+  share_plus: ^10.1.4
   # for notification
-  awesome_notifications: any
+  awesome_notifications: 0.10.0
   firebase_messaging: ^14.7.9
   firebase_core : any
   google_api_availability: ^5.0.0
-  permission_handler: ^10.2.0
-  huawei_push: ^6.10.0+300
+  permission_handler: ^11.4.0
+  # huawei_push: ^6.10.0+300
   # end for notification
   date_picker_timeline: any
  
   radio_grouped_buttons: ^1.0.1
-  app_version_update: ^5.0.3
+  app_version_update: ^6.0.0
   custom_radio_grouped_button: ^2.2.1
   
   
@@ -100,7 +100,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+  flutter_lints: ^5.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

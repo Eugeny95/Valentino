@@ -21,10 +21,14 @@ class BasketState {
   List<Position>? positions;
   double? totalCost = 0;
   double? summaFromserver;
+  String? deliveryFromserver;
+  String? saleFromserver;
 
   BasketState(
       {required this.basketStatus,
       this.positions,
       this.totalCost,
-      this.summaFromserver});
+      this.summaFromserver,
+      this.deliveryFromserver,
+      this.saleFromserver});
 }

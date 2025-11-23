@@ -166,3 +166,22 @@ class SelectPaymentEvent extends BasketEvent {
       required this.saleId,
       required this.promo});
 }
+
+class GoToBasketEvent extends BasketEvent {
+  AddressData? addressData;
+  PointData? pointData;
+  UserData? user;
+  OrderServiceType? orderServiceType;
+  PaymentType? paymentType;
+  int? saleId;
+  String? promo;
+
+  GoToBasketEvent(
+      {required this.addressData,
+      required this.pointData,
+      required this.user,
+      required this.orderServiceType,
+      required this.paymentType,
+      required this.saleId,
+      required this.promo});
+}

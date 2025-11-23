@@ -10,7 +10,7 @@ import 'package:valentino/ui/basket_page/components/available_sale_card.dart';
 import 'package:valentino/ui/basket_page/data/models.dart';
 
 class AvailabeSalesWidget extends StatefulWidget {
-  Function(int id) onSelectSale;
+  Function(int id, String title) onSelectSale;
   int? toggleForSale2;
   AddressData? addressData2;
   PointData? pointData2;
@@ -115,19 +115,34 @@ class _AvailabeSalesWidgetState extends State<AvailabeSalesWidget> {
   int toggleForSale = -1;
   String? promo = 'PromoS';
   OrderServiceType orderServiceType = OrderServiceType.DeliveryPickUp;
+  AddressData initialAddressData = AddressData(
+      deliveryCost: 0,
+      street: '',
+      house: '',
+      flat: 0,
+      entrance: 0,
+      floor: 0,
+      doorphone: '',
+      city: '');
 
   Widget generateItems(AvailableSalesState state) {
     return AvailableSalesItem(
       onSelectSale: (int index) {
         int saleId =
             state.availableSalesHttpModel!.available_actions![index].id ?? -1;
-        widget.onSelectSale(saleId);
+        String saleName =
+            state.availableSalesHttpModel!.available_actions![index].title ??
+                '';
+        widget.onSelectSale(saleId, saleName);
 
-        print(widget.toggleForSale2);
+        print('Переключатель${widget.toggleForSale2}');
 
         BlocProvider.of<BasketBloc>(context).add(SlectSaleEvent(
             dishHttpModel: dishHttpModel,
             addressData: addressData2,
+            // (widget.toggleForSale2 == 1)
+            //     ? addressData2
+            //     : initialAddressData,
             pointData: pointData2,
             promo: promo,
             user: BlocProvider.of<AuthBloc>(context).getUser(),

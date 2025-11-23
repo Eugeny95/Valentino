@@ -36,7 +36,6 @@ class _ProfilePageState extends State<ProfilePage> {
             children: [
               Column(children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     SizedBox(width: width / 7),
                     Text(
@@ -44,7 +43,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       style: TextStyle(
                           fontFamily: 'SHAL',
                           color: Colors.red,
-                          fontSize: 65,
+                          fontSize: height * 0.08,
                           fontWeight: FontWeight.normal),
                     ),
                   ],
@@ -54,7 +53,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   style: TextStyle(
                       fontFamily: 'SHAL',
                       color: Color.fromARGB(255, 69, 161, 48),
-                      fontSize: 65,
+                      fontSize: height * 0.072,
                       height: 0.2,
                       fontWeight: FontWeight.normal),
                 ),
@@ -280,6 +279,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         color: Colors.transparent,
                         width: width - (0.01 * width),
                         child: SocialNetworkWidget())),
+                Padding(padding: EdgeInsets.only(top: height * 0.03)),
               ]),
             ],
           ),

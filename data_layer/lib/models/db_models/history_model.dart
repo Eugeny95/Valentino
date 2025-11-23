@@ -64,22 +64,34 @@ class PositionDbModel {
 }
 
 class HistoryDbModel {
+  String? sale;
   int? id;
   DateTime? date_time;
   double? totalcost;
+  double? deliveryCost;
   OrderStatus? status;
   List<PositionDbModel>? positions = [];
   HistoryDbModel(
-      {this.date_time, this.totalcost, this.status, this.positions, this.id});
+      {this.date_time,
+      this.totalcost,
+      this.deliveryCost,
+      this.status,
+      this.positions,
+      this.id,
+      this.sale});
 
   HistoryDbModel copyWith({
     DateTime? date_time,
     double? totalcost,
+    String? sale,
+    double? deliveryCost,
     OrderStatus? status,
   }) {
     return HistoryDbModel(
       date_time: date_time ?? this.date_time,
       totalcost: totalcost ?? this.totalcost,
+      deliveryCost: deliveryCost ?? this.deliveryCost,
+      sale: sale ?? this.sale,
       status: status ?? this.status,
     );
   }
@@ -88,6 +100,8 @@ class HistoryDbModel {
     return <String, dynamic>{
       'date_time': date_time?.millisecondsSinceEpoch,
       'totalcost': totalcost,
+      'deliveryCost': deliveryCost,
+      'sale': sale ?? '',
       'status': status?.toString(),
     };
   }
@@ -98,6 +112,9 @@ class HistoryDbModel {
           ? DateTime.fromMillisecondsSinceEpoch(map['date_time'] as int)
           : null,
       totalcost: map['totalcost'] != null ? map['totalcost'] as double : null,
+      deliveryCost:
+          map['deliveryCost'] != null ? map['deliveryCost'] as double : null,
+      sale: map['sale'] != null ? map['sale'] as String : '',
       status: map['status'] != null
           ? OrderStatus.values
               .firstWhere((e) => (e.toString() == map['status']))
@@ -112,7 +129,7 @@ class HistoryDbModel {
 
   @override
   String toString() =>
-      'HistoryDbModel(date_time: $date_time, totalcost: $totalcost, status: $status)';
+      'HistoryDbModel(date_time: $date_time, totalcost: $totalcost, deliveryCost: $deliveryCost,  sale: $sale, status: $status )';
 
   @override
   bool operator ==(covariant HistoryDbModel other) {
@@ -120,9 +137,16 @@ class HistoryDbModel {
 
     return other.date_time == date_time &&
         other.totalcost == totalcost &&
+        other.deliveryCost == deliveryCost &&
+        other.sale == sale &&
         other.status == status;
   }
 
   @override
-  int get hashCode => date_time.hashCode ^ totalcost.hashCode ^ status.hashCode;
+  int get hashCode =>
+      date_time.hashCode ^
+      totalcost.hashCode ^
+      deliveryCost.hashCode ^
+      sale.hashCode ^
+      status.hashCode;
 }

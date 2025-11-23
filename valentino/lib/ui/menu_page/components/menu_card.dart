@@ -28,7 +28,7 @@ class MenuCategoryItem extends StatelessWidget {
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
+      children: [
         Column(
           children: [
             BlocBuilder<InformationMessageBloc, InformationMessageState>(

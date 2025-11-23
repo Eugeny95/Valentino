@@ -124,6 +124,63 @@ class _HistoryPreviewState extends State<HistoryPreview> {
                     Column(
                       children: lines,
                     ),
+                    widget.historyDbModel.sale == null
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Container(
+                                  child: Text(
+                                widget.historyDbModel.sale.toString(),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color:
+                                        const Color.fromARGB(255, 253, 46, 31)),
+                              )),
+                              SizedBox(
+                                width: width * 0.05,
+                              )
+                            ],
+                          )
+                        : Container(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        widget.historyDbModel.deliveryCost != 0.0
+                            ? Container(
+                                child: Text(
+                                'Доставка: ${widget.historyDbModel.deliveryCost!.toInt()}₽',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: const Color.fromARGB(
+                                        255, 235, 235, 235)),
+                              ))
+                            : Container(),
+                        SizedBox(
+                          width: width * 0.05,
+                        )
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        widget.historyDbModel.sale != '' &&
+                                widget.historyDbModel.sale != 'null'
+                            ? Container(
+                                child: Text(
+                                '  ${widget.historyDbModel.sale}',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w900,
+                                    color:
+                                        const Color.fromARGB(255, 248, 39, 39)),
+                              ))
+                            : Container(),
+                        SizedBox(
+                          width: width * 0.05,
+                        )
+                      ],
+                    ),
+                    // Отображение что приходит имз БД
+                    // Container(child: Text(widget.historyDbModel.toString())),
                     SizedBox(
                       height: 5,
                     ),

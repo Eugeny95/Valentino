@@ -13,14 +13,34 @@ class StorageDBProvider {
     String _databasesPath = await getDatabasesPath();
     String _path = _databasesPath + '/test_db3.db';
 
-    database = await openDatabase(_path, version: 3, onConfigure: _onConfigure,
-        onCreate: (Database db, int version) async {
-      await db.execute(
-          'CREATE TABLE history_order (id INTEGER PRIMARY KEY, status TEXT, totalcost REAL, date_time INTEGER);');
+    database = await openDatabase(
+      _path,
+      version: 4,
+      onConfigure: _onConfigure,
+      onCreate: (Database db, int version) async {
+        await db.execute(
+            'CREATE TABLE history_order (id INTEGER PRIMARY KEY, status TEXT, totalcost REAL, deliveryCost REAL, sale TEXT, date_time INTEGER);');
 
-      await db.execute(
-          'CREATE TABLE positions (id INTEGER PRIMARY KEY, name TEXT, amount INTEGER, cost REAL, order_id INTEGER, FOREIGN KEY (order_id)  REFERENCES history_order (id) ON DELETE CASCADE);');
-    });
+        await db.execute(
+            'CREATE TABLE positions (id INTEGER PRIMARY KEY, name TEXT, amount INTEGER, cost REAL, order_id INTEGER, FOREIGN KEY (order_id)  REFERENCES history_order (id) ON DELETE CASCADE);');
+      },
+      onUpgrade: (Database db, int oldVersion, int newVersion) async {
+        print('%& onUpgrade');
+        if (oldVersion < 4) {
+          // Выполняем миграцию для версии 3
+          await db.execute('ALTER TABLE history_order ADD COLUMN sale TEXT;');
+          // Добавляем второй столбец
+          await db.execute(
+              'ALTER TABLE history_order ADD COLUMN deliveryCost REAL;');
+        }
+        // Добавьте дополнительные условия для будущих версий, если это необходимо
+      },
+    );
+
+    // где то здесь onUpdate
+    // 1. Сравниваешь версии
+    // 2. Если версия старая проводишь миграцию
+    // 3. Alter table history_order add Column
   }
 
   Future<void> insertOrder({required HistoryDbModel historyDbModel}) async {
@@ -48,7 +68,7 @@ class StorageDBProvider {
     List<HistoryDbModel> listHistoryDbModel = [];
     String query =
         '''SELECT history_order.id,  history_order.date_time, history_order.status,
-       history_order.totalcost, positions.name, positions.amount, positions.cost
+       history_order.totalcost, history_order.deliveryCost, history_order.sale, positions.name, positions.amount, positions.cost
       FROM history_order LEFT JOIN positions ON history_order.id = positions.order_id ''';
 
     List<Map> result = await db.rawQuery(query);
@@ -59,6 +79,8 @@ class StorageDBProvider {
       HistoryDbModel historyDbModel = HistoryDbModel(
         id: newMap[key]![0]['id'] ?? 0,
         totalcost: newMap[key]![0]['totalcost'] ?? 0,
+        deliveryCost: newMap[key]![0]['deliveryCost'] ?? 0,
+        sale: newMap[key]![0]['sale'] ?? '',
         date_time: newMap[key]![0]['date_time'] != null
             ? DateTime.fromMillisecondsSinceEpoch(
                 newMap[key]![0]['date_time'] as int)

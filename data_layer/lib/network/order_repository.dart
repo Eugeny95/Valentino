@@ -30,22 +30,35 @@ class OrderRepository {
     return CreateOrderStatus.failure;
   }
 
-  Future<double> calculateSumInServer(
+  Future<Map<String, dynamic>> calculateSumInServer(
       PreOrderHttpModel preOrderHttpModel, String accessToken) async {
     try {
-      print('DO_OTPRAVKI_NA_SERVER${preOrderHttpModel.point!.toJson()}');
+      print('DO_OTPRAVKI_NA_SERVER${preOrderHttpModel.toJson()}');
       Response responce = await Dio().post(
           'http://147.45.109.158:8880/orders_info/discounted_price/',
           data: preOrderHttpModel.toJson(),
           options: Options(headers: <String, String>{
             'authorization': 'Bearer ${accessToken}'
           }));
-      print('OTPRAVKA_NA_SERVER${preOrderHttpModel.adress!.toJson()}');
+      print('OTPRAVKA_NA_SERVER${preOrderHttpModel.toJson()}');
       print('totalcostFromServer = ${responce.data['summa']}');
-      return responce.data['summa'].toDouble();
+      print('deliveryFromServer = ${responce.data['delivery']}');
+      print('saleFromServer = ${responce.data['sale']}');
+      // return responce.data['summa'].toDouble();
+      return {
+        'summa': responce.data['summa'].toDouble(),
+        'delivery': responce.data['delivery'],
+        'sale': responce.data['sale'].toString(),
+      };
     } catch (_) {
       print('totalcost = ${preOrderHttpModel.summa}');
-      return preOrderHttpModel.summa!;
+
+      // return preOrderHttpModel.summa!;
+      return {
+        'summa': preOrderHttpModel.summa!,
+        'delivery': null, // or some default value
+        'sale': null, // or some default value
+      };
     }
   }
 }

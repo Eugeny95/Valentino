@@ -20,7 +20,7 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
   OrderServiceType orderServiceType = OrderServiceType.DeliveryPickUp;
 
   BasketBloc() : super(BasketState(basketStatus: BasketStatus.initial)) {
-    Future<double> getServerCost(
+    Future<Map<String, dynamic>> getServerCost(
         {required AddressData addressData,
         required PointData pointData,
         required UserData user,
@@ -58,10 +58,23 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
           summa: totalCost + addressData.deliveryCost,
           type_payment: paymentType);
 
-      double summaFromserver = await OrderRepository()
-          .calculateSumInServer(preOrderHttpModel, user.accessToken);
+      // double summaFromserver = await OrderRepository()
+      //     .calculateSumInServer(preOrderHttpModel, user.accessToken);
+      // // dynamic responceFromserver = await OrderRepository()
+      // //     .calculateSumInServer(preOrderHttpModel, user.accessToken);
 
-      return summaFromserver;
+      // return summaFromserver;
+
+      // Get response from the server
+      var responseFromServer = await OrderRepository()
+          .calculateSumInServer(preOrderHttpModel, user.accessToken);
+      // Return the entire response as a map
+      print('0000000000 = ${responseFromServer.toString()}');
+      return {
+        'summa': responseFromServer['summa'],
+        'delivery': responseFromServer['delivery'],
+        'sale': responseFromServer['sale'],
+      };
     }
 
     on<AddDishEvent>((event, emit) async {
@@ -88,7 +101,7 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
       for (Position position in positions) {
         totalCost = totalCost + position.allCost;
       }
-      double summaFromserver = await getServerCost(
+      Map<String, dynamic> serverCost = await getServerCost(
           addressData: event.addressData!,
           pointData: event.pointData!,
           user: event.user!,
@@ -97,10 +110,13 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
           saleId: event.saleId!,
           promo: event.promo!);
       emit(BasketState(
-          basketStatus: BasketStatus.done,
-          positions: positions,
-          totalCost: totalCost + deliveryCost,
-          summaFromserver: summaFromserver));
+        basketStatus: BasketStatus.done,
+        positions: positions,
+        totalCost: totalCost + deliveryCost,
+        summaFromserver: serverCost['summa'],
+        deliveryFromserver: serverCost['delivery'],
+        saleFromserver: serverCost['sale'],
+      ));
     });
 
     on<ClearBasketEvent>((event, emit) {
@@ -125,7 +141,7 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
       for (Position position in positions) {
         totalCost = totalCost + position.allCost;
       }
-      double summaFromserver = await getServerCost(
+      Map<String, dynamic> serverCost = await getServerCost(
           addressData: event.addressData!,
           pointData: event.pointData!,
           user: event.user!,
@@ -134,10 +150,13 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
           saleId: event.saleId!,
           promo: event.promo!);
       emit(BasketState(
-          basketStatus: BasketStatus.done,
-          positions: positions,
-          totalCost: totalCost + deliveryCost,
-          summaFromserver: summaFromserver));
+        basketStatus: BasketStatus.done,
+        positions: positions,
+        totalCost: totalCost + deliveryCost,
+        summaFromserver: serverCost['summa'],
+        deliveryFromserver: serverCost['delivery'],
+        saleFromserver: serverCost['sale'],
+      ));
     });
 
     on<SetDeliveryCost>((event, emit) async {
@@ -146,7 +165,7 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
       for (Position position in positions) {
         totalCost = totalCost + position!.calculateCost();
       }
-      double summaFromserver = await getServerCost(
+      Map<String, dynamic> serverCost = await getServerCost(
           addressData: event.addressData!,
           pointData: event.pointData!,
           user: event.user!,
@@ -156,10 +175,13 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
           promo: event.promo!);
 
       emit(BasketState(
-          basketStatus: BasketStatus.done,
-          positions: positions,
-          totalCost: totalCost + deliveryCost,
-          summaFromserver: summaFromserver));
+        basketStatus: BasketStatus.done,
+        positions: positions,
+        totalCost: totalCost + deliveryCost,
+        summaFromserver: serverCost['summa'],
+        deliveryFromserver: serverCost['delivery'],
+        saleFromserver: serverCost['sale'],
+      ));
     });
 
     on<RemovePositionEvent>((event, emit) async {
@@ -173,7 +195,7 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
       for (Position position in positions) {
         totalCost = totalCost + position.allCost;
       }
-      double summaFromserver = await getServerCost(
+      Map<String, dynamic> serverCost = await getServerCost(
           addressData: event.addressData!,
           pointData: event.pointData!,
           user: event.user!,
@@ -182,10 +204,13 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
           saleId: event.saleId!,
           promo: event.promo!);
       emit(BasketState(
-          basketStatus: BasketStatus.done,
-          positions: positions,
-          totalCost: totalCost + deliveryCost,
-          summaFromserver: summaFromserver));
+        basketStatus: BasketStatus.done,
+        positions: positions,
+        totalCost: totalCost + deliveryCost,
+        summaFromserver: serverCost['summa'],
+        deliveryFromserver: serverCost['delivery'],
+        saleFromserver: serverCost['sale'],
+      ));
     });
 
     on<GetBasketPositions>((event, emit) {
@@ -205,7 +230,7 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
           totalCost: totalCost + deliveryCost));
     });
     on<SelectDeliveryTypeEvent>((event, emit) async {
-      double summaFromserver = await getServerCost(
+      Map<String, dynamic> serverCost = await getServerCost(
           addressData: event.addressData!,
           pointData: event.pointData!,
           user: event.user!,
@@ -215,15 +240,18 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
           promo: event.promo!);
 
       emit(BasketState(
-          basketStatus: BasketStatus.done,
-          positions: positions,
-          totalCost: totalCost + deliveryCost,
-          summaFromserver: summaFromserver));
-      print('summaFromServVBloke = ${summaFromserver}');
+        basketStatus: BasketStatus.done,
+        positions: positions,
+        totalCost: totalCost + deliveryCost,
+        summaFromserver: serverCost['summa'],
+        deliveryFromserver: serverCost['delivery'],
+        saleFromserver: serverCost['sale'],
+      ));
+      print('summaFromServVBloke = ${serverCost['summa']}');
     });
 
     on<SlectSaleEvent>((event, emit) async {
-      double summaFromserver = await getServerCost(
+      Map<String, dynamic> serverCost = await getServerCost(
           addressData: event.addressData!,
           pointData: event.pointData!,
           user: event.user!,
@@ -236,11 +264,13 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
           basketStatus: BasketStatus.done,
           positions: positions,
           totalCost: totalCost + deliveryCost,
-          summaFromserver: summaFromserver));
-      print('summaFromServVBloke = ${summaFromserver}');
+          summaFromserver: serverCost['summa'],
+          deliveryFromserver: serverCost['delivery'],
+          saleFromserver: serverCost['sale']));
+      print('summaFromServVBloke = ${serverCost['summa']}');
     });
     on<PromoEvent>((event, emit) async {
-      double summaFromserver = await getServerCost(
+      Map<String, dynamic> serverCost = await getServerCost(
           addressData: event.addressData!,
           pointData: event.pointData!,
           user: event.user!,
@@ -253,13 +283,38 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
           basketStatus: BasketStatus.done,
           positions: positions,
           totalCost: totalCost + deliveryCost,
-          summaFromserver: summaFromserver));
-      print('summaFromServVBloke = ${summaFromserver}');
+          summaFromserver: serverCost['summa'],
+          deliveryFromserver: serverCost['delivery'],
+          saleFromserver: serverCost['sale']));
+      print('summaFromServVBloke = ${serverCost['summa']}');
+    });
+    on<GoToBasketEvent>((event, emit) async {
+      Map<String, dynamic> serverCost = await getServerCost(
+          addressData: event.addressData!,
+          pointData: event.pointData!,
+          user: event.user!,
+          orderServiceType: event.orderServiceType!,
+          paymentType: event.paymentType!,
+          saleId: event.saleId!,
+          promo: event.promo!);
+
+      emit(BasketState(
+          basketStatus: BasketStatus.done,
+          positions: positions,
+          totalCost: totalCost + deliveryCost,
+          summaFromserver: serverCost['summa'],
+          deliveryFromserver: serverCost['delivery'],
+          saleFromserver: serverCost['sale']));
+      print('summaFromServVBloke = ${serverCost['summa']}');
     });
   }
 
   double getTotalCost() {
     return totalCost + deliveryCost;
+  }
+
+  double getAllPositionsCost() {
+    return totalCost;
   }
 
   OrderServiceType getOrderServiceType() {
